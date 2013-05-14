@@ -1,4 +1,4 @@
-package com.ziamor.runner;
+package com.ziamor.runner.gameObjects;
 
 import java.awt.Color;
 import java.awt.Graphics;

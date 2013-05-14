@@ -6,11 +6,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JPanel;
 
+import com.ziamor.runner.screens.MainMenuScreen;
+
 public class Runner extends JPanel implements KeyListener {
 	private boolean isRunning = true;
 	public static int width, height;
-	public GamePlayScreen gamePlayScreen = new GamePlayScreen();
-
+	public static GameScreenManager gameScreenManager;
+	
 	public Runner() {
 		this.setFocusable(true);
 		this.addKeyListener(this);
@@ -19,7 +21,9 @@ public class Runner extends JPanel implements KeyListener {
 		// Get the dimensions of the screen
 		this.width = this.getSize().width;
 		this.height = this.getSize().height;
-
+		gameScreenManager = new GameScreenManager();
+		gameScreenManager.addScreen(new MainMenuScreen());
+		
 		// Start the game loop
 		Thread t = new Thread() {
 			public void run() {
@@ -40,25 +44,25 @@ public class Runner extends JPanel implements KeyListener {
 		}
 	}
 
-	public void update(Graphics g) {
-		this.gamePlayScreen.update(g);
+	public void update() {
+		GameScreenManager.update();
 	}
 
 	public void paintComponent(Graphics g) {
-		this.update(g);
-		this.gamePlayScreen.paintComponent(g);
+		this.update();
+		GameScreenManager.paintComponent(g);
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			gamePlayScreen.player.pressRight = true;
+			GamePlayScreen.player.pressRight = true;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			gamePlayScreen.player.pressLeft = true;
+			GamePlayScreen.player.pressLeft = true;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
-			gamePlayScreen.player.pressJump = true;
+			GamePlayScreen.player.pressJump = true;
 		}
 
 	}
@@ -66,13 +70,13 @@ public class Runner extends JPanel implements KeyListener {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			gamePlayScreen.player.pressRight = false;
+			GamePlayScreen.player.pressRight = false;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			gamePlayScreen.player.pressLeft = false;
+			GamePlayScreen.player.pressLeft = false;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
-			gamePlayScreen.player.pressJump = false;
+			GamePlayScreen.player.pressJump = false;
 		}
 	}
 

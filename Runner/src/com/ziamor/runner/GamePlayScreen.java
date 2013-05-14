@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.List;
 
+import com.ziamor.runner.gameObjects.Player;
+import com.ziamor.runner.gameObjects.Wall;
+
 public class GamePlayScreen extends GameScreen{
 	
 	public static Player player;
@@ -11,8 +14,8 @@ public class GamePlayScreen extends GameScreen{
 
 	public GamePlayScreen()
 	{
-		this.setDisableRender(true);
-		this.setDisableUpdate(true);
+		this.setBlockRender(true);
+		this.setBlockUpdate(true);
 		player = new Player();
 		wall = new Wall();
 	}
