@@ -3,7 +3,9 @@ package com.ziamor.runner.gameObjects;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Wall {
+import com.ziamor.runner.GameObject;
+
+public class Wall extends GameObject{
 
 	public int x;
 	public int y;
@@ -15,7 +17,7 @@ public class Wall {
 
 	}
 
-	public void update(Graphics g) {
+	public void update() {
 
 	}
 

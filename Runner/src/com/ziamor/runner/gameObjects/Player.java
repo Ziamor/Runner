@@ -3,9 +3,12 @@ package com.ziamor.runner.gameObjects;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import com.ziamor.runner.GameObject;
+import com.ziamor.runner.InputManager;
+import com.ziamor.runner.Runner;
 import com.ziamor.runner.screens.*;
 
-public class Player {
+public class Player extends GameObject{
 
 	public int x;
 	public int y;
@@ -20,17 +23,17 @@ public class Player {
 
 	}
 
-	public void update(Graphics g) {
+	public void update() {
 
 		// initialize speed
 		int xspeed = 0;
 		int yspeed = 0;
 
 		// check for key input
-		if (pressRight == true) {
+		if (Runner._input.isKeyPressed(InputManager._keys.get("d"))) {
 			xspeed = 5;
 		}
-		if (pressLeft == true) {
+		if (Runner._input.isKeyPressed(InputManager._keys.get("a"))) {
 			xspeed = -5;
 		}
 
@@ -60,7 +63,6 @@ public class Player {
 	}
 
 	public void paintComponent(Graphics g) {
-
 		g.setColor(Color.blue);
 		g.fillRect(x, y, 32, 48);
 	}

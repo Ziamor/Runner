@@ -6,6 +6,6 @@ import com.ziamor.runner.Runner;
 public class MainMenuScreen extends GameScreen{
 
 	public MainMenuScreen(){
-		Runner.gameScreenManager.addScreen(new GamePlayScreen());
+		Runner._gameScreenManager.addScreen(new GamePlayScreen());
 	}
 }

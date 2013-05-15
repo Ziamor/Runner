@@ -1,5 +1,6 @@
 package com.ziamor.runner;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Stack;
 
@@ -24,8 +25,8 @@ public class GameScreenManager {
 	}
 
 	public static void paintComponent(Graphics g) {
-		Stack<GameScreen> screensToUpdate = gameScreens;
-
+		Stack<GameScreen> screensToUpdate = gameScreens;		
+		
 		for (GameScreen screen : screensToUpdate) {
 			screen.paintComponent(g);
 		}

@@ -20,19 +20,8 @@ public class GamePlayScreen extends GameScreen{
 		
 		player = new Player();
 		wall = new Wall();
-	}
-	
-	public void update(Graphics g) {
-		player.update(g);
-		wall.update(g);
-	}
-
-	public void paintComponent(Graphics g) {
 		
-		g.setColor(Color.white);
-		g.fillRect(0, 0, 1000, 600);
-		player.paintComponent(g);
-		wall.paintComponent(g);
-		
+		this.addGameObject(player);
+		this.addGameObject(wall);
 	}
 }
