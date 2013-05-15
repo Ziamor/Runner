@@ -3,7 +3,7 @@ package com.ziamor.runner.gameObjects;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import com.ziamor.runner.GamePlayScreen;
+import com.ziamor.runner.screens.*;
 
 public class Player {
 
