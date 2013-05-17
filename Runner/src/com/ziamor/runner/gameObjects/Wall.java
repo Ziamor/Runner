@@ -12,8 +12,8 @@ public class Wall extends GameObject{
 
 	public Wall() {
 
-		x = 500;
-		y = 350;
+		x = 400;
+		y = 350+80;
 
 	}
 
