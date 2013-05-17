@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class GameScreen {
 	private boolean blockRender;
 	private boolean blockUpdate;
-	private ArrayList<GameObject> gameObjects;
+	protected  ArrayList<GameObject> gameObjects;
 
 	public GameScreen() {
 		gameObjects = new ArrayList<GameObject>();
@@ -22,7 +22,16 @@ public class GameScreen {
 
 	public void addGameObject(GameObject gobj) {
 		gameObjects.add(gobj);
+	}
 
+	public ArrayList<GameObject> getGameObjectByID(String id) {
+		// Temporary ArrayList to store game objects with the specified ID
+		ArrayList<GameObject> gameObjectsWithID = new ArrayList<GameObject>();
+		// Loop through all GameObjects and pull any GameObject that uses the ID
+		for (GameObject gobj : gameObjects)
+			if (gobj.getObjID().equals(id))
+				gameObjectsWithID.add(gobj);
+		return gameObjectsWithID;
 	}
 
 	public void update() {

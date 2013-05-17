@@ -20,8 +20,8 @@ public class Runner extends JPanel {
 		this.setFocusable(true);
 
 		// Get the dimensions of the screen
-		this._width = 1000;
-		this._height = 600;
+		this._width = 1024;
+		this._height = 608;
 
 		// Set the game window
 		this.setPreferredSize(new Dimension(_width, _height));

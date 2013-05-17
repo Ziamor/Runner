@@ -3,6 +3,7 @@ package com.ziamor.runner.gameObjects;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import com.ziamor.runner.CollisionHandler;
 import com.ziamor.runner.GameObject;
 import com.ziamor.runner.InputManager;
 import com.ziamor.runner.Runner;
@@ -10,15 +11,14 @@ import com.ziamor.runner.screens.*;
 
 public class Player extends GameObject {
 
-	public int x;
-	public int y;
 	private int yspeed;
 
 	public Player() {
-
+		this.objID = "player";
 		x = 400;
 		y = 350;
-
+		width = 32;
+		height = 48;
 	}
 
 	public void update() {
@@ -29,9 +29,9 @@ public class Player extends GameObject {
 		// check if the player is on the ground
 		int gravity = 1;
 		boolean grounded = false;
-		if (x > GamePlayScreen.wall.x - 32) {
-			if (x < GamePlayScreen.wall.x + 32) {
-				if (y == GamePlayScreen.wall.y - 48) {
+		if (x > GamePlayScreen.wall.getX() - 32) {
+			if (x < GamePlayScreen.wall.getX() + 32) {
+				if (y == GamePlayScreen.wall.getY() - 48) {
 					grounded = true;
 					yspeed = 0;
 					gravity = 0;
@@ -54,54 +54,31 @@ public class Player extends GameObject {
 				yspeed = -15;
 			}
 		}
-  
+
 		// apply gravity
-		yspeed = yspeed + gravity;
-		
+		yspeed += gravity;
+
 		// move player
-		x = x + xspeed;
-		y = y + yspeed;
+		x += xspeed;
+		y += yspeed;
 
 		// collision checking
-		boolean collision = true;
-		while (collision == true) {
-			collision = false; // initialize collision
-
-			// check for collision
-			if (x > GamePlayScreen.wall.x - 32) {
-				if (x < GamePlayScreen.wall.x + 32) {
-					if (y > GamePlayScreen.wall.y - 48) {
-						if (y < GamePlayScreen.wall.y + 48) {
-							collision = true;
-						}
-					}
-
-				}
-			}
-
-			// correct collision
-			if (collision == true) {
-				if (xspeed > 0) {
-					x = x - 1;
-				}
-				if (xspeed < 0) {
-					x = x + 1;
-				}
-				if (yspeed > 0) {
-					y = y - 1;
-				}
-				if (yspeed < 0) {
-					y = y + 1;
-				}
-			}
-
+		while (CollisionHandler.isColliding(this, GamePlayScreen.wall)) {
+			if (xspeed > 0)
+				x--;
+			else if (xspeed < 0)
+				x++;
+			if (yspeed > 0)
+				y--;
+			else if (yspeed < 0)
+				y++;
 		}
 
 	}
 
 	public void paintComponent(Graphics g) {
 		g.setColor(Color.blue);
-		g.fillRect(x, y, 32, 48);
+		g.fillRect(x, y, width, height);
 	}
 
 }

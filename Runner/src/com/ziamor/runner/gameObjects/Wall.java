@@ -5,16 +5,12 @@ import java.awt.Graphics;
 
 import com.ziamor.runner.GameObject;
 
-public class Wall extends GameObject{
-
-	public int x;
-	public int y;
+public class Wall extends GameObject {
 
 	public Wall() {
-
-		x = 400;
-		y = 350+80;
-
+		this.objID = "wall";
+		width = 32;
+		height = 48;
 	}
 
 	public void update() {
@@ -23,7 +19,9 @@ public class Wall extends GameObject{
 
 	public void paintComponent(Graphics g) {
 		g.setColor(Color.black);
-		g.fillRect(x, y, 32, 48);
+		g.fillRect(x, y, width, height);
+		g.setColor(Color.gray);
+		g.fillRect(x + 4, y + 4, width - 8, height - 8);
 	}
 
 }
