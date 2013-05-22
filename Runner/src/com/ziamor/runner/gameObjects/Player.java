@@ -31,13 +31,11 @@ public class Player extends GameObject {
 		double gravity = 0.5;
 		boolean grounded = false;
 		y = y + 1;
-		for (GameObject gameObject : GameScreen.gameObjects) {
-			if (gameObject.getObjID() == "wall") {
-				if (CollisionHandler.isColliding(this, gameObject)) {
-					grounded = true;
-					yspeedDouble = 0;
-					gravity = 0;
-				}
+		for (GameObject gameObject : this.parent.getGameObjectsByID("wall")) {
+			if (CollisionHandler.isColliding(this, gameObject)) {
+				grounded = true;
+				yspeedDouble = 0;
+				gravity = 0;
 			}
 		}
 		y = y - 1;
@@ -71,11 +69,9 @@ public class Player extends GameObject {
 		while (collision == true) {
 
 			collision = false;
-			for (GameObject gameObject : GameScreen.gameObjects) {
-				if (gameObject.getObjID() == "wall") {
+			for (GameObject gameObject : this.parent.getGameObjectsByID("wall")) {
 					if (CollisionHandler.isColliding(this, gameObject)) {
 						collision = true;
-					}
 				}
 			}
 
@@ -99,7 +95,8 @@ public class Player extends GameObject {
 
 	public void paintComponent(Graphics g) {
 		g.setColor(Color.blue);
-		g.fillRect(x - GamePlayScreen.viewX, y - GamePlayScreen.viewY, width, height);
+		g.fillRect(x - GamePlayScreen.viewX, y - GamePlayScreen.viewY, width,
+				height);
 	}
 
 }

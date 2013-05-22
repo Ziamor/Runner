@@ -6,7 +6,18 @@ public class GameObject {
 
 	protected String objID;
 	protected int x, y, width, height;
-
+	protected GameScreen parent;
+	
+	public GameObject()
+	{
+		this.parent = null;
+	}
+	
+	public GameObject(GameScreen parent)
+	{
+		this.parent = parent;
+	}
+	
 	public String getObjID() {
 		return objID;
 	}

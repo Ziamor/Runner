@@ -45,7 +45,7 @@ public class Runner extends JPanel {
 		while (_isRunning) {
 			this.repaint();
 			try {
-				Thread.sleep(1000 / 30);
+				Thread.sleep(1000 / 60);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
