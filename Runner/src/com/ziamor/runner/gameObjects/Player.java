@@ -5,17 +5,18 @@ import java.awt.Graphics;
 
 import com.ziamor.runner.CollisionHandler;
 import com.ziamor.runner.GameObject;
+import com.ziamor.runner.GameScreen;
 import com.ziamor.runner.InputManager;
 import com.ziamor.runner.Runner;
 import com.ziamor.runner.screens.*;
 
 public class Player extends GameObject {
 
-	private int yspeed;
+	private double yspeedDouble;
 
 	public Player() {
 		this.objID = "player";
-		x = 400;
+		x = 100;
 		y = 350;
 		width = 32;
 		height = 48;
@@ -24,61 +25,81 @@ public class Player extends GameObject {
 	public void update() {
 
 		// initialize speed
-		int xspeed = 0;
+		int xspeed = 5;
 
 		// check if the player is on the ground
-		int gravity = 1;
+		double gravity = 0.5;
 		boolean grounded = false;
-		if (x > GamePlayScreen.wall.getX() - 32) {
-			if (x < GamePlayScreen.wall.getX() + 32) {
-				if (y == GamePlayScreen.wall.getY() - 48) {
+		y = y + 1;
+		for (GameObject gameObject : GameScreen.gameObjects) {
+			if (gameObject.getObjID() == "wall") {
+				if (CollisionHandler.isColliding(this, gameObject)) {
 					grounded = true;
-					yspeed = 0;
+					yspeedDouble = 0;
 					gravity = 0;
 				}
 			}
 		}
+		y = y - 1;
 
 		// check for key input
 		if (Runner._input.isKeyPressed(InputManager._keys.get("d"))) {
-			xspeed = 5;
+			xspeed = 15;
 		}
 		if (Runner._input.isKeyPressed(InputManager._keys.get("a"))) {
 			xspeed = -5;
 		}
 		if (Runner._input.isKeyPressed(InputManager._keys.get("s"))) {
-			yspeed = 5;
+			gravity = gravity * 3;
 		}
 		if (Runner._input.isKeyPressed(InputManager._keys.get("w"))) {
 			if (grounded == true) {
-				yspeed = -15;
+				yspeedDouble = -13;
 			}
 		}
 
-		// apply gravity
-		yspeed += gravity;
+		yspeedDouble += gravity; // apply gravity
+		int yspeed = ((int) yspeedDouble); // make yspeed an int
 
 		// move player
 		x += xspeed;
 		y += yspeed;
 
 		// collision checking
-		while (CollisionHandler.isColliding(this, GamePlayScreen.wall)) {
-			if (xspeed > 0)
-				x--;
-			else if (xspeed < 0)
-				x++;
-			if (yspeed > 0)
-				y--;
-			else if (yspeed < 0)
-				y++;
+		boolean collision = true;
+		int yCount = 0;
+		while (collision == true) {
+
+			collision = false;
+			for (GameObject gameObject : GameScreen.gameObjects) {
+				if (gameObject.getObjID() == "wall") {
+					if (CollisionHandler.isColliding(this, gameObject)) {
+						collision = true;
+					}
+				}
+			}
+
+			if (collision) {
+				if (yCount < Math.abs(yspeed)) {
+					if (yspeed > 0)
+						y--;
+					else if (yspeed < 0)
+						y++;
+					yCount++;
+				} else {
+					if (xspeed > 0)
+						x--;
+					else if (xspeed < 0)
+						x++;
+				}
+			}
 		}
 
 	}
 
 	public void paintComponent(Graphics g) {
 		g.setColor(Color.blue);
-		g.fillRect(x, y, width, height);
+		g.fillRect(x - GamePlayScreen.viewX, y - GamePlayScreen.viewY, width, height);
 	}
 
 }

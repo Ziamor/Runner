@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import com.ziamor.runner.GameObject;
+import com.ziamor.runner.screens.GamePlayScreen;
 
 public class Wall extends GameObject {
 
@@ -14,14 +15,15 @@ public class Wall extends GameObject {
 	}
 
 	public void update() {
-
 	}
 
 	public void paintComponent(Graphics g) {
 		g.setColor(Color.black);
-		g.fillRect(x, y, width, height);
+		g.fillRect(x - GamePlayScreen.viewX, y - GamePlayScreen.viewY, width,
+				height);
 		g.setColor(Color.gray);
-		g.fillRect(x + 4, y + 4, width - 8, height - 8);
+		g.fillRect(x + 4 - GamePlayScreen.viewX, y + 4 - GamePlayScreen.viewY,
+				width - 8, height - 8);
 	}
 
 }

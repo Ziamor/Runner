@@ -14,11 +14,11 @@ public class InputManager implements KeyListener {
 		{
 			// Use site:
 			// http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
-			// for more key codes
-			put("w", 87);
+		 	// for more key codes
+		 	put("w", 87);
 			put("a", 65);
-			put("d", 68);
-			put("s", 83);
+  			put("d", 68);
+			put("s", 83);    
 		}
 	};;
 

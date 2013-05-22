@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class GameScreen {
 	private boolean blockRender;
 	private boolean blockUpdate;
-	protected  ArrayList<GameObject> gameObjects;
+	public static ArrayList<GameObject> gameObjects;
 
 	public GameScreen() {
 		gameObjects = new ArrayList<GameObject>();
