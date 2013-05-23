@@ -17,18 +17,23 @@ public class GameScreenManager {
 	}
 
 	public static void update() {
-		Stack<GameScreen> screensToDraw = gameScreens;
+		Stack<GameScreen> screensToUpdate = new Stack<GameScreen>();
+		screensToUpdate.addAll(gameScreens);
 
-		for (GameScreen screen : screensToDraw) {
+		for (int i = 0; i < screensToUpdate.size(); i++) {
+			GameScreen screen = screensToUpdate.pop();
 			screen.update();
 		}
 	}
 
 	public static void paintComponent(Graphics g) {
-		Stack<GameScreen> screensToUpdate = gameScreens;		
-		
-		for (GameScreen screen : screensToUpdate) {
+		Stack<GameScreen> screensToDraw = new Stack<GameScreen>();
+		screensToDraw.addAll(gameScreens);
+
+		for (int i = 0; i < screensToDraw.size(); i++) {
+			GameScreen screen = screensToDraw.pop();
 			screen.paintComponent(g);
+
 		}
 
 	}

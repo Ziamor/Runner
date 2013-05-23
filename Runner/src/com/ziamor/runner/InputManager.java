@@ -19,6 +19,7 @@ public class InputManager implements KeyListener {
 			put("a", 65);
   			put("d", 68);
 			put("s", 83);    
+			put("enter", 13);  
 		}
 	};;
 

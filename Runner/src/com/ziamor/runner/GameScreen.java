@@ -20,6 +20,14 @@ public class GameScreen {
 		this.blockUpdate = value;
 	}
 
+	public boolean getBlockRender() {
+		return this.blockRender;
+	}
+
+	public boolean getBlockUpdate() {
+		return this.blockUpdate;
+	}
+	
 	public void addGameObject(GameObject gobj) {
 		gobj.parent = this;
 		gameObjects.add(gobj);
