@@ -32,6 +32,10 @@ public class GameScreen {
 		gobj.parent = this;
 		gameObjects.add(gobj);
 	}
+	
+	public void clearGameObjects() {
+		gameObjects.clear();
+	}
 
 	public ArrayList<GameObject> getGameObjectsByID(String id) {
 		// Temporary ArrayList to store game objects with the specified ID

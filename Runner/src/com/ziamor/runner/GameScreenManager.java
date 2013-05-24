@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Stack;
 
+import com.ziamor.runner.gameObjects.Wall;
+
 public class GameScreenManager {
 
 	private static Stack<GameScreen> gameScreens = new Stack<GameScreen>();
@@ -13,6 +15,7 @@ public class GameScreenManager {
 	}
 
 	public void removeScreen(GameScreen screen) {
+		screen.clearGameObjects();
 		gameScreens.remove(screen);
 	}
 

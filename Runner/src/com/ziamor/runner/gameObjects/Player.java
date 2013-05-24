@@ -13,11 +13,10 @@ import com.ziamor.runner.screens.*;
 public class Player extends GameObject {
 
 	private double yspeedDouble;
-	private boolean dead;
+	private int xspeed;
 
 	public Player() {
 		this.objID = "player";
-		dead = false;
 		x = 100;
 		y = 350;
 		width = 32;
@@ -26,14 +25,14 @@ public class Player extends GameObject {
 
 	public void update() {
 
-		if (!dead) {
-			// initialize speed
-			int xspeed = 5;
+		if (!GamePlayScreen.playerDead) {
+			// make the player move forward
+			xspeed = 5;
 
 			// check if the player is on the ground
 			double gravity = 0.5;
 			boolean grounded = false;
-			y = y + 1;
+			y = y + 1; // temporarily move the player down 1
 			for (GameObject gameObject : this.parent.getGameObjectsByID("wall")) {
 				if (CollisionHandler.isColliding(this, gameObject)) {
 					grounded = true;
@@ -41,7 +40,7 @@ public class Player extends GameObject {
 					gravity = 0;
 				}
 			}
-			y = y - 1;
+			y = y - 1; // revert y to its proper value
 
 			// check for key input
 			if (Runner._input.isKeyPressed(InputManager._keys.get("d"))) {
@@ -72,6 +71,7 @@ public class Player extends GameObject {
 			while (collision == true) {
 
 				collision = false;
+				// loop through every wall to check for collisions
 				for (GameObject gameObject : this.parent
 						.getGameObjectsByID("wall")) {
 					if (CollisionHandler.isColliding(this, gameObject)) {
@@ -79,7 +79,7 @@ public class Player extends GameObject {
 					}
 				}
 
-				if (collision) {
+				if (collision) { // try to correct a collision
 					if (yCount < Math.abs(yspeed)) {
 						if (yspeed > 0)
 							y--;
@@ -87,32 +87,36 @@ public class Player extends GameObject {
 							y++;
 						yCount++;
 					} else {
-						dead = true;
+						// kill the player if he ran into a wall
+						GamePlayScreen.playerDead = true;
 						xspeed = -4;
 						yspeedDouble = -6;
 						break;
 					}
 				}
 			}
+
+			// kill the player if he is too low
+			if (y > 608+200) { 
+				GamePlayScreen.playerDead = true;
+				xspeed =0;
+				yspeedDouble = -13;
+			}
+			
 		} else { // if player is dead
 			yspeedDouble += 0.5; // apply gravity
 			int yspeed = ((int) yspeedDouble); // make yspeed an int
 
 			// move player
-			x -= 4;
+			x += xspeed;
 			y += yspeed;
-		}
-
-		if (y > 700) {
-			Runner._gameScreenManager.removeScreen(this.parent);
-			Runner._gameScreenManager.addScreen(new MainMenuScreen());
 		}
 
 	}
 
 	public void paintComponent(Graphics g) {
 		g.setColor(Color.blue);
-		if (dead){
+		if (GamePlayScreen.playerDead) {
 			g.setColor(Color.red);
 		}
 		g.fillRect(x - GamePlayScreen.viewX, y - GamePlayScreen.viewY, width,
