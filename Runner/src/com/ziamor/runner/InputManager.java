@@ -14,14 +14,20 @@ public class InputManager implements KeyListener {
 		{
 			// Use site:
 			// http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
-		 	// for more key codes
-		 	put("w", 87);
+			// for more key codes
+			put("w", 87);
 			put("a", 65);
-  			put("d", 68);
-			put("s", 83);    
-			put("enter", 13);  
+			put("d", 68);
+			put("s", 83);
+			put("enter", 13);
+
+			put("left", 37);
+			put("up", 38);
+			put("right", 39);
+			put("down", 40);
+			put("space", 32);
 		}
-	};;
+	};
 
 	public boolean isKeyPressed(int keyCode) {
 		/*

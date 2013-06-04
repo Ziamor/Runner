@@ -6,6 +6,7 @@ public class GameObject {
 
 	protected String objID;
 	protected int x, y, width, height;
+	protected boolean isVisible;
 	protected GameScreen parent;
 	
 	public GameObject()
@@ -54,9 +55,20 @@ public class GameObject {
 		height = value;
 	}
 	
+	public boolean isVisible() {
+		return isVisible;
+	}
+
+	public void setVisible(boolean isVisible) {
+		this.isVisible = isVisible;
+	}
+	
 	public void update() {
 	}
 
 	public void paintComponent(Graphics g) {
 	}
+	
+
+	
 }
