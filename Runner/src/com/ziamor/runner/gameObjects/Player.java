@@ -16,23 +16,25 @@ public class Player extends GameObject {
 	private int xspeed;
 	private boolean gravitySwitch;
 	private int dashTimer;
-
+	private boolean gravitySwitchAble;
 	private boolean freshUp;
+	private boolean freshDown;
 	private boolean freshSpace;
 	private boolean freshRight;
 
 	public Player() {
 		this.objID = "player";
-		x = 100;
-		y = 350;
+		x = 80;
+		y = 300;
 		width = 32;
 		height = 48;
 		isVisible = true;
 		xspeed = 5;
 		gravitySwitch = false;
-
+		gravitySwitchAble = false;
 		dashTimer = 0;
 		freshUp = true;
+		freshDown = true;
 		freshSpace = true;
 		freshRight = true;
 	}
@@ -61,7 +63,7 @@ public class Player extends GameObject {
 		// reduce the dash timer
 		if (dashTimer > 0) {
 			dashTimer--;
-		}		 
+		}
 
 		// check for walls above and below
 		boolean wallBelow = false;
@@ -94,25 +96,26 @@ public class Player extends GameObject {
 			if (wallAbove)
 				grounded = true;
 		}
+		if (grounded) {
+			gravitySwitchAble = true;
+		}
 
 		// check for key input
 		if (Runner._input.isKeyPressed(InputManager._keys.get("space"))) {
 			// space bar press
 			if (freshSpace) {
 				freshSpace = false;
-				if (grounded) { // jump if on ground
-					if (!gravitySwitch) {
-						yspeedDouble = -13; // jump in regular gravity
-					} else {
-						yspeedDouble = 13; // jump in switched gravity
+				if (gravitySwitchAble) {
+					if (grounded) { // jump if on ground
+						if (!gravitySwitch) {
+							yspeedDouble = -12; // jump in regular gravity
+						} else {
+							yspeedDouble = 12; // jump in switched gravity
+						}
 					}
-					if (wallAbove && wallBelow) { // switch gravity if in tunnel
-						gravity = -gravity;
-						gravitySwitch = !gravitySwitch;
-					}
-				} else { // switch gravity if in air
 					gravity = -gravity;
 					gravitySwitch = !gravitySwitch;
+					gravitySwitchAble = false;
 				}
 			}
 		} else {
@@ -140,14 +143,29 @@ public class Player extends GameObject {
 		boolean fastFall = false;
 		if (Runner._input.isKeyPressed(InputManager._keys.get("down"))) {
 			// down arrow press
-			fastFall = true;
+			if (freshDown) {
+				if (gravitySwitch) {
+					freshDown = false;
+					if (grounded == true) {
+						yspeedDouble = 13;
+					}
+				} else {
+					fastFall = true;
+				}
+			}
+		} else {
+			freshDown = true; // release the key for a fresh press
 		}
 		if (Runner._input.isKeyPressed(InputManager._keys.get("up"))) {
 			// up arrow press
 			if (freshUp) {
-				freshUp = false;
-				if (grounded == true) {
-					yspeedDouble = -13;
+				if (!gravitySwitch) {
+					freshUp = false;
+					if (grounded == true) {
+						yspeedDouble = -13;
+					}
+				} else {
+					fastFall = true;
 				}
 			}
 		} else {
