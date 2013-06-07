@@ -7,6 +7,7 @@ public class GameObject {
 	protected String objID;
 	protected int x, y, width, height;
 	protected boolean isVisible;
+	protected boolean isActive;
 	protected GameScreen parent;
 	
 	public GameObject()
@@ -61,6 +62,14 @@ public class GameObject {
 
 	public void setVisible(boolean isVisible) {
 		this.isVisible = isVisible;
+	}
+	
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 	
 	public void update() {

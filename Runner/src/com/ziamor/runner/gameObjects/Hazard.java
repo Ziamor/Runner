@@ -6,31 +6,37 @@ import java.awt.Graphics;
 import com.ziamor.runner.GameObject;
 import com.ziamor.runner.screens.GamePlayScreen;
 
-public class Wall extends GameObject {
-
-	public Wall() {
-		this.objID = "wall";
+public class Hazard extends GameObject{
+	
+	public Hazard() {
+		this.objID = "hazard";
 		width = 32;
-		height = 48;
+		height = 16;
 		isVisible = true;
 		isActive = true;
 	}
 
 	public void update() {
+		
 	}
 
 	public void paintComponent(Graphics g) {
 		if (!isVisible) {
 			return;
 		}
-
+		
 		g.setColor(Color.black);
-		g.fillRect(x - GamePlayScreen.viewX, y - GamePlayScreen.viewY, width,
-				height);
-		g.setColor(Color.gray);
-		g.fillRect(x + 4 - GamePlayScreen.viewX, y + 4 - GamePlayScreen.viewY,
-				width - 8, height - 8);
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				// draw some badass spikes
+				g.fillRect(x - GamePlayScreen.viewX + 8*i+4-j, y - GamePlayScreen.viewY +4*j,
+						(j+1)*2, height-j*4);
+			}
+		}
+		
+		
 
 	}
 
 }
+

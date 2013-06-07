@@ -22,12 +22,14 @@ public class Runner extends JPanel {
 		// Get the dimensions of the screen
 		this._width = 1024;
 		this._height = 608;
+		
 
 		// Set the game window
 		this.setPreferredSize(new Dimension(_width, _height));
 
 		this._input = new InputManager();
 		this.addKeyListener(_input);
+		this.addMouseListener(_input);
 
 		_gameScreenManager = new GameScreenManager();
 		_gameScreenManager.addScreen(new MainMenuScreen());
@@ -58,6 +60,7 @@ public class Runner extends JPanel {
 
 	public void paintComponent(Graphics g) {
 		this.update();
+		this._input.update();
 		g.setColor(Color.white);
 		g.fillRect(0, 0, _width, _height);
 		GameScreenManager.paintComponent(g);

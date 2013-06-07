@@ -12,15 +12,11 @@ import com.ziamor.runner.screens.*;
 
 public class Player extends GameObject {
 
-	private double yspeedDouble;
-	private int xspeed;
-	private boolean gravitySwitch;
-	private int dashTimer;
-	private boolean gravitySwitchAble;
-	private boolean freshUp;
-	private boolean freshDown;
-	private boolean freshSpace;
-	private boolean freshRight;
+	private double yspeedDouble = 0;
+	private int xspeed = 5;
+	private boolean gravitySwitch = false;
+	private int dashTimer = 0;
+	private boolean gravitySwitchAble = true;
 
 	public Player() {
 		this.objID = "player";
@@ -28,28 +24,21 @@ public class Player extends GameObject {
 		y = 300;
 		width = 32;
 		height = 48;
+		isActive = true;
 		isVisible = true;
-		xspeed = 5;
-		gravitySwitch = false;
-		gravitySwitchAble = false;
-		dashTimer = 0;
-		freshUp = true;
-		freshDown = true;
-		freshSpace = true;
-		freshRight = true;
 	}
 
 	public void update() {
+		// don't update if inactive
+		if (!isActive)
+			return;
 
 		// if player is dead
 		if (GamePlayScreen.playerDead) {
 			yspeedDouble += 0.5; // apply gravity
 			int yspeed = ((int) yspeedDouble); // make yspeed an int
-
-			// move player
-			x += xspeed;
-			y += yspeed;
-
+			x += xspeed; // update x
+			y += yspeed; // update y
 			return; // don't complete the rest of the update()
 		}
 
@@ -61,9 +50,8 @@ public class Player extends GameObject {
 		}
 
 		// reduce the dash timer
-		if (dashTimer > 0) {
+		if (dashTimer > 0)
 			dashTimer--;
-		}
 
 		// check for walls above and below
 		boolean wallBelow = false;
@@ -100,77 +88,55 @@ public class Player extends GameObject {
 			gravitySwitchAble = true;
 		}
 
-		// check for key input
-		if (Runner._input.isKeyPressed(InputManager._keys.get("space"))) {
-			// space bar press
-			if (freshSpace) {
-				freshSpace = false;
-				if (gravitySwitchAble) {
-					if (grounded) { // jump if on ground
-						if (!gravitySwitch) {
-							yspeedDouble = -12; // jump in regular gravity
-						} else {
-							yspeedDouble = 12; // jump in switched gravity
-						}
+		// check for space bar press
+		if (Runner._input.isKeyHit(InputManager._keys.get("space"))) {
+			if (gravitySwitchAble) {
+				if (grounded) { // jump if on ground
+					if (!gravitySwitch) {
+						yspeedDouble = -12; // jump in regular gravity
+					} else {
+						yspeedDouble = 12; // jump in switched gravity
 					}
-					gravity = -gravity;
-					gravitySwitch = !gravitySwitch;
-					gravitySwitchAble = false;
 				}
+				gravity = -gravity;
+				gravitySwitch = !gravitySwitch;
+				gravitySwitchAble = false;
 			}
-		} else {
-			freshSpace = true; // release the key for a fresh press
 		}
-		if (Runner._input.isKeyPressed(InputManager._keys.get("right"))) {
-			// right arrow press
-			if (freshRight) {
-				if (dashTimer == 0) {
-					freshRight = false;
-					xspeed = 20; // dash forward
-					yspeedDouble = 0;
-					dashTimer = 60;
-				}
-			}
-		} else {
-			freshRight = true; // release the key for a fresh press
+
+		// check for right arrow press
+		if (Runner._input.isKeyHit(InputManager._keys.get("right"))
+				&& dashTimer == 0) {
+			xspeed = 20; // dash forward
+			yspeedDouble = 0;
+			dashTimer = 60;
 		}
+
+		// check for left arrow press
 		if (Runner._input.isKeyPressed(InputManager._keys.get("left"))) {
-			// left arrow press
 			xspeed = -5;
 			// just for debugging
 			// it may not even do anything in the actual game
 		}
+
+		// check for down arrow press
 		boolean fastFall = false;
-		if (Runner._input.isKeyPressed(InputManager._keys.get("down"))) {
-			// down arrow press
-			if (freshDown) {
-				if (gravitySwitch) {
-					freshDown = false;
-					if (grounded == true) {
-						yspeedDouble = 13;
-					}
-				} else {
-					fastFall = true;
-				}
-			}
-		} else {
-			freshDown = true; // release the key for a fresh press
+		if (Runner._input.isKeyHit(InputManager._keys.get("down"))) {
+			if (gravitySwitch && grounded == true)
+				yspeedDouble = 13;
 		}
-		if (Runner._input.isKeyPressed(InputManager._keys.get("up"))) {
-			// up arrow press
-			if (freshUp) {
-				if (!gravitySwitch) {
-					freshUp = false;
-					if (grounded == true) {
-						yspeedDouble = -13;
-					}
-				} else {
-					fastFall = true;
-				}
-			}
-		} else {
-			freshUp = true; // release the key for a fresh press
+		if (Runner._input.isKeyPressed(InputManager._keys.get("down"))
+				&& !gravitySwitch)
+			fastFall = true;
+
+		// check for up arrow press
+		if (Runner._input.isKeyHit(InputManager._keys.get("up"))) {
+			if (!gravitySwitch && grounded == true)
+				yspeedDouble = -13;
 		}
+		if (Runner._input.isKeyPressed(InputManager._keys.get("up"))
+				&& gravitySwitch)
+			fastFall = true;
 
 		// apply gravity
 		if (fastFall)
@@ -214,8 +180,8 @@ public class Player extends GameObject {
 			}
 		}
 
-		// kill the player if he is too low
-		if (y > 608 + 200) {
+		// kill the player if he is too low or too high
+		if (y > 608 + 200 || y < -600) {
 			GamePlayScreen.playerDead = true;
 			xspeed = 0;
 			yspeedDouble = -13;
@@ -224,9 +190,24 @@ public class Player extends GameObject {
 		// collect any coins that the player is touching
 		for (GameObject gameObject : this.parent.getGameObjectsByID("coin")) {
 			if (CollisionHandler.isColliding(this, gameObject)) {
-				if (gameObject.isVisible() == true) {
+				if (gameObject.isActive() == true) {
+					// make the coin inactive and invisible
+					gameObject.setActive(false);
+					// gameObject.setVisible(false);
+				}
 
-					gameObject.setVisible(false);
+			}
+		}
+
+		// check if the player is touching any hazards
+		for (GameObject gameObject : this.parent.getGameObjectsByID("hazard")) {
+			if (CollisionHandler.isColliding(this, gameObject)) {
+				if (gameObject.isActive() == true) {
+					// kill the player
+					GamePlayScreen.playerDead = true;
+					xspeed = -4;
+					yspeedDouble = -6;
+					break;
 				}
 
 			}
@@ -235,7 +216,7 @@ public class Player extends GameObject {
 
 	public void paintComponent(Graphics g) {
 		if (!isVisible) {
-			return;
+			return; // don't paint if invisible
 		}
 
 		g.setColor(Color.blue);
@@ -253,6 +234,8 @@ public class Player extends GameObject {
 			g.fillRect(x - GamePlayScreen.viewX + 3, y - GamePlayScreen.viewY
 					+ 3, width - 6, 8);
 		}
+
+		// test
 
 	}
 
