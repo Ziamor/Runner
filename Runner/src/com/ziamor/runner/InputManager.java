@@ -12,6 +12,9 @@ public class InputManager implements KeyListener, MouseListener {
 	private boolean[] key_pressed = new boolean[256];
 	private boolean[] key_released = new boolean[256];
 	private boolean[] key_hit = new boolean[256];
+	private boolean mouse_clicked;
+	private int mouse_x;
+	private int mouse_y;
 
 	public static Map<String, Integer> _keys = new HashMap<String, Integer>() {
 		{
@@ -47,6 +50,14 @@ public class InputManager implements KeyListener, MouseListener {
 		return key_released[keyCode];
 	}
 
+	public boolean isMouseClicked(int x, int y, int width, int height) {
+		if ((mouse_clicked) && (mouse_x > x) && (mouse_x < x + width)
+				&& (mouse_y > y) && (mouse_y < y + height)) {
+			return true;
+		} else
+			return false;
+	}
+
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
@@ -68,35 +79,41 @@ public class InputManager implements KeyListener, MouseListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		
+
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		System.out.println("Mouse clicked");
+		mouse_clicked = true;
+		mouse_x = e.getX();
+		mouse_y = e.getY();
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		
+
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		
+
 	}
 
 	public void update() {
+		// clear mouse_clicked
+		mouse_clicked = false;
+
+		// clear key_hit
 		for (int i = 0; i < 256; i++) {
 			key_hit[i] = false;
 		}

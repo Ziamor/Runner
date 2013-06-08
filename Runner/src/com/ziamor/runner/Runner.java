@@ -56,11 +56,11 @@ public class Runner extends JPanel {
 
 	public void update() {
 		GameScreenManager.update();
+		this._input.update();
 	}
 
 	public void paintComponent(Graphics g) {
 		this.update();
-		this._input.update();
 		g.setColor(Color.white);
 		g.fillRect(0, 0, _width, _height);
 		GameScreenManager.paintComponent(g);

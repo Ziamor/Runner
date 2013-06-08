@@ -77,16 +77,12 @@ public class Player extends GameObject {
 		// check to see if grounded
 		double gravity = 0.5;
 		boolean grounded = false;
-		if (!gravitySwitch && wallBelow) {
+		if ((!gravitySwitch && wallBelow) || (gravitySwitch && wallAbove)) {
 			grounded = true;
-		} else if (gravitySwitch) {
-			gravity = -0.5;
-			if (wallAbove)
-				grounded = true;
-		}
-		if (grounded) {
 			gravitySwitchAble = true;
 		}
+		if (gravitySwitch)
+			gravity = -0.5;
 
 		// check for space bar press
 		if (Runner._input.isKeyHit(InputManager._keys.get("space"))) {
