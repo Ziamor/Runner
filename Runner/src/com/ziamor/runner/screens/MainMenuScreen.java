@@ -12,32 +12,33 @@ import com.ziamor.runner.gameObjects.Button;
 public class MainMenuScreen extends GameScreen {
 
 	public MainMenuScreen() {
-		// test making a button
-		Button tempbutton = new Button();
-		tempbutton.setX(100);
-		tempbutton.setY(100);
-		tempbutton.setWidth(100);
-		tempbutton.setHeight(100);
-		this.addGameObject(tempbutton);
+		this.setBlockRender(true);
+		this.setBlockUpdate(true);
+		if (world < 1)
+			world = 1;
 	}
 
 	public void update() {
+		// call the gameScreen update();
+		super.update();
+		if (!getBlockUpdate())
+			return;
+
 		if (Runner._input.isKeyPressed(InputManager._keys.get("space"))) {
-			Runner._gameScreenManager.addScreen(new GamePlayScreen());
+			Runner._gameScreenManager.addScreen(new GamePlayScreen(0, 0));
 			Runner._gameScreenManager.removeScreen(this);
 		}
 
-		// update all game objects
-		for (GameObject gameObject : gameObjects) {
-			gameObject.update();
+		if (Runner._input.isKeyPressed(InputManager._keys.get("w"))) {
+			Runner._gameScreenManager.addScreen(new WorldSelectScreen(world));
+			Runner._gameScreenManager.removeScreen(this);
 		}
+
 	}
 
 	public void paintComponent(Graphics g) {
-		// update all game objects
-		for (GameObject gameObject : gameObjects) {
-			gameObject.paintComponent(g);
-		}
+		// call the gameScreen paintComponent(g);
+		super.paintComponent(g);
 
 		// paint other stuff (temporary)
 		g.setColor(Color.green);
@@ -51,6 +52,7 @@ public class MainMenuScreen extends GameScreen {
 		g.setColor(Color.black);
 		g.drawString("Main Menu Screen", 482, 280);
 		g.drawString("Press 'Space' to play", 475, 300);
+		g.drawString("Press 'w' to go to the world select screen", 425, 350);
 		g.setColor(Color.darkGray);
 		g.drawString("Change Gravity", 370, 525);
 		g.drawString("Jump", 655, 468);

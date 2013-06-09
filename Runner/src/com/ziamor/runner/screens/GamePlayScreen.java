@@ -15,6 +15,8 @@ import com.ziamor.runner.gameObjects.Coin;
 
 public class GamePlayScreen extends GameScreen {
 
+	public int level;
+
 	public static Player player;
 	public static Wall wall;
 	public static int viewX;
@@ -22,9 +24,12 @@ public class GamePlayScreen extends GameScreen {
 	public static boolean playerDead;
 	private int playerDeadTimer;
 
-	public GamePlayScreen() {
+	public GamePlayScreen(int world, int level) {
 		this.setBlockRender(true);
 		this.setBlockUpdate(true);
+
+		this.world = world;
+		this.level = level;
 
 		// add the player
 		player = new Player();
@@ -56,30 +61,30 @@ public class GamePlayScreen extends GameScreen {
 				if ((j > 4) & (j < 15)) {
 					Coin tempCoin = new Coin();
 					tempCoin.setX((i * 20 + j) * 32 + 8);
-					tempCoin.setY(tempY + 4 - 48*6);
+					tempCoin.setY(tempY + 4 - 48 * 6);
 					this.addGameObject(tempCoin);
 					Coin tempCoin2 = new Coin();
 					tempCoin2.setX((i * 20 + j) * 32 + 8);
-					tempCoin2.setY(tempY + 28 - 48*6);
+					tempCoin2.setY(tempY + 28 - 48 * 6);
 					this.addGameObject(tempCoin2);
 				}
-				
+
 				// more coins
 				if ((j > 7) & (j < 12)) {
 					Coin tempCoin3 = new Coin();
 					tempCoin3.setX((i * 20 + j) * 32 + 8);
-					tempCoin3.setY(tempY + 4 - 48*4);
+					tempCoin3.setY(tempY + 4 - 48 * 4);
 					this.addGameObject(tempCoin3);
 					Coin tempCoin4 = new Coin();
 					tempCoin4.setX((i * 20 + j) * 32 + 8);
-					tempCoin4.setY(tempY + 28 - 48*4);
+					tempCoin4.setY(tempY + 28 - 48 * 4);
 					this.addGameObject(tempCoin4);
 					Coin tempCoin5 = new Coin();
 					tempCoin5.setX((i * 20 + j) * 32 + 8);
-					tempCoin5.setY(tempY + 4 - 48*3);
+					tempCoin5.setY(tempY + 4 - 48 * 3);
 					this.addGameObject(tempCoin5);
 				}
-				
+
 				// hazards
 				if ((j > 8) & (j < 11) && i > 2) {
 					Hazard tempHazard = new Hazard();
@@ -99,19 +104,15 @@ public class GamePlayScreen extends GameScreen {
 	}
 
 	public void update() {
-		// only update if blockUpdate is true
-		if (!getBlockUpdate()) {
+		// call the gameScreen update();
+		super.update();
+		if (!getBlockUpdate())
 			return;
-		}
-
-		// update all game objects
-		for (GameObject gameObject : gameObjects) {
-			gameObject.update();
-		}
 
 		// check to see if the user paused the game
 		if (Runner._input.isKeyHit(InputManager._keys.get("escape"))) {
-			Runner._gameScreenManager.addScreen(new GamePauseScreen());
+			Runner._gameScreenManager.addScreen(new GamePauseScreen(world,
+					level));
 			this.setBlockUpdate(false); // freeze game objects
 		}
 

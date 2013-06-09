@@ -6,7 +6,9 @@ import java.util.ArrayList;
 public class GameScreen {
 	private boolean blockRender;
 	private boolean blockUpdate;
+	private boolean remove;
 	protected ArrayList<GameObject> gameObjects;
+	public static int world;
 
 	public GameScreen() {
 		gameObjects = new ArrayList<GameObject>();
@@ -27,14 +29,18 @@ public class GameScreen {
 	public boolean getBlockUpdate() {
 		return this.blockUpdate;
 	}
-	
+
 	public void addGameObject(GameObject gobj) {
 		gobj.parent = this;
 		gameObjects.add(gobj);
 	}
-	
+
 	public void clearGameObjects() {
 		gameObjects.clear();
+	}
+
+	public void removeThisScreen() {
+		Runner._gameScreenManager.removeScreen(this);
 	}
 
 	public ArrayList<GameObject> getGameObjectsByID(String id) {
@@ -48,14 +54,36 @@ public class GameScreen {
 	}
 
 	public void update() {
+		
+		// stop the update if needed
+		if (!blockUpdate) {
+			return;
+		}
+		
+		// update all game objects
 		for (GameObject gameObject : gameObjects) {
 			gameObject.update();
+		}
+
+		// check if the screen should be removed
+		if (isRemove()) {
+			Runner._gameScreenManager.removeScreen(this);
 		}
 	}
 
 	public void paintComponent(Graphics g) {
+		
+		// paint all game objects
 		for (GameObject gameObject : gameObjects) {
 			gameObject.paintComponent(g);
 		}
+	}
+
+	public boolean isRemove() {
+		return remove;
+	}
+
+	public void setRemove(boolean remove) {
+		this.remove = remove;
 	}
 }

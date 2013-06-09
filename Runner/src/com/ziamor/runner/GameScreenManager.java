@@ -1,10 +1,7 @@
 package com.ziamor.runner;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Stack;
-
-import com.ziamor.runner.gameObjects.Wall;
 
 public class GameScreenManager {
 
