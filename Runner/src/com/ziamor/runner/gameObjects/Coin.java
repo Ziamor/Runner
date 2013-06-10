@@ -14,11 +14,10 @@ public class Coin extends GameObject {
 		this.objID = "coin";
 		width = 16;
 		height = 16;
-		isVisible = true;
-		isActive = true;
 	}
 
 	public void update() {
+		// make the coin fade away if the player picked it up
 		if (!isActive && isVisible) {
 			alpha -= 20;
 			y -= 2;

@@ -7,15 +7,13 @@ import com.ziamor.runner.GameObject;
 import com.ziamor.runner.GameScreen;
 import com.ziamor.runner.InputManager;
 import com.ziamor.runner.Runner;
-import com.ziamor.runner.gameObjects.Button;
+import com.ziamor.runner.gameObjects.BackButton;
 
 public class MainMenuScreen extends GameScreen {
 
 	public MainMenuScreen() {
 		this.setBlockRender(true);
 		this.setBlockUpdate(true);
-		if (world < 1)
-			world = 1;
 	}
 
 	public void update() {
@@ -25,12 +23,12 @@ public class MainMenuScreen extends GameScreen {
 			return;
 
 		if (Runner._input.isKeyPressed(InputManager._keys.get("space"))) {
-			Runner._gameScreenManager.addScreen(new GamePlayScreen(0, 0));
+			Runner._gameScreenManager.addScreen(new GamePlayScreen());
 			Runner._gameScreenManager.removeScreen(this);
 		}
 
 		if (Runner._input.isKeyPressed(InputManager._keys.get("w"))) {
-			Runner._gameScreenManager.addScreen(new WorldSelectScreen(world));
+			Runner._gameScreenManager.addScreen(new WorldSelectScreen());
 			Runner._gameScreenManager.removeScreen(this);
 		}
 

@@ -15,6 +15,13 @@ public class Runner extends JPanel {
 	public static int _width, _height;
 	public static GameScreenManager _gameScreenManager;
 	public static InputManager _input;
+	
+	public static int world;
+	public static int level;
+	public static int score;
+	public static int stars;
+	public static int[][] scoreHigh;
+	public static int[][] starsHigh;
 
 	public Runner() {
 		this.setFocusable(true);
@@ -22,15 +29,22 @@ public class Runner extends JPanel {
 		// Get the dimensions of the screen
 		this._width = 1024;
 		this._height = 608;
-		
 
 		// Set the game window
 		this.setPreferredSize(new Dimension(_width, _height));
 
+		// Initialize the input manager
 		this._input = new InputManager();
 		this.addKeyListener(_input);
 		this.addMouseListener(_input);
 
+		// Initialize game-wide variables
+		this.world = 1;
+		this.level = 1;
+		scoreHigh = new int[3][6];
+		starsHigh = new int[3][6];
+		
+		// Make the main menu screen
 		_gameScreenManager = new GameScreenManager();
 		_gameScreenManager.addScreen(new MainMenuScreen());
 

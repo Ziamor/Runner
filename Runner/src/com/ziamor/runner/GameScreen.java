@@ -8,7 +8,6 @@ public class GameScreen {
 	private boolean blockUpdate;
 	private boolean remove;
 	protected ArrayList<GameObject> gameObjects;
-	public static int world;
 
 	public GameScreen() {
 		gameObjects = new ArrayList<GameObject>();

@@ -12,8 +12,6 @@ public class Wall extends GameObject {
 		this.objID = "wall";
 		width = 32;
 		height = 48;
-		isVisible = true;
-		isActive = true;
 	}
 
 	public void update() {

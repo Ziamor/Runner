@@ -9,12 +9,12 @@ import com.ziamor.runner.InputManager;
 import com.ziamor.runner.Runner;
 import com.ziamor.runner.screens.*;
 
-public class Button extends GameObject {
+public class BackButton extends GameObject {
 
-	public String purpose;
+	public String destination;
 
-	public Button(String p) {
-		purpose = p;
+	public BackButton(String dest) {
+		destination = dest;
 		x = 10;
 		y = 10;
 		width = 50;
@@ -24,15 +24,13 @@ public class Button extends GameObject {
 	public void update() {
 		if (Runner._input.isMouseClicked(x, y, width, height)) {
 			System.out.println("Mouse clicked on the button");
-			if (purpose == "MainMenu")
+			if (destination == "MainMenu")
 				Runner._gameScreenManager.addScreen(new MainMenuScreen());
-			if (purpose == "WorldSelect")
-				Runner._gameScreenManager.addScreen(new WorldSelectScreen(
-						parent.world));
-			if (purpose == "LevelSelect") {
+			if (destination == "WorldSelect")
+				Runner._gameScreenManager.addScreen(new WorldSelectScreen());
+			if (destination == "LevelSelect") {
 				int size = GameScreenManager.getGameScreens().size();
-				Runner._gameScreenManager.addScreen(new LevelSelectScreen(
-						parent.world));
+				Runner._gameScreenManager.addScreen(new LevelSelectScreen());
 				// clear the GamePauseScreen and GamePlayScreen
 				for (int i = 0; i < size; i++) {
 					GameScreenManager.getGameScreens().remove(0);
@@ -47,7 +45,7 @@ public class Button extends GameObject {
 		g.setColor(Color.lightGray);
 		g.fillRect(x, y, width, height);
 		g.setColor(Color.black);
-		g.drawString("Back",21,40);
+		g.drawString("Back", 21, 40);
 	}
 
 }

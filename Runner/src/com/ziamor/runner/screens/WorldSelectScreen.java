@@ -7,21 +7,19 @@ import com.ziamor.runner.GameObject;
 import com.ziamor.runner.GameScreen;
 import com.ziamor.runner.InputManager;
 import com.ziamor.runner.Runner;
-import com.ziamor.runner.gameObjects.Button;
+import com.ziamor.runner.gameObjects.BackButton;
 import com.ziamor.runner.gameObjects.LevelSelectButton;
 import com.ziamor.runner.gameObjects.WorldSelectButton;
 import com.ziamor.runner.screens.*;
 
 public class WorldSelectScreen extends GameScreen {
 
-	public int worldCurrent;
 	public static int viewX = 0;
 
-	public WorldSelectScreen(int worldCurrent) {
+	public WorldSelectScreen() {
 		this.setBlockRender(true);
 		this.setBlockUpdate(true);
-		this.worldCurrent = worldCurrent;
-		viewX = (worldCurrent - 1) * 700;
+		viewX = (Runner.world - 1) * 700;
 
 		// make the world buttons
 		for (int i = 1; i < 4; i++) {
@@ -35,7 +33,7 @@ public class WorldSelectScreen extends GameScreen {
 		}
 
 		// make the back button
-		this.addGameObject(new Button("MainMenu"));
+		this.addGameObject(new BackButton("MainMenu"));
 	}
 
 	public void update() {
@@ -45,19 +43,19 @@ public class WorldSelectScreen extends GameScreen {
 			return;
 
 		if (Runner._input.isKeyHit(InputManager._keys.get("right"))) {
-			worldCurrent++;
+			Runner.world++;
 		}
 		if (Runner._input.isKeyHit(InputManager._keys.get("left"))) {
-			worldCurrent--;
+			Runner.world--;
 		}
 
 		// make sure worldCurrent isn't less than 1
-		if (worldCurrent < 1) {
-			worldCurrent = 1;
+		if (Runner.world < 1) {
+			Runner.world = 1;
 		}
 
 		// move the view smoothly
-		viewX += (int) (((worldCurrent - 1) * 700 - viewX) / 10);
+		viewX += (int) (((Runner.world - 1) * 700 - viewX) / 10);
 
 	}
 

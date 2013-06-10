@@ -6,8 +6,8 @@ public class GameObject {
 
 	protected String objID;
 	protected int x, y, width, height;
-	protected boolean isVisible;
-	protected boolean isActive;
+	protected boolean isVisible = true;
+	protected boolean isActive = true;
 	protected GameScreen parent;
 	
 	public GameObject()

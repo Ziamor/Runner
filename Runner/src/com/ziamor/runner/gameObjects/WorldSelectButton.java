@@ -21,7 +21,7 @@ public class WorldSelectButton extends GameObject {
 		if (Runner._input.isMouseClicked(x - WorldSelectScreen.viewX, y, width,
 				height)) {
 			// go to the LevelSelectScreen for the current world
-			Runner._gameScreenManager.addScreen(new LevelSelectScreen(world));
+			Runner._gameScreenManager.addScreen(new LevelSelectScreen());
 
 			// remove the WorldSelectScreen
 			parent.setRemove(true);

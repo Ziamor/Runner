@@ -8,20 +8,16 @@ import com.ziamor.runner.GameScreen;
 import com.ziamor.runner.GameScreenManager;
 import com.ziamor.runner.InputManager;
 import com.ziamor.runner.Runner;
-import com.ziamor.runner.gameObjects.Button;
+import com.ziamor.runner.gameObjects.BackButton;
 
 public class GamePauseScreen extends GameScreen {
 
-	public int level;
-
-	public GamePauseScreen(int world, int level) {
+	public GamePauseScreen() {
 		this.setBlockRender(true);
 		this.setBlockUpdate(true);
-		this.world = world;
-		this.level = level;
 
 		// make the back button
-		this.addGameObject(new Button("LevelSelect"));
+		this.addGameObject(new BackButton("LevelSelect"));
 	}
 
 	public void update() {

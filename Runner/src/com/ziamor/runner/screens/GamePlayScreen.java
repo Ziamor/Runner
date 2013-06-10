@@ -6,6 +6,7 @@ import java.awt.List;
 
 import com.ziamor.runner.GameObject;
 import com.ziamor.runner.GameScreen;
+import com.ziamor.runner.GameScreenManager;
 import com.ziamor.runner.InputManager;
 import com.ziamor.runner.Runner;
 import com.ziamor.runner.gameObjects.Hazard;
@@ -15,23 +16,27 @@ import com.ziamor.runner.gameObjects.Coin;
 
 public class GamePlayScreen extends GameScreen {
 
-	public int level;
-
 	public static Player player;
-	public static Wall wall;
 	public static int viewX;
 	public static int viewY;
 	public static boolean playerDead;
+	public static boolean levelComplete;
 	private int playerDeadTimer;
 
-	public GamePlayScreen(int world, int level) {
+	public GamePlayScreen() {
 		this.setBlockRender(true);
 		this.setBlockUpdate(true);
 
-		this.world = world;
-		this.level = level;
+		Runner.score = 0; // initialize score
+		Runner.stars = 0; // initialize stars
 
-		// add the player
+		// read the XML file and create all the objects in the level
+		// Use Runner.world and Runner.level to find the right file
+		//
+		//
+		// Do it Alex
+
+		// add the player (remove after XML level creation works)
 		player = new Player();
 		this.addGameObject(player);
 		playerDead = false;
@@ -41,7 +46,7 @@ public class GamePlayScreen extends GameScreen {
 		viewX = player.getX() - 200;
 		viewY = player.getY() - 300;
 
-		// create a bunch of walls for testing
+		// create a bunch of walls (remove after XML level creation works)
 		int tempY = 450;
 		for (int i = 0; i < 100; i++) {
 			for (int j = 2; j < 18; j++) {
@@ -111,8 +116,7 @@ public class GamePlayScreen extends GameScreen {
 
 		// check to see if the user paused the game
 		if (Runner._input.isKeyHit(InputManager._keys.get("escape"))) {
-			Runner._gameScreenManager.addScreen(new GamePauseScreen(world,
-					level));
+			Runner._gameScreenManager.addScreen(new GamePauseScreen());
 			this.setBlockUpdate(false); // freeze game objects
 		}
 
@@ -131,6 +135,24 @@ public class GamePlayScreen extends GameScreen {
 				Runner._gameScreenManager.addScreen(new MainMenuScreen());
 				Runner._gameScreenManager.removeScreen(this);
 			}
+		}
+
+		if (levelComplete) { // run once the player completes a level
+
+			// update the high score
+			if (Runner.score > Runner.scoreHigh[Runner.world][Runner.level])
+				Runner.scoreHigh[Runner.world][Runner.level] = Runner.score;
+
+			// update the high stars
+			if (Runner.stars > Runner.starsHigh[Runner.world][Runner.level])
+				Runner.starsHigh[Runner.world][Runner.level] = Runner.stars;
+
+			// eventually,
+			// we'll have some sort of
+			// completion splash screen
+
+			Runner._gameScreenManager.addScreen(new LevelSelectScreen());
+			Runner._gameScreenManager.removeScreen(this);
 		}
 
 	}

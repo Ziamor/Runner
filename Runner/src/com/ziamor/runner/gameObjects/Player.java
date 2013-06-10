@@ -24,8 +24,6 @@ public class Player extends GameObject {
 		y = 300;
 		width = 32;
 		height = 48;
-		isActive = true;
-		isVisible = true;
 	}
 
 	public void update() {
@@ -139,8 +137,7 @@ public class Player extends GameObject {
 			yspeedDouble += gravity * 3; // fast falling
 		else
 			yspeedDouble += gravity; // normal falling
-		// make yspeed an int
-		int yspeed = ((int) yspeedDouble);
+		int yspeed = ((int) yspeedDouble); // make yspeed an int
 
 		// move player
 		x += xspeed;
@@ -187,9 +184,8 @@ public class Player extends GameObject {
 		for (GameObject gameObject : this.parent.getGameObjectsByID("coin")) {
 			if (CollisionHandler.isColliding(this, gameObject)) {
 				if (gameObject.isActive() == true) {
-					// make the coin inactive and invisible
-					gameObject.setActive(false);
-					// gameObject.setVisible(false);
+					gameObject.setActive(false); // make the coin inactive
+					Runner.score += 100;
 				}
 
 			}
@@ -199,7 +195,7 @@ public class Player extends GameObject {
 		for (GameObject gameObject : this.parent.getGameObjectsByID("hazard")) {
 			if (CollisionHandler.isColliding(this, gameObject)) {
 				if (gameObject.isActive() == true) {
-					// kill the player
+					// kill the player and knock him back
 					GamePlayScreen.playerDead = true;
 					xspeed = -4;
 					yspeedDouble = -6;
@@ -230,8 +226,6 @@ public class Player extends GameObject {
 			g.fillRect(x - GamePlayScreen.viewX + 3, y - GamePlayScreen.viewY
 					+ 3, width - 6, 8);
 		}
-
-		// test
 
 	}
 
