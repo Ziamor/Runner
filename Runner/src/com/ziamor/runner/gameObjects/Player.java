@@ -185,9 +185,8 @@ public class Player extends GameObject {
 			if (CollisionHandler.isColliding(this, gameObject)) {
 				if (gameObject.isActive() == true) {
 					gameObject.setActive(false); // make the coin inactive
-					Runner.score += 100;
+					Runner.score += 1000;
 				}
-
 			}
 		}
 
@@ -201,7 +200,6 @@ public class Player extends GameObject {
 					yspeedDouble = -6;
 					break;
 				}
-
 			}
 		}
 	}

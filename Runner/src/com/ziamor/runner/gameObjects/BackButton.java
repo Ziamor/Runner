@@ -23,7 +23,6 @@ public class BackButton extends GameObject {
 
 	public void update() {
 		if (Runner._input.isMouseClicked(x, y, width, height)) {
-			System.out.println("Mouse clicked on the button");
 			if (destination == "MainMenu")
 				Runner._gameScreenManager.addScreen(new MainMenuScreen());
 			if (destination == "WorldSelect")

@@ -19,14 +19,16 @@ public class LevelSelectScreen extends GameScreen {
 		this.setBlockUpdate(true);
 
 		// make the level buttons
-		for (int i = 1; i < 7; i++) {
-			LevelSelectButton tempbutton = new LevelSelectButton();
-			tempbutton.setX(150 * i - 65);
-			tempbutton.setY(250);
-			tempbutton.setWidth(100);
-			tempbutton.setHeight(108);
-			tempbutton.level = i;
-			this.addGameObject(tempbutton);
+		for (int i = 1; i < 4; i++) {
+			for (int j = 0; j < 3; j++) {
+				LevelSelectButton tempbutton = new LevelSelectButton();
+				tempbutton.setX(205 * i - 135);
+				tempbutton.setY(139 * j + 110);
+				tempbutton.setWidth(170);
+				tempbutton.setHeight(110);
+				tempbutton.level = i + j * 3;
+				this.addGameObject(tempbutton);
+			}
 		}
 
 		// make the back button

@@ -43,8 +43,8 @@ public class GamePlayScreen extends GameScreen {
 		playerDeadTimer = 0;
 
 		// initialize view
-		viewX = player.getX() - 200;
-		viewY = player.getY() - 300;
+		viewX = player.getX() - 40;
+		viewY = player.getY() - 250;
 
 		// create a bunch of walls (remove after XML level creation works)
 		int tempY = 450;
@@ -122,8 +122,8 @@ public class GamePlayScreen extends GameScreen {
 
 		// move the view smoothly
 		if (!playerDead) {
-			viewX += (int) ((player.getX() - 150 - viewX) / 10);
-			viewY += (int) ((player.getY() - 300 - viewY) / 20);
+			viewX += (int) ((player.getX() - 40 - viewX) / 10);
+			viewY += (int) ((player.getY() - 250 - viewY) / 20);
 			// prevent the view from being too low
 			if (viewY > 240)
 				viewY = 240;
@@ -155,6 +155,18 @@ public class GamePlayScreen extends GameScreen {
 			Runner._gameScreenManager.removeScreen(this);
 		}
 
+	}
+	
+	public void paintComponent(Graphics g) {
+		// call the gameScreen paintComponent(g);
+		super.paintComponent(g);
+		
+		g.setColor(Color.gray);
+		g.fillRect(0, 560, 720, 48);
+		g.setColor(Color.black);
+		g.drawString("Score: " + Runner.score, 20, 590);
+		
+		
 	}
 
 }

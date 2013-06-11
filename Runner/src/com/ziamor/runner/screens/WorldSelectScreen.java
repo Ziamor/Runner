@@ -24,10 +24,10 @@ public class WorldSelectScreen extends GameScreen {
 		// make the world buttons
 		for (int i = 1; i < 4; i++) {
 			WorldSelectButton tempbutton = new WorldSelectButton();
-			tempbutton.setX(200 + 700 * (i - 1));
-			tempbutton.setY(100);
-			tempbutton.setWidth(624);
-			tempbutton.setHeight(408);
+			tempbutton.setX(90 + 700 * (i - 1));
+			tempbutton.setY(130);
+			tempbutton.setWidth(540);
+			tempbutton.setHeight(348);
 			tempbutton.world = i;
 			this.addGameObject(tempbutton);
 		}

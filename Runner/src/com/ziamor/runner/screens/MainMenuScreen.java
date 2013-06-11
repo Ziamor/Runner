@@ -40,23 +40,23 @@ public class MainMenuScreen extends GameScreen {
 
 		// paint other stuff (temporary)
 		g.setColor(Color.green);
-		g.fillRect(0, 260, 1024, 56);
+		g.fillRect(0, 260, 720, 56);
 		g.setColor(Color.lightGray);
-		g.fillRect(250, 500, 300, 40);
-		g.fillRect(600, 500, 40, 40);
-		g.fillRect(650, 500, 40, 40);
-		g.fillRect(700, 500, 40, 40);
-		g.fillRect(650, 450, 40, 40);
+		g.fillRect(100, 500, 300, 40);
+		g.fillRect(450, 500, 40, 40);
+		g.fillRect(500, 500, 40, 40);
+		g.fillRect(550, 500, 40, 40);
+		g.fillRect(500, 450, 40, 40);
 		g.setColor(Color.black);
-		g.drawString("Main Menu Screen", 482, 280);
-		g.drawString("Press 'Space' to play", 475, 300);
-		g.drawString("Press 'w' to go to the world select screen", 425, 350);
+		g.drawString("Main Menu Screen", 325, 280);
+		g.drawString("Press 'Space' to play", 317, 300);
+		g.drawString("Press 'w' to go to the world select screen", 263, 350);
 		g.setColor(Color.darkGray);
-		g.drawString("Change Gravity", 370, 525);
-		g.drawString("Jump", 655, 468);
-		g.drawString("Up", 662, 482);
-		g.drawString("Jump", 655, 518);
-		g.drawString("Down", 654, 532);
-		g.drawString("Dash", 705, 525);
+		g.drawString("Change Gravity", 220, 525);
+		g.drawString("Jump", 505, 468);
+		g.drawString("Up", 512, 482);
+		g.drawString("Jump", 505, 518);
+		g.drawString("Down", 504, 532);
+		g.drawString("Dash", 555, 525);
 	}
 }
