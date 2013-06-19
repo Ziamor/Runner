@@ -2,12 +2,15 @@ package com.ziamor.runner;
 
 import java.awt.Graphics;
 
+import com.ziamor.runner.screens.GamePlayScreen;
+
 public class GameObject {
 
 	protected String objID;
-	protected int x, y, width, height;
+	protected int x, y, width, height, xOffset, yOffset;
 	protected boolean isVisible = true;
 	protected boolean isActive = true;
+	protected boolean offScreen = false;
 	protected GameScreen parent;
 	
 	public GameObject()
@@ -76,6 +79,11 @@ public class GameObject {
 	}
 
 	public void paintComponent(Graphics g) {
+		// don't draw objects that aren't on the screen
+		if (x > GamePlayScreen.viewX+800)
+			offScreen = true;
+		else
+			offScreen = false;
 	}
 	
 

@@ -19,9 +19,9 @@ public class Hazard extends GameObject{
 	}
 
 	public void paintComponent(Graphics g) {
-		if (!isVisible) {
+		super.paintComponent(g);
+		if (!isVisible || offScreen)
 			return;
-		}
 		
 		g.setColor(Color.black);
 		for (int i = 0; i < 4; i++) {

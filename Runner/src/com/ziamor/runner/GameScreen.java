@@ -3,12 +3,14 @@ package com.ziamor.runner;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
+import com.ziamor.runner.gameObjects.Fireball;
+
 public class GameScreen {
 	private boolean blockRender;
 	private boolean blockUpdate;
 	private boolean remove;
 	protected ArrayList<GameObject> gameObjects;
-
+	
 	public GameScreen() {
 		gameObjects = new ArrayList<GameObject>();
 	}
@@ -60,7 +62,8 @@ public class GameScreen {
 		}
 		
 		// update all game objects
-		for (GameObject gameObject : gameObjects) {
+		ArrayList<GameObject> gameObjectsToUpdate = gameObjects;
+		for (GameObject gameObject : gameObjectsToUpdate) {
 			gameObject.update();
 		}
 
@@ -68,6 +71,9 @@ public class GameScreen {
 		if (isRemove()) {
 			Runner._gameScreenManager.removeScreen(this);
 		}
+		
+
+		
 	}
 
 	public void paintComponent(Graphics g) {
@@ -85,4 +91,5 @@ public class GameScreen {
 	public void setRemove(boolean remove) {
 		this.remove = remove;
 	}
+
 }

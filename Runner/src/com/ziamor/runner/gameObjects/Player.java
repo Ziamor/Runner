@@ -205,9 +205,9 @@ public class Player extends GameObject {
 	}
 
 	public void paintComponent(Graphics g) {
-		if (!isVisible) {
-			return; // don't paint if invisible
-		}
+		super.paintComponent(g);
+		if (!isVisible || offScreen)
+			return;
 
 		g.setColor(Color.blue);
 		if (GamePlayScreen.playerDead) {

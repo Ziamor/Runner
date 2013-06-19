@@ -9,6 +9,8 @@ import com.ziamor.runner.GameScreen;
 import com.ziamor.runner.GameScreenManager;
 import com.ziamor.runner.InputManager;
 import com.ziamor.runner.Runner;
+import com.ziamor.runner.gameObjects.Cannon;
+import com.ziamor.runner.gameObjects.Fireball;
 import com.ziamor.runner.gameObjects.Hazard;
 import com.ziamor.runner.gameObjects.Player;
 import com.ziamor.runner.gameObjects.Wall;
@@ -36,6 +38,8 @@ public class GamePlayScreen extends GameScreen {
 		//
 		// Do it Alex
 
+		addGameObject(new Fireball(600, 600, -6));
+		
 		// add the player (remove after XML level creation works)
 		player = new Player();
 		this.addGameObject(player);
@@ -48,7 +52,7 @@ public class GamePlayScreen extends GameScreen {
 
 		// create a bunch of walls (remove after XML level creation works)
 		int tempY = 450;
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 10; i++) {
 			for (int j = 2; j < 18; j++) {
 				// bottom wall
 				Wall tempWall1 = new Wall();
@@ -91,12 +95,13 @@ public class GamePlayScreen extends GameScreen {
 				}
 
 				// hazards
-				if ((j > 8) & (j < 11) && i > 2) {
-					Hazard tempHazard = new Hazard();
-					tempHazard.setX((i * 20 + j) * 32);
-					tempHazard.setY(tempY - 16);
-					this.addGameObject(tempHazard);
+				if (j == 10) {
+					Cannon tempCannon = new Cannon();
+					tempCannon.setX((i * 20 + j) * 32);
+					tempCannon.setY(tempY - 16);
+					this.addGameObject(tempCannon);
 				}
+			
 			}
 			tempY = (int) (tempY + Math.random() * 200 - 100);
 			tempY = Math.round(tempY / 48) * 48;

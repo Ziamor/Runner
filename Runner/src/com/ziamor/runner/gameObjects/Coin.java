@@ -29,9 +29,10 @@ public class Coin extends GameObject {
 	}
 
 	public void paintComponent(Graphics g) {
-		if (!isVisible) {
+		super.paintComponent(g);
+		if (!isVisible || offScreen)
 			return;
-		}
+		
 		Color c = new Color(230, 230, 0, alpha);
 		g.setColor(c);
 		g.fillRect(x - GamePlayScreen.viewX + 1, y - GamePlayScreen.viewY + 1,

@@ -6,15 +6,26 @@ import java.awt.Graphics;
 import com.ziamor.runner.GameObject;
 import com.ziamor.runner.screens.GamePlayScreen;
 
-public class Wall extends GameObject {
+public class Cannon extends GameObject {
 
-	public Wall() {
-		this.objID = "wall";
+	private int shotTimer;
+
+	public Cannon() {
+		this.objID = "cannon";
 		width = 32;
-		height = 48;
+		height = 24;
+		
+		
 	}
 
 	public void update() {
+
+		shotTimer++;
+
+		if (shotTimer > 60 && !offScreen) {
+			((GamePlayScreen) parent).addGameObject(new Fireball(x, y, -6));
+		}
+
 	}
 
 	public void paintComponent(Graphics g) {
@@ -25,9 +36,6 @@ public class Wall extends GameObject {
 		g.setColor(Color.black);
 		g.fillRect(x - GamePlayScreen.viewX, y - GamePlayScreen.viewY, width,
 				height);
-		g.setColor(Color.gray);
-		g.fillRect(x + 4 - GamePlayScreen.viewX, y + 4 - GamePlayScreen.viewY,
-				width - 8, height - 8);
 
 	}
 
