@@ -10,9 +10,11 @@ public class GameScreen {
 	private boolean blockUpdate;
 	private boolean remove;
 	protected ArrayList<GameObject> gameObjects;
-	
+	protected ArrayList<GameObject> objectsToAdd;
+
 	public GameScreen() {
 		gameObjects = new ArrayList<GameObject>();
+		objectsToAdd = new ArrayList<GameObject>();
 	}
 
 	public void setBlockRender(boolean value) {
@@ -33,7 +35,7 @@ public class GameScreen {
 
 	public void addGameObject(GameObject gobj) {
 		gobj.parent = this;
-		gameObjects.add(gobj);
+		objectsToAdd.add(gobj);
 	}
 
 	public void clearGameObjects() {
@@ -55,12 +57,16 @@ public class GameScreen {
 	}
 
 	public void update() {
-		
+		// add to main list from objectsToAdd
+		if (!objectsToAdd.isEmpty())
+			gameObjects.addAll(objectsToAdd);
+		objectsToAdd = new ArrayList<GameObject>();
+
 		// stop the update if needed
 		if (!blockUpdate) {
 			return;
 		}
-		
+
 		// update all game objects
 		ArrayList<GameObject> gameObjectsToUpdate = gameObjects;
 		for (GameObject gameObject : gameObjectsToUpdate) {
@@ -71,13 +77,11 @@ public class GameScreen {
 		if (isRemove()) {
 			Runner._gameScreenManager.removeScreen(this);
 		}
-		
 
-		
 	}
 
 	public void paintComponent(Graphics g) {
-		
+
 		// paint all game objects
 		for (GameObject gameObject : gameObjects) {
 			gameObject.paintComponent(g);

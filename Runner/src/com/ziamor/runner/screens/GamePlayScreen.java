@@ -109,7 +109,7 @@ public class GamePlayScreen extends GameScreen {
 				}
 
 				// hazards
-				if (j == 10 && false) {
+				if (j == 10) {
 					Cannon tempCannon = new Cannon();
 					tempCannon.setX((i * 20 + j) * 32);
 					tempCannon.setY(tempY - 16);
