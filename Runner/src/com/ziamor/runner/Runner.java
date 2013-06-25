@@ -41,8 +41,8 @@ public class Runner extends JPanel {
 		// Initialize game-wide variables
 		this.world = 1;
 		this.level = 1;
-		scoreHigh = new int[3][6];
-		starsHigh = new int[3][6];
+		scoreHigh = new int[4][10]; // size is 1 bigger than # of worlds and levels
+		starsHigh = new int[4][10]; // [0][0] remains empty
 		
 		// Make the main menu screen
 		_gameScreenManager = new GameScreenManager();

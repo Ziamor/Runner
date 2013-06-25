@@ -35,6 +35,7 @@ public class LevelSelectButton extends GameObject {
 		g.fillRect(x, y, width, height);
 		g.setColor(Color.black);
 		g.drawString("" + Runner.world + " - " + level, x + width/2 - 10 , y + height/2);
+		g.drawString("" + Runner.scoreHigh[Runner.world][this.level],  x + width/2, y + 100);
 	}
 
 }

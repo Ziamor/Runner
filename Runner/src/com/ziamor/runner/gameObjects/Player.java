@@ -12,18 +12,26 @@ import com.ziamor.runner.screens.*;
 
 public class Player extends GameObject {
 
-	private double yspeedDouble = 0;
-	private int xspeed = 5;
-	private boolean gravitySwitch = false;
-	private int dashTimer = 0;
-	private boolean gravitySwitchAble = true;
+	private double yspeedDouble;
+	private int xspeed;
+	private boolean gravitySwitch;
+	private int dashTimer;
+	private boolean gravitySwitchAble;
+	public int yStart;
 
 	public Player() {
 		this.objID = "player";
-		x = 80;
-		y = 300;
+		x = 32 * 4;
+		y = 1000;
 		width = 32;
 		height = 48;
+
+		yspeedDouble = 0;
+		xspeed = 0;
+
+		gravitySwitch = false;
+		dashTimer = 0;
+		gravitySwitchAble = true;
 	}
 
 	public void update() {
@@ -31,10 +39,55 @@ public class Player extends GameObject {
 		if (!isActive)
 			return;
 
+		// if the player hasn't started the level yet
+		if (GamePlayScreen.preLevel) {
+			if (y > yStart+200) {
+				yspeedDouble -= 0.5;
+				if (yspeedDouble < -15)
+					yspeedDouble = -15;
+			} else
+				yspeedDouble += 0.5;
+			
+			if (y > yStart && yspeedDouble > 0) {
+				y = yStart;
+				GamePlayScreen.preLevel = false;
+			}
+			
+			if (GamePlayScreen.preLevel) {
+				y += yspeedDouble;
+				return;
+			}
+		}
+
 		// if player is dead
 		if (GamePlayScreen.playerDead) {
 			yspeedDouble += 0.5; // apply gravity
 			int yspeed = ((int) yspeedDouble); // make yspeed an int
+			x += xspeed; // update x
+			y += yspeed; // update y
+			return; // don't complete the rest of the update()
+		}
+
+		// check if the player has entered the end portal
+		if (x > GamePlayScreen.endPortal.getX() + 32
+				&& !GamePlayScreen.levelComplete) {
+			GamePlayScreen.levelComplete = true;
+			yspeedDouble *= 0.5;
+			gravitySwitch = false;
+		}
+
+		// if player is in a portal at the end of the level
+		if (GamePlayScreen.levelComplete) {
+			if (yspeedDouble > 0) // apply gravity
+				yspeedDouble = (yspeedDouble - 1) * 0.8;
+			else
+				yspeedDouble -= 0.2;
+			int yspeed = ((int) yspeedDouble); // make yspeed an int
+			if (x > GamePlayScreen.endPortal.getX() + 32)
+				xspeed += -1;
+			else
+				xspeed += 1;
+			xspeed = (int) Math.round(xspeed * 0.9);
 			x += xspeed; // update x
 			y += yspeed; // update y
 			return; // don't complete the rest of the update()
@@ -202,6 +255,7 @@ public class Player extends GameObject {
 				}
 			}
 		}
+
 	}
 
 	public void paintComponent(Graphics g) {

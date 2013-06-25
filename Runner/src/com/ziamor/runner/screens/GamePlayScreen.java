@@ -13,21 +13,30 @@ import com.ziamor.runner.gameObjects.Cannon;
 import com.ziamor.runner.gameObjects.Fireball;
 import com.ziamor.runner.gameObjects.Hazard;
 import com.ziamor.runner.gameObjects.Player;
+import com.ziamor.runner.gameObjects.Portal;
 import com.ziamor.runner.gameObjects.Wall;
 import com.ziamor.runner.gameObjects.Coin;
 
 public class GamePlayScreen extends GameScreen {
 
 	public static Player player;
+	public static Portal endPortal;
+	public static Portal startPortal;
 	public static int viewX;
 	public static int viewY;
 	public static boolean playerDead;
+	public static boolean preLevel;
 	public static boolean levelComplete;
-	private int playerDeadTimer;
+	private static boolean levelCompleteSplash;
+	private int playerDeadTimer = 0;
 
 	public GamePlayScreen() {
 		this.setBlockRender(true);
 		this.setBlockUpdate(true);
+		levelComplete = false;
+		levelCompleteSplash = false;
+		playerDead = false;
+		preLevel = true;
 
 		Runner.score = 0; // initialize score
 		Runner.stars = 0; // initialize stars
@@ -38,17 +47,22 @@ public class GamePlayScreen extends GameScreen {
 		//
 		// Do it Alex
 
-		addGameObject(new Fireball(600, 600, -6));
-		
+		// addGameObject(new Fireball(600, 600, -6));
+
+		// create the portals
+		endPortal = new Portal(32 * 50);
+		this.addGameObject(endPortal);
+		startPortal = new Portal(32 * 3);
+		this.addGameObject(startPortal);
+
 		// add the player (remove after XML level creation works)
 		player = new Player();
+		player.yStart = 402;
 		this.addGameObject(player);
-		playerDead = false;
-		playerDeadTimer = 0;
 
 		// initialize view
 		viewX = player.getX() - 40;
-		viewY = player.getY() - 250;
+		viewY = player.yStart - 250;
 
 		// create a bunch of walls (remove after XML level creation works)
 		int tempY = 450;
@@ -95,13 +109,13 @@ public class GamePlayScreen extends GameScreen {
 				}
 
 				// hazards
-				if (j == 10) {
+				if (j == 10 && false) {
 					Cannon tempCannon = new Cannon();
 					tempCannon.setX((i * 20 + j) * 32);
 					tempCannon.setY(tempY - 16);
 					this.addGameObject(tempCannon);
 				}
-			
+
 			}
 			tempY = (int) (tempY + Math.random() * 200 - 100);
 			tempY = Math.round(tempY / 48) * 48;
@@ -126,13 +140,18 @@ public class GamePlayScreen extends GameScreen {
 		}
 
 		// move the view smoothly
-		if (!playerDead) {
+		if (!playerDead && !preLevel) {
 			viewX += (int) ((player.getX() - 40 - viewX) / 10);
-			viewY += (int) ((player.getY() - 250 - viewY) / 20);
+
+			if (!levelComplete) // if the player isn't in a portal
+				viewY += (int) ((player.getY() - 250 - viewY) / 20);
+
 			// prevent the view from being too low
 			if (viewY > 240)
 				viewY = 240;
-		} else {
+		}
+		
+		if (playerDead) {
 			playerDeadTimer++;
 			if (playerDeadTimer == 100) { // shortly after the player dies
 				// go back to the main menu screen
@@ -142,7 +161,12 @@ public class GamePlayScreen extends GameScreen {
 			}
 		}
 
-		if (levelComplete) { // run once the player completes a level
+		if (levelComplete && player.getY() < -500) {
+			levelCompleteSplash = true;
+		}
+
+		// if the player has completed a level
+		if (levelCompleteSplash) {
 
 			// update the high score
 			if (Runner.score > Runner.scoreHigh[Runner.world][Runner.level])
@@ -161,17 +185,16 @@ public class GamePlayScreen extends GameScreen {
 		}
 
 	}
-	
+
 	public void paintComponent(Graphics g) {
 		// call the gameScreen paintComponent(g);
 		super.paintComponent(g);
-		
+
 		g.setColor(Color.gray);
 		g.fillRect(0, 560, 720, 48);
 		g.setColor(Color.black);
 		g.drawString("Score: " + Runner.score, 20, 590);
-		
-		
+
 	}
 
 }
