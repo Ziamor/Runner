@@ -61,7 +61,7 @@ public class GamePlayScreen extends GameScreen {
 		this.addGameObject(player);
 
 		// initialize view
-		viewX = player.getX() - 40;
+		viewX = startPortal.getX() - 32;
 		viewY = player.yStart - 250;
 
 		// create a bunch of walls (remove after XML level creation works)
@@ -141,16 +141,20 @@ public class GamePlayScreen extends GameScreen {
 
 		// move the view smoothly
 		if (!playerDead && !preLevel) {
-			viewX += (int) ((player.getX() - 40 - viewX) / 10);
-
-			if (!levelComplete) // if the player isn't in a portal
+			// the view won't go the end portal
+			int viewXDest = player.getX();
+			if (player.getX() > endPortal.getX() - 542)
+				viewXDest = endPortal.getX() - 542;
+			viewX += (int) ((viewXDest - 40 - viewX) / 10);
+			
+			// only change view Y if the player isn't in a portal
+			if (!levelComplete)
 				viewY += (int) ((player.getY() - 250 - viewY) / 20);
-
 			// prevent the view from being too low
 			if (viewY > 240)
 				viewY = 240;
 		}
-		
+
 		if (playerDead) {
 			playerDeadTimer++;
 			if (playerDeadTimer == 100) { // shortly after the player dies
@@ -161,7 +165,7 @@ public class GamePlayScreen extends GameScreen {
 			}
 		}
 
-		if (levelComplete && player.getY() < -500) {
+		if (levelComplete && player.getY() < viewY-48) {
 			levelCompleteSplash = true;
 		}
 

@@ -22,8 +22,9 @@ public class Cannon extends GameObject {
 
 		shotTimer++;
 
-		if (shotTimer > 60 && !offScreen) {
+		if (shotTimer > 80 && !offScreen) {
 			((GamePlayScreen) parent).addGameObject(new Fireball(x, y, -6));
+			shotTimer = 0;
 		}
 
 	}

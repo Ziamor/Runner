@@ -7,7 +7,12 @@ import com.ziamor.runner.screens.GamePlayScreen;
 public class GameObject {
 
 	protected String objID;
-	protected int x, y, width, height, xOffset, yOffset;
+	protected int x;
+	protected int y;
+	protected int width;
+	protected int height;
+	protected int xOffset;
+	protected int yOffset;
 	protected boolean isVisible = true;
 	protected boolean isActive = true;
 	protected boolean offScreen = false;
