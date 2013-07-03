@@ -16,6 +16,7 @@ import com.ziamor.runner.gameObjects.Player;
 import com.ziamor.runner.gameObjects.Portal;
 import com.ziamor.runner.gameObjects.Wall;
 import com.ziamor.runner.gameObjects.Coin;
+import com.ziamor.runner.gameObjects.levels.Level;
 
 public class GamePlayScreen extends GameScreen {
 
@@ -47,8 +48,10 @@ public class GamePlayScreen extends GameScreen {
 		//
 		// Do it Alex
 
-		// addGameObject(new Fireball(600, 600, -6));
-
+		// addGameObject(new Fireball(600, 600, -6));		
+		
+		this.addGameObject(Level.loadLevel("res\\maps\\01-01"));
+		/*
 		// create the portals
 		endPortal = new Portal(32 * 50);
 		this.addGameObject(endPortal);
@@ -63,7 +66,7 @@ public class GamePlayScreen extends GameScreen {
 		// initialize view
 		viewX = startPortal.getX() - 32;
 		viewY = player.yStart - 250;
-
+		
 		// create a bunch of walls (remove after XML level creation works)
 		int tempY = 450;
 		for (int i = 0; i < 10; i++) {
@@ -123,7 +126,7 @@ public class GamePlayScreen extends GameScreen {
 				tempY = 96;
 			if (tempY > 48 * 13)
 				tempY = 48 * 13;
-		}
+		}*/
 
 	}
 
@@ -146,7 +149,7 @@ public class GamePlayScreen extends GameScreen {
 			if (player.getX() > endPortal.getX() - 542)
 				viewXDest = endPortal.getX() - 542;
 			viewX += (int) ((viewXDest - 40 - viewX) / 10);
-			
+
 			// only change view Y if the player isn't in a portal
 			if (!levelComplete)
 				viewY += (int) ((player.getY() - 250 - viewY) / 20);
@@ -165,7 +168,7 @@ public class GamePlayScreen extends GameScreen {
 			}
 		}
 
-		if (levelComplete && player.getY() < viewY-48) {
+		if (levelComplete && player.getY() < viewY - 48) {
 			levelCompleteSplash = true;
 		}
 

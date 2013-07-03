@@ -38,6 +38,13 @@ public class GameScreen {
 		objectsToAdd.add(gobj);
 	}
 
+	public void addGameObject(ArrayList<GameObject> gobjList) {
+		for (GameObject gobj : gobjList) {
+			gobj.parent = this;
+			objectsToAdd.add(gobj);
+		}
+	}
+
 	public void clearGameObjects() {
 		gameObjects.clear();
 	}

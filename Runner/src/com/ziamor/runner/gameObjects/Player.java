@@ -32,6 +32,7 @@ public class Player extends GameObject {
 		gravitySwitch = false;
 		dashTimer = 0;
 		gravitySwitchAble = true;
+
 	}
 
 	public void update() {
@@ -41,18 +42,18 @@ public class Player extends GameObject {
 
 		// if the player hasn't started the level yet
 		if (GamePlayScreen.preLevel) {
-			if (y > yStart+200) {
+			if (y > yStart + 200) {
 				yspeedDouble -= 0.5;
 				if (yspeedDouble < -15)
 					yspeedDouble = -15;
 			} else
 				yspeedDouble += 0.5;
-			
+
 			if (y > yStart && yspeedDouble > 0) {
 				y = yStart;
 				GamePlayScreen.preLevel = false;
 			}
-			
+
 			if (GamePlayScreen.preLevel) {
 				y += yspeedDouble;
 				return;
