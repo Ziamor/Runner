@@ -12,17 +12,17 @@ import com.ziamor.runner.screens.*;
 
 public class Player extends GameObject {
 
+	public static int x;
+	public static int y;
 	private double yspeedDouble;
 	private int xspeed;
 	private boolean gravitySwitch;
 	private int dashTimer;
 	private boolean gravitySwitchAble;
-	public int yStart;
+	public static int yStart;
 
 	public Player() {
 		this.objID = "player";
-		x = 32 * 4;
-		y = 1000;
 		width = 32;
 		height = 48;
 
@@ -42,7 +42,7 @@ public class Player extends GameObject {
 
 		// if the player hasn't started the level yet
 		if (GamePlayScreen.preLevel) {
-			if (y > yStart + 200) {
+			if (y > yStart + 100) {
 				yspeedDouble -= 0.5;
 				if (yspeedDouble < -15)
 					yspeedDouble = -15;
@@ -70,7 +70,7 @@ public class Player extends GameObject {
 		}
 
 		// check if the player has entered the end portal
-		if (x > GamePlayScreen.endPortal.getX() + 32
+		if (x > GamePlayScreen.endPortalX + 32
 				&& !GamePlayScreen.levelComplete) {
 			GamePlayScreen.levelComplete = true;
 			yspeedDouble *= 0.5;
@@ -84,7 +84,7 @@ public class Player extends GameObject {
 			else
 				yspeedDouble -= 0.2;
 			int yspeed = ((int) yspeedDouble); // make yspeed an int
-			if (x > GamePlayScreen.endPortal.getX() + 32)
+			if (x > GamePlayScreen.endPortalX + 32)
 				xspeed += -1;
 			else
 				xspeed += 1;
@@ -280,6 +280,8 @@ public class Player extends GameObject {
 					+ 3, width - 6, 8);
 		}
 
+		g.drawString("" + this.parent, 30, 30);
+		
 	}
 
 }

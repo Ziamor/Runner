@@ -27,9 +27,8 @@ public class Missile extends GameObject {
 
 	public void update() {
 		// home in on the player
-		double directionToPlayer = getDirection(x, y,
-				GamePlayScreen.player.getX() + 8,
-				GamePlayScreen.player.getY() + 16);
+		double directionToPlayer = getDirection(x, y, Player.x + 8,
+				Player.y + 16);
 		// System.out.println(directionToPlayer);
 		double diff = directionToPlayer - direction;
 		if (diff > Math.PI)

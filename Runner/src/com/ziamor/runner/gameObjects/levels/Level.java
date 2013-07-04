@@ -13,10 +13,11 @@ import com.ziamor.runner.gameObjects.Cannon;
 import com.ziamor.runner.gameObjects.Player;
 import com.ziamor.runner.gameObjects.Portal;
 import com.ziamor.runner.gameObjects.Wall;
+import com.ziamor.runner.screens.GamePlayScreen;
 
 public class Level {
-	private static final int _tileWidth = 32;// Temp width for the game;
-	private static final int _tileHeight = 48;// Temp height for the game;
+	private static final int _tileWidth = 32; // Temp width for the game;
+	private static final int _tileHeight = 48; // Temp height for the game;
 
 	public static ArrayList<GameObject> loadLevel(String fileName) {
 		ArrayList<GameObject> level = new ArrayList<GameObject>();
@@ -31,20 +32,22 @@ public class Level {
 				else if (c == '1') {
 					Wall wall = new Wall();
 					wall.setX(x * _tileWidth);
-					wall.setY(y * _tileWidth);
+					wall.setY(y * _tileHeight);
 					level.add(wall);
 					x++;
 				} else if (c == '2') {
-					Portal startPort = new Portal(x * _tileWidth);
+					Portal startPort = new Portal(x * _tileWidth -32);
 					level.add(startPort);
 					Player player = new Player();
-					player.setX(x * _tileWidth);
+					Player.x = x * _tileWidth;
+					Player.y = y * _tileHeight + 400;
 					player.yStart = y * _tileHeight;
 					level.add(player);
 					x++;
 				} else if (c == '3') {
 					Portal endPort = new Portal(x * _tileWidth);
 					level.add(endPort);
+					GamePlayScreen.endPortalX = x * _tileWidth;
 					x++;
 				} else if (c == '4') {
 					Cannon cannon = new Cannon();
