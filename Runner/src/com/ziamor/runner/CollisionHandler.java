@@ -3,12 +3,14 @@ package com.ziamor.runner;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
+import com.ziamor.runner.gameObjects.Player;
+
 public class CollisionHandler {
 
 	public static boolean isColliding(GameObject gobj1, GameObject gobj2) {
-		Rectangle rect1 = new Rectangle(gobj1.x + gobj1.xOffset, gobj1.y
+		Rectangle rect1 = new Rectangle(gobj1.getX() + gobj1.xOffset, gobj1.getY()
 				+ gobj1.yOffset, gobj1.width, gobj1.height);
-		Rectangle rect2 = new Rectangle(gobj2.x + gobj2.xOffset, gobj2.y
+		Rectangle rect2 = new Rectangle(gobj2.getX() + gobj2.xOffset, gobj2.getY()
 				+ gobj2.yOffset, gobj2.width, gobj2.height);
 		// check for collision
 		if (rect1.intersects(rect2))
@@ -23,4 +25,5 @@ public class CollisionHandler {
 				return true;
 		return false;
 	}
+	
 }

@@ -70,8 +70,7 @@ public class Player extends GameObject {
 		}
 
 		// check if the player has entered the end portal
-		if (x > GamePlayScreen.endPortalX + 32
-				&& !GamePlayScreen.levelComplete) {
+		if (x > GamePlayScreen.endPortalX + 32 && !GamePlayScreen.levelComplete) {
 			GamePlayScreen.levelComplete = true;
 			yspeedDouble *= 0.5;
 			gravitySwitch = false;
@@ -201,7 +200,7 @@ public class Player extends GameObject {
 		boolean collision = true;
 		int yCount = 0;
 		while (collision == true) {
-
+			
 			collision = false;
 			// loop through every wall to check for collisions
 			for (GameObject gameObject : this.parent.getGameObjectsByID("wall")) {
@@ -226,7 +225,7 @@ public class Player extends GameObject {
 				}
 			}
 		}
-
+		
 		// kill the player if he is too low or too high
 		if (y > 608 + 200 || y < -600) {
 			GamePlayScreen.playerDead = true;
@@ -280,8 +279,14 @@ public class Player extends GameObject {
 					+ 3, width - 6, 8);
 		}
 
-		g.drawString("" + this.parent, 30, 30);
-		
+	}
+	
+	public int getX(){ // need this because x is static
+		return x;
+	}
+	
+	public int getY(){ // need this because y is static
+		return y;
 	}
 
 }

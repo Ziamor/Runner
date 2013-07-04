@@ -40,94 +40,53 @@ public class GamePlayScreen extends GameScreen {
 		Runner.score = 0; // initialize score
 		Runner.stars = 0; // initialize stars
 
-		// read the XML file and create all the objects in the level
-		// Use Runner.world and Runner.level to find the right file
-		//
-		//
-		// Do it Alex
+		this.addGameObject(Level.loadLevel());
 
-		// addGameObject(new Fireball(600, 600, -6));		
-		
-		this.addGameObject(Level.loadLevel("res\\maps\\01-01"));
-		
 		// initialize view
 		viewX = Player.x - 64;
 		viewY = Player.yStart - 250;
-				
+
 		/*
-		// create the portals
-		endPortal = new Portal(32 * 50);
-		this.addGameObject(endPortal);
-		startPortal = new Portal(32 * 3);
-		this.addGameObject(startPortal);
-
-		// add the player (remove after XML level creation works)
-		player = new Player();
-		player.yStart = 402;
-		this.addGameObject(player);
-
-		
-		
-		// create a bunch of walls (remove after XML level creation works)
-		int tempY = 450;
-		for (int i = 0; i < 10; i++) {
-			for (int j = 2; j < 18; j++) {
-				// bottom wall
-				Wall tempWall1 = new Wall();
-				tempWall1.setX((i * 20 + j) * 32);
-				tempWall1.setY(tempY);
-				this.addGameObject(tempWall1);
-
-				// top wall
-				Wall tempWall2 = new Wall();
-				tempWall2.setX((i * 20 + j) * 32);
-				tempWall2.setY(tempY - 48 * 7);
-				this.addGameObject(tempWall2);
-
-				// coins
-				if ((j > 4) & (j < 15)) {
-					Coin tempCoin = new Coin();
-					tempCoin.setX((i * 20 + j) * 32 + 8);
-					tempCoin.setY(tempY + 4 - 48 * 6);
-					this.addGameObject(tempCoin);
-					Coin tempCoin2 = new Coin();
-					tempCoin2.setX((i * 20 + j) * 32 + 8);
-					tempCoin2.setY(tempY + 28 - 48 * 6);
-					this.addGameObject(tempCoin2);
-				}
-
-				// more coins
-				if ((j > 7) & (j < 12)) {
-					Coin tempCoin3 = new Coin();
-					tempCoin3.setX((i * 20 + j) * 32 + 8);
-					tempCoin3.setY(tempY + 4 - 48 * 4);
-					this.addGameObject(tempCoin3);
-					Coin tempCoin4 = new Coin();
-					tempCoin4.setX((i * 20 + j) * 32 + 8);
-					tempCoin4.setY(tempY + 28 - 48 * 4);
-					this.addGameObject(tempCoin4);
-					Coin tempCoin5 = new Coin();
-					tempCoin5.setX((i * 20 + j) * 32 + 8);
-					tempCoin5.setY(tempY + 4 - 48 * 3);
-					this.addGameObject(tempCoin5);
-				}
-
-				// hazards
-				if (j == 10) {
-					Cannon tempCannon = new Cannon();
-					tempCannon.setX((i * 20 + j) * 32);
-					tempCannon.setY(tempY - 16);
-					this.addGameObject(tempCannon);
-				}
-
-			}
-			tempY = (int) (tempY + Math.random() * 200 - 100);
-			tempY = Math.round(tempY / 48) * 48;
-			if (tempY < 96)
-				tempY = 96;
-			if (tempY > 48 * 13)
-				tempY = 48 * 13;
-		}*/
+		 * // create the portals endPortal = new Portal(32 * 50);
+		 * this.addGameObject(endPortal); startPortal = new Portal(32 * 3);
+		 * this.addGameObject(startPortal);
+		 * 
+		 * // add the player (remove after XML level creation works) player =
+		 * new Player(); player.yStart = 402; this.addGameObject(player);
+		 * 
+		 * 
+		 * 
+		 * // create a bunch of walls (remove after XML level creation works)
+		 * int tempY = 450; for (int i = 0; i < 10; i++) { for (int j = 2; j <
+		 * 18; j++) { // bottom wall Wall tempWall1 = new Wall();
+		 * tempWall1.setX((i * 20 + j) * 32); tempWall1.setY(tempY);
+		 * this.addGameObject(tempWall1);
+		 * 
+		 * // top wall Wall tempWall2 = new Wall(); tempWall2.setX((i * 20 + j)
+		 * * 32); tempWall2.setY(tempY - 48 * 7); this.addGameObject(tempWall2);
+		 * 
+		 * // coins if ((j > 4) & (j < 15)) { Coin tempCoin = new Coin();
+		 * tempCoin.setX((i * 20 + j) * 32 + 8); tempCoin.setY(tempY + 4 - 48 *
+		 * 6); this.addGameObject(tempCoin); Coin tempCoin2 = new Coin();
+		 * tempCoin2.setX((i * 20 + j) * 32 + 8); tempCoin2.setY(tempY + 28 - 48
+		 * * 6); this.addGameObject(tempCoin2); }
+		 * 
+		 * // more coins if ((j > 7) & (j < 12)) { Coin tempCoin3 = new Coin();
+		 * tempCoin3.setX((i * 20 + j) * 32 + 8); tempCoin3.setY(tempY + 4 - 48
+		 * * 4); this.addGameObject(tempCoin3); Coin tempCoin4 = new Coin();
+		 * tempCoin4.setX((i * 20 + j) * 32 + 8); tempCoin4.setY(tempY + 28 - 48
+		 * * 4); this.addGameObject(tempCoin4); Coin tempCoin5 = new Coin();
+		 * tempCoin5.setX((i * 20 + j) * 32 + 8); tempCoin5.setY(tempY + 4 - 48
+		 * * 3); this.addGameObject(tempCoin5); }
+		 * 
+		 * // hazards if (j == 10) { Cannon tempCannon = new Cannon();
+		 * tempCannon.setX((i * 20 + j) * 32); tempCannon.setY(tempY - 16);
+		 * this.addGameObject(tempCannon); }
+		 * 
+		 * } tempY = (int) (tempY + Math.random() * 200 - 100); tempY =
+		 * Math.round(tempY / 48) * 48; if (tempY < 96) tempY = 96; if (tempY >
+		 * 48 * 13) tempY = 48 * 13; }
+		 */
 
 	}
 
@@ -137,10 +96,18 @@ public class GamePlayScreen extends GameScreen {
 		if (!getBlockUpdate())
 			return;
 
-		// check to see if the user paused the game
+		// if the user paused the game
 		if (Runner._input.isKeyHit(InputManager._keys.get("escape"))) {
 			Runner._gameScreenManager.addScreen(new GamePauseScreen());
 			this.setBlockUpdate(false); // freeze game objects
+		}
+
+		// if the user enters editor mode
+		if (Runner._input.isKeyHit(InputManager._keys.get("L"))) {
+			Runner._gameScreenManager.addScreen(new LevelEditScreen());
+			LevelEditScreen.viewX = this.viewX;
+			LevelEditScreen.viewY = this.viewY;
+			this.setRemove(true); // removes this screen
 		}
 
 		// move the view smoothly

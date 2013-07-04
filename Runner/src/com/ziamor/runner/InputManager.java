@@ -13,8 +13,9 @@ public class InputManager implements KeyListener, MouseListener {
 	private boolean[] key_released = new boolean[256];
 	private boolean[] key_hit = new boolean[256];
 	private boolean mouse_clicked;
-	private int mouse_x;
-	private int mouse_y;
+	private boolean mouse_clickedRight;
+	public static int mouse_x;
+	public static int mouse_y;
 
 	public static Map<String, Integer> _keys = new HashMap<String, Integer>() {
 		{
@@ -33,6 +34,8 @@ public class InputManager implements KeyListener, MouseListener {
 			put("down", 40);
 			put("space", 32);
 			put("escape", 27);
+			
+			put("L",76);
 		}
 	};
 
@@ -50,12 +53,20 @@ public class InputManager implements KeyListener, MouseListener {
 		return key_released[keyCode];
 	}
 
+	public boolean isMouseClicked() {
+		return mouse_clicked;
+	}
+
 	public boolean isMouseClicked(int x, int y, int width, int height) {
 		if ((mouse_clicked) && (mouse_x > x) && (mouse_x < x + width)
 				&& (mouse_y > y) && (mouse_y < y + height)) {
 			return true;
 		} else
 			return false;
+	}
+
+	public boolean isMouseClickedRight() {
+		return mouse_clickedRight;
 	}
 
 	@Override
@@ -84,9 +95,7 @@ public class InputManager implements KeyListener, MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		mouse_clicked = true;
-		mouse_x = e.getX();
-		mouse_y = e.getY();
+
 	}
 
 	@Override
@@ -106,12 +115,23 @@ public class InputManager implements KeyListener, MouseListener {
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-
+		// this is here instead of mouseClicked so that even if you move the
+		// mouse the mouse during a click, it still goes through
+		if (e.getButton() == 1) {
+			mouse_clicked = true;
+			mouse_x = e.getX();
+			mouse_y = e.getY();
+		} else if (e.getButton() == 3) {
+			mouse_clickedRight = true;
+			mouse_x = e.getX();
+			mouse_y = e.getY();
+		}
 	}
 
 	public void update() {
 		// clear mouse_clicked
 		mouse_clicked = false;
+		mouse_clickedRight = false;
 
 		// clear key_hit
 		for (int i = 0; i < 256; i++) {

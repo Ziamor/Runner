@@ -46,8 +46,8 @@ public class GamePauseScreen extends GameScreen {
 		g.fillRect(0, 0, 1024, 30);
 		g.fillRect(0, 608 - 30, 1024, 30);
 		g.setColor(Color.black);
-		g.drawString("PAUSED", 500, 20);
-		g.drawString("PAUSED", 500, 598);
+		g.drawString("PAUSED", 350, 20);
+		g.drawString("PAUSED", 350, 598);
 
 		// call the gameScreen paintComponent(g);
 		super.paintComponent(g);

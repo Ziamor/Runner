@@ -21,9 +21,8 @@ public class LevelSelectButton extends GameObject {
 	public void update() {
 		if (Runner._input.isMouseClicked(x, y, width, height)) {
 			
-			// create a GamePlayScreen
-			Runner._gameScreenManager.addScreen(new GamePlayScreen());
 			Runner.level = this.level; // set the level
+			Runner._gameScreenManager.addScreen(new GamePlayScreen());
 
 			// remove the LevelSelectScreen
 			parent.setRemove(true);
