@@ -42,4 +42,20 @@ public class LevelSelectScreen extends GameScreen {
 			return;
 	}
 
+	public void paintComponent(Graphics g) {
+		
+		// draw the border
+		g.setColor(Color.darkGray);
+		g.fillRect(0,0,80,80);
+		g.fillRect(720-80,0,80,80);
+		g.fillRect(0,0,720,60);
+		g.fillRect(0,608-80,80,80);
+		g.fillRect(720-80,608-80,80,80);
+		g.fillRect(0,608-60,720,60);
+		
+		// draw the objects
+		super.paintComponent(g);
+
+	}
+	
 }

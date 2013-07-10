@@ -108,16 +108,18 @@ public class Player extends GameObject {
 		boolean wallBelow = false;
 		boolean wallAbove = false;
 		y = y + 1; // change y to check for walls below
-		for (GameObject gameObject : this.parent.getGameObjectsByID("wall")) {
-			if (CollisionHandler.isColliding(this, gameObject)) {
+		for (GameObject gobj : this.parent.getGameObjectsByID("wall",
+				"breakablewall")) {
+			if (CollisionHandler.isColliding(this, gobj) && gobj.isActive()) {
 				if (yspeedDouble > 0) // stop the player if moving down
 					yspeedDouble = 0;
 				wallBelow = true;
 			}
 		}
 		y = y - 2; // change y to check for walls above
-		for (GameObject gameObject : this.parent.getGameObjectsByID("wall")) {
-			if (CollisionHandler.isColliding(this, gameObject)) {
+		for (GameObject gobj : this.parent.getGameObjectsByID("wall",
+				"breakablewall")) {
+			if (CollisionHandler.isColliding(this, gobj) && gobj.isActive()) {
 				if (yspeedDouble < 0) // stop the player if moving down
 					yspeedDouble = 0;
 				wallAbove = true;
@@ -200,12 +202,18 @@ public class Player extends GameObject {
 		boolean collision = true;
 		int yCount = 0;
 		while (collision == true) {
-			
+
 			collision = false;
 			// loop through every wall to check for collisions
-			for (GameObject gameObject : this.parent.getGameObjectsByID("wall")) {
-				if (CollisionHandler.isColliding(this, gameObject)) {
+			for (GameObject gameObject : this.parent.getGameObjectsByID("wall",
+					"breakablewall")) {
+				if (CollisionHandler.isColliding(this, gameObject)
+						&& gameObject.isActive()) {
 					collision = true;
+					if (xspeed > 6 && gameObject.getObjID() == "breakablewall") {
+						collision = false;
+						gameObject.setActive(false);
+					}
 				}
 			}
 
@@ -225,9 +233,9 @@ public class Player extends GameObject {
 				}
 			}
 		}
-		
+
 		// kill the player if he is too low or too high
-		if (y > 608 + 200 || y < -600) {
+		if (y > GamePlayScreen.levelHeight || y < 0) {
 			GamePlayScreen.playerDead = true;
 			xspeed = 0;
 			yspeedDouble = -13;
@@ -280,12 +288,12 @@ public class Player extends GameObject {
 		}
 
 	}
-	
-	public int getX(){ // need this because x is static
+
+	public int getX() { // need this because x is static
 		return x;
 	}
-	
-	public int getY(){ // need this because y is static
+
+	public int getY() { // need this because y is static
 		return y;
 	}
 

@@ -62,6 +62,17 @@ public class GameScreen {
 				gameObjectsWithID.add(gobj);
 		return gameObjectsWithID;
 	}
+	
+	// Returns two types of objects in an arraylist
+	public ArrayList<GameObject> getGameObjectsByID(String id1, String id2) {
+		// Temporary ArrayList to store game objects with the specified ID
+		ArrayList<GameObject> gameObjectsWithID = new ArrayList<GameObject>();
+		// Loop through all GameObjects and pull any GameObject that uses the ID
+		for (GameObject gobj : gameObjects)
+			if (gobj.getObjID().equals(id1) || gobj.getObjID().equals(id2))
+				gameObjectsWithID.add(gobj);
+		return gameObjectsWithID;
+	}
 
 	public void update() {
 		// add to main list from objectsToAdd

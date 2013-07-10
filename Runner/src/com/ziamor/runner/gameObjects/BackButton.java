@@ -15,8 +15,8 @@ public class BackButton extends GameObject {
 
 	public BackButton(String dest) {
 		destination = dest;
-		x = 10;
-		y = 10;
+		x = 15;
+		y = 15;
 		width = 50;
 		height = 50;
 	}
@@ -44,7 +44,7 @@ public class BackButton extends GameObject {
 		g.setColor(Color.lightGray);
 		g.fillRect(x, y, width, height);
 		g.setColor(Color.black);
-		g.drawString("Back", 21, 40);
+		g.drawString("Back", 26, 45);
 	}
 
 }

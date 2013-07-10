@@ -56,10 +56,24 @@ public class WorldSelectScreen extends GameScreen {
 
 		// move the view smoothly
 		viewX += (int) (((Runner.world - 1) * 700 - viewX) / 10);
+		if (viewX < (Runner.world - 1) * 700)
+			viewX++;
+		else if (viewX > (Runner.world - 1) * 700)
+			viewX--;
 
 	}
 
 	public void paintComponent(Graphics g) {
+
+		// draw the border
+		g.setColor(Color.darkGray);
+		g.fillRect(0, 0, 80, 80);
+		g.fillRect(720 - 80, 0, 80, 80);
+		g.fillRect(0, 0, 720, 60);
+		g.fillRect(0, 608 - 80, 80, 80);
+		g.fillRect(720 - 80, 608 - 80, 80, 80);
+		g.fillRect(0, 608 - 60, 720, 60);
+
 		// call the gameScreen paintComponent(g);
 		super.paintComponent(g);
 
