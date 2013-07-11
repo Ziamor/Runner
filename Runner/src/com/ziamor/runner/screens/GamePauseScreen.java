@@ -8,7 +8,7 @@ import com.ziamor.runner.GameScreen;
 import com.ziamor.runner.GameScreenManager;
 import com.ziamor.runner.InputManager;
 import com.ziamor.runner.Runner;
-import com.ziamor.runner.gameObjects.BackButton;
+import com.ziamor.runner.menuObjects.BackButton;
 
 public class GamePauseScreen extends GameScreen {
 

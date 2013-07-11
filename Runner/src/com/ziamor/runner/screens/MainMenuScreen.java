@@ -7,7 +7,7 @@ import com.ziamor.runner.GameObject;
 import com.ziamor.runner.GameScreen;
 import com.ziamor.runner.InputManager;
 import com.ziamor.runner.Runner;
-import com.ziamor.runner.gameObjects.BackButton;
+import com.ziamor.runner.menuObjects.BackButton;
 
 public class MainMenuScreen extends GameScreen {
 
