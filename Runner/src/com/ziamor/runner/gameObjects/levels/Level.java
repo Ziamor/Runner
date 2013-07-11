@@ -10,17 +10,13 @@ import java.util.List;
 
 import com.ziamor.runner.GameObject;
 import com.ziamor.runner.Runner;
-import com.ziamor.runner.gameObjects.BreakableWall;
-import com.ziamor.runner.gameObjects.Cannon;
-import com.ziamor.runner.gameObjects.Player;
-import com.ziamor.runner.gameObjects.Portal;
-import com.ziamor.runner.gameObjects.Wall;
+import com.ziamor.runner.gameObjects.*;
 import com.ziamor.runner.screens.GamePlayScreen;
 import com.ziamor.runner.screens.LevelEditScreen;
 
 public class Level {
 	private static final int _tileWidth = 32; // Temp width for the game;
-	private static final int _tileHeight = 48; // Temp height for the game;
+	private static final int _tileHeight = 24; // Temp height for the game;
 
 	public static ArrayList<GameObject> loadLevel() {
 		String fileName = "res\\maps\\" + Runner.world + "-" + Runner.level;
@@ -40,17 +36,15 @@ public class Level {
 					level.add(wall);
 					x++;
 				} else if (c == '2') {
-					Portal startPort = new Portal(x * _tileWidth - 32);
-					level.add(startPort);
+					level.add(new Portal(x * _tileWidth - 32));
 					Player player = new Player();
 					Player.x = x * _tileWidth;
 					Player.y = y * _tileHeight + 400;
-					player.yStart = y * _tileHeight;
+					Player.yStart = y * _tileHeight;
 					level.add(player);
 					x++;
 				} else if (c == '3') {
-					Portal endPort = new Portal(x * _tileWidth - 32);
-					level.add(endPort);
+					level.add(new Portal(x * _tileWidth - 32));
 					GamePlayScreen.endPortalX = x * _tileWidth - 32;
 					x++;
 				} else if (c == '4') {
@@ -59,11 +53,23 @@ public class Level {
 					wall.setY(y * _tileHeight);
 					level.add(wall);
 					x++;
+				} else if (c == '5') {
+					Coin coin = new Coin();
+					coin.setX(x * _tileWidth);
+					coin.setY(y * _tileHeight);
+					level.add(coin);
+					x++;
+				} else if (c == '6') {
+					Star star = new Star();
+					star.setX(x * _tileWidth);
+					star.setY(y * _tileHeight);
+					level.add(star);
+					x++;
 				} else if (c == '|') {
 					x = 0;
 					y++;
 				}
-				
+
 				if (x * 32 > GamePlayScreen.levelWidth)
 					GamePlayScreen.levelWidth = x * 32;
 				if (y * 48 > GamePlayScreen.levelHeight)
@@ -117,10 +123,10 @@ public class Level {
 					x++;
 				}
 
-				if (x * 32 > LevelEditScreen.levelWidth)
-					LevelEditScreen.levelWidth = x * 32;
-				if (y * 48 > LevelEditScreen.levelHeight)
-					LevelEditScreen.levelHeight = y * 48;
+				if (x * _tileWidth > LevelEditScreen.levelWidth)
+					LevelEditScreen.levelWidth = x * _tileWidth;
+				if (y * _tileHeight > LevelEditScreen.levelHeight)
+					LevelEditScreen.levelHeight = y * _tileHeight;
 			}
 		}
 		return map;

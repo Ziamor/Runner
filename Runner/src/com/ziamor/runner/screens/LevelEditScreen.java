@@ -55,11 +55,9 @@ public class LevelEditScreen extends GameScreen {
 		if (Runner._input.isMouseClicked()) {
 			// put a tile onto the map
 			int x = (int) (InputManager.mouse_x + viewX) / 32;
-			int y = (int) (InputManager.mouse_y + viewY) / 48;
-			if (x < levelWidth && y < levelHeight
-					&& InputManager.mouse_x > -viewX
-					&& InputManager.mouse_y > -viewY
-					&& InputManager.mouse_y < 548)
+			int y = (int) (InputManager.mouse_y + viewY) / 24;
+			if (Runner._input.isMouseClicked(-viewX, -viewY, levelWidth * 32,
+					levelHeight * 24) && InputManager.mouse_y < 548)
 				map[x][y] = selectedTile;
 			// select a different tile
 			if (InputManager.mouse_y > 548) {
@@ -75,10 +73,10 @@ public class LevelEditScreen extends GameScreen {
 		if (Runner._input.isMouseClickedRight()) {
 			// remove a tile from the map
 			int x = (int) (InputManager.mouse_x + viewX) / 32;
-			int y = (int) (InputManager.mouse_y + viewY) / 48;
-			if (Runner._input.isMouseClicked(-viewX, -viewY, levelWidth * 32,
-					levelHeight * 48) && InputManager.mouse_y < 548)
-				map[x][y] = 0;  
+			int y = (int) (InputManager.mouse_y + viewY) / 24;
+			if (Runner._input.isMouseClickedRight(-viewX, -viewY, levelWidth * 32,
+					levelHeight * 24) && InputManager.mouse_y < 548)
+				map[x][y] = 0;
 		}
 
 		// ALEX
@@ -92,14 +90,23 @@ public class LevelEditScreen extends GameScreen {
 
 	public void paintComponent(Graphics g) {
 
+		// draw the grid
 		for (int x = 0; x < levelWidth / 32; x++) {
-			for (int y = 0; y < levelHeight / 48; y++) {
-				// draw the grid
-				g.setColor(Color.lightGray);
-				g.drawRect(x * 32 - viewX, y * 48 - viewY, 31, 47);
-
-				// draw the tile
-				drawTile(map[x][y], x * 32 - viewX, y * 48 - viewY, g);
+			for (int y = 0; y < levelHeight / 24; y++) {
+				if (y % 2 == 0) {
+					g.setColor(Color.lightGray);
+					g.drawRect(x * 32 - viewX, y * 24 - viewY, 31, 47);
+				} else {
+					g.setColor(new Color(0,0,0,40));
+					g.drawLine(x * 32 - viewX, y * 24 - viewY,x * 32 - viewX + 32,y * 24 - viewY);
+				}
+			}
+		}
+		
+		// draw the tiles
+		for (int x = 0; x < levelWidth / 32; x++) {
+			for (int y = 0; y < levelHeight / 24; y++) {
+				drawTile(map[x][y], x * 32 - viewX, y * 24 - viewY, g);
 			}
 		}
 

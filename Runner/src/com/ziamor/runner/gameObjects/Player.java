@@ -246,10 +246,22 @@ public class Player extends GameObject {
 			if (CollisionHandler.isColliding(this, gameObject)) {
 				if (gameObject.isActive() == true) {
 					gameObject.setActive(false); // make the coin inactive
-					Runner.score += 1000;
+					Runner.score += 100;
 				}
 			}
 		}
+		
+		// collect any stars that the player is touching
+				for (GameObject gameObject : this.parent.getGameObjectsByID("star")) {
+					if (CollisionHandler.isColliding(this, gameObject)) {
+						if (gameObject.isActive() == true) {
+							gameObject.setActive(false); // make the coin inactive
+							gameObject.setVisible(false);
+							Runner.score += 10000;
+							Runner.stars++;
+						}
+					}
+				}
 
 		// check if the player is touching any hazards
 		for (GameObject gameObject : this.parent.getGameObjectsByID("hazard")) {

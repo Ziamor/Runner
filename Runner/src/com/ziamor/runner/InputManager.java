@@ -14,6 +14,8 @@ public class InputManager implements KeyListener, MouseListener {
 	private boolean[] key_hit = new boolean[256];
 	private boolean mouse_clicked;
 	private boolean mouse_clickedRight;
+	private boolean mouse_released;
+	private boolean mouse_releasedRight;
 	public static int mouse_x;
 	public static int mouse_y;
 
@@ -34,8 +36,8 @@ public class InputManager implements KeyListener, MouseListener {
 			put("down", 40);
 			put("space", 32);
 			put("escape", 27);
-			
-			put("L",76);
+
+			put("L", 76);
 		}
 	};
 
@@ -69,6 +71,18 @@ public class InputManager implements KeyListener, MouseListener {
 		return mouse_clickedRight;
 	}
 
+	public boolean isMouseClickedRight(int x, int y, int width, int height) {
+		if ((mouse_clickedRight) && (mouse_x > x) && (mouse_x < x + width)
+				&& (mouse_y > y) && (mouse_y < y + height)) {
+			return true;
+		} else
+			return false;
+	}
+
+	public boolean isMouseReleased() {
+		return mouse_released;
+	}
+	
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
@@ -110,28 +124,30 @@ public class InputManager implements KeyListener, MouseListener {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-
+		mouse_x = e.getX();
+		mouse_y = e.getY();
+		if (e.getButton() == 1)
+			mouse_clicked = true;
+		else if (e.getButton() == 3)
+			mouse_clickedRight = true;
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// this is here instead of mouseClicked so that even if you move the
-		// mouse the mouse during a click, it still goes through
-		if (e.getButton() == 1) {
-			mouse_clicked = true;
-			mouse_x = e.getX();
-			mouse_y = e.getY();
-		} else if (e.getButton() == 3) {
-			mouse_clickedRight = true;
-			mouse_x = e.getX();
-			mouse_y = e.getY();
-		}
+		mouse_x = e.getX();
+		mouse_y = e.getY();
+		if (e.getButton() == 1)
+			mouse_released = true;
+		else if (e.getButton() == 3)
+			mouse_releasedRight = true;
 	}
-
+	
 	public void update() {
 		// clear mouse_clicked
 		mouse_clicked = false;
 		mouse_clickedRight = false;
+		mouse_released = false;
+		mouse_releasedRight = false;
 
 		// clear key_hit
 		for (int i = 0; i < 256; i++) {

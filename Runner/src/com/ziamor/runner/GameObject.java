@@ -18,6 +18,13 @@ public class GameObject {
 	protected boolean offScreen = false;
 	protected GameScreen parent;
 	
+	public GameObject(int x, int y)
+	{
+		this.x = x;
+		this.y = y;
+		this.parent = null;
+	}
+	
 	public GameObject()
 	{
 		this.parent = null;

@@ -7,6 +7,7 @@ import com.ziamor.runner.GameObject;
 import com.ziamor.runner.GameScreen;
 import com.ziamor.runner.InputManager;
 import com.ziamor.runner.Runner;
+import com.ziamor.runner.menuObjects.AchieveButton;
 import com.ziamor.runner.menuObjects.BackButton;
 import com.ziamor.runner.menuObjects.LevelSelectButton;
 import com.ziamor.runner.menuObjects.WorldSelectButton;
@@ -31,8 +32,9 @@ public class LevelSelectScreen extends GameScreen {
 			}
 		}
 
-		// make the back button
-		this.addGameObject(new BackButton("WorldSelect"));
+		// make the corner buttons button
+		this.addGameObject(new BackButton("WorldSelectScreen"));
+		this.addGameObject(new AchieveButton());
 	}
 
 	public void update() {
@@ -43,19 +45,19 @@ public class LevelSelectScreen extends GameScreen {
 	}
 
 	public void paintComponent(Graphics g) {
-		
+
 		// draw the border
 		g.setColor(Color.darkGray);
-		g.fillRect(0,0,80,80);
-		g.fillRect(720-80,0,80,80);
-		g.fillRect(0,0,720,60);
-		g.fillRect(0,608-80,80,80);
-		g.fillRect(720-80,608-80,80,80);
-		g.fillRect(0,608-60,720,60);
-		
+		g.fillRect(0, 0, 80, 80);
+		g.fillRect(720 - 80, 0, 80, 80);
+		g.fillRect(0, 0, 720, 60);
+		g.fillRect(0, 608 - 80, 80, 80);
+		g.fillRect(720 - 80, 608 - 80, 80, 80);
+		g.fillRect(0, 608 - 60, 720, 60);
+
 		// draw the objects
 		super.paintComponent(g);
 
 	}
-	
+
 }
