@@ -21,7 +21,10 @@ public class Player extends GameObject {
 	private boolean gravitySwitchAble;
 	public static int yStart;
 
-	public Player() {
+	public Player(int x, int yStart) {
+		Player.x = x;
+		Player.y = GamePlayScreen.levelHeight;
+		Player.yStart = yStart;
 		this.objID = "player";
 		width = 32;
 		height = 48;
@@ -235,7 +238,7 @@ public class Player extends GameObject {
 		}
 
 		// kill the player if he is too low or too high
-		if (y > GamePlayScreen.levelHeight || y < 0) {
+		if (y > GamePlayScreen.levelHeight || y < -48) {
 			GamePlayScreen.playerDead = true;
 			xspeed = 0;
 			yspeedDouble = -13;

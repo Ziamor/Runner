@@ -1,13 +1,18 @@
 package com.ziamor.runner;
 
+import java.awt.DisplayMode;
+import java.awt.MouseInfo;
+import java.awt.Point;
+import java.awt.PointerInfo;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InputManager implements KeyListener, MouseListener {
+public class InputManager implements KeyListener, MouseListener, MouseMotionListener {
 
 	private boolean[] key_pressed = new boolean[256];
 	private boolean[] key_released = new boolean[256];
@@ -143,6 +148,7 @@ public class InputManager implements KeyListener, MouseListener {
 	}
 	
 	public void update() {
+	
 		// clear mouse_clicked
 		mouse_clicked = false;
 		mouse_clickedRight = false;
@@ -153,6 +159,18 @@ public class InputManager implements KeyListener, MouseListener {
 		for (int i = 0; i < 256; i++) {
 			key_hit[i] = false;
 		}
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		mouse_x = e.getX();
+		mouse_y = e.getY();
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		mouse_x = e.getX();
+		mouse_y = e.getY();
 	}
 
 }

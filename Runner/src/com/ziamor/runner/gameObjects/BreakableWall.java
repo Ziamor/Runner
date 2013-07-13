@@ -16,7 +16,9 @@ public class BreakableWall extends GameObject {
 
 	private boolean startBreak;
 
-	public BreakableWall() {
+	public BreakableWall(int x, int y) {
+		this.x = x;
+		this.y = y;
 		this.objID = "breakablewall";
 		width = 32;
 		height = 48;

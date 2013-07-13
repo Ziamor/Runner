@@ -10,7 +10,9 @@ public class Cannon extends GameObject {
 
 	private int shotTimer;
 
-	public Cannon() {
+	public Cannon(int x, int y) {
+		this.x = x;
+		this.y = y;
 		this.objID = "cannon";
 		width = 32;
 		height = 24;

@@ -29,7 +29,7 @@ public class Runner extends JPanel {
 		// Get the dimensions of the screen
 		this._width = 720;
 		this._height = 608;
-
+		
 		// Set the game window
 		this.setPreferredSize(new Dimension(_width, _height));
 
@@ -37,6 +37,7 @@ public class Runner extends JPanel {
 		this._input = new InputManager();
 		this.addKeyListener(_input);
 		this.addMouseListener(_input);
+		this.addMouseMotionListener(_input);
 
 		// Initialize game-wide variables
 		this.world = 1;

@@ -11,7 +11,7 @@ import com.ziamor.runner.InputManager;
 import com.ziamor.runner.Runner;
 import com.ziamor.runner.gameObjects.Cannon;
 import com.ziamor.runner.gameObjects.Fireball;
-import com.ziamor.runner.gameObjects.Hazard;
+import com.ziamor.runner.gameObjects.Spikes;
 import com.ziamor.runner.gameObjects.Player;
 import com.ziamor.runner.gameObjects.Portal;
 import com.ziamor.runner.gameObjects.Wall;
@@ -82,8 +82,8 @@ public class GamePlayScreen extends GameScreen {
 			viewX += (int) ((viewXDest - viewX) / 10);
 
 			int viewYDest = Player.y - 250;
-			if (viewYDest > levelHeight - 560) // if too low
-				viewYDest = levelHeight - 560;
+			if (viewYDest > levelHeight - 552) // if too low
+				viewYDest = levelHeight - 552;
 			if (viewYDest < 0) // if too high
 				viewYDest = 0;
 			if (!levelComplete) // if player isn't in endPortal
@@ -129,10 +129,12 @@ public class GamePlayScreen extends GameScreen {
 		// call the gameScreen paintComponent(g);
 		super.paintComponent(g);
 
-		g.setColor(Color.gray);
-		g.fillRect(0, 560, 720, 48);
 		g.setColor(Color.black);
-		g.drawString("Score: " + Runner.score, 20, 590);
+		g.fillRect(0, 552, 720, 56);
+		g.setColor(Color.gray);
+		g.fillRect(5, 557, 710, 46);
+		g.setColor(Color.black);
+		g.drawString("Score: " + Runner.score, 20, 582);
 
 	}
 

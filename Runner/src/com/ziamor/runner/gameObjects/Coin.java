@@ -10,7 +10,9 @@ public class Coin extends GameObject {
 
 	private int alpha = 255;
 
-	public Coin() {
+	public Coin(int x, int y) {
+		this.x = x + 8;
+		this.y = y + 4;
 		this.objID = "coin";
 		width = 16;
 		height = 16;
@@ -33,7 +35,7 @@ public class Coin extends GameObject {
 		if (!isVisible || offScreen)
 			return;
 
-		g.setColor(new Color(230, 230, 0, 255));
+		g.setColor(new Color(230, 230, 0, alpha));
 		g.fillRect(x - GamePlayScreen.viewX + 1, y - GamePlayScreen.viewY + 1,
 				width - 2, height - 2);
 		g.fillRect(x - GamePlayScreen.viewX + 5, y - GamePlayScreen.viewY - 1,

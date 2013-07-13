@@ -27,55 +27,40 @@ public class Level {
 			int y = 0;
 
 			for (char c : levelData.toCharArray()) {
-				if (c == '0')
-					x++;
-				else if (c == '1') {
-					Wall wall = new Wall();
-					wall.setX(x * _tileWidth);
-					wall.setY(y * _tileHeight);
-					level.add(wall);
-					x++;
-				} else if (c == '2') {
-					level.add(new Portal(x * _tileWidth - 32));
-					Player player = new Player();
-					Player.x = x * _tileWidth;
-					Player.y = y * _tileHeight + 400;
-					Player.yStart = y * _tileHeight;
-					level.add(player);
-					x++;
-				} else if (c == '3') {
-					level.add(new Portal(x * _tileWidth - 32));
-					GamePlayScreen.endPortalX = x * _tileWidth - 32;
-					x++;
-				} else if (c == '4') {
-					BreakableWall wall = new BreakableWall();
-					wall.setX(x * _tileWidth);
-					wall.setY(y * _tileHeight);
-					level.add(wall);
-					x++;
-				} else if (c == '5') {
-					Coin coin = new Coin();
-					coin.setX(x * _tileWidth);
-					coin.setY(y * _tileHeight);
-					level.add(coin);
-					x++;
-				} else if (c == '6') {
-					Star star = new Star();
-					star.setX(x * _tileWidth);
-					star.setY(y * _tileHeight);
-					level.add(star);
-					x++;
-				} else if (c == '|') {
+				if (c == '|') {
 					x = 0;
-					y++;
+					y = y + _tileHeight;
+				} else if (c == '0') {
+					x = x + _tileWidth;
+				} else if (c == '1') {
+					level.add(new Wall(x, y));
+					x = x + _tileWidth;
+				} else if (c == '2') {
+					level.add(new Portal(x - 32));
+					level.add(new Player(x, y));
+					x = x + _tileWidth;
+				} else if (c == '3') {
+					level.add(new Portal(x - 32));
+					GamePlayScreen.endPortalX = x - 32;
+					x = x + _tileWidth;
+				} else if (c == '4') {
+					level.add(new BreakableWall(x, y));
+					x = x + _tileWidth;
+				} else if (c == '5') {
+					level.add(new Coin(x, y));
+					x = x + _tileWidth;
+				} else if (c == '6') {
+					level.add(new Star(x, y));
+					x = x + _tileWidth;
 				}
-
-				if (x * 32 > GamePlayScreen.levelWidth)
-					GamePlayScreen.levelWidth = x * 32;
-				if (y * 48 > GamePlayScreen.levelHeight)
-					GamePlayScreen.levelHeight = y * 48;
 			}
+
+			if (x > GamePlayScreen.levelWidth)
+				GamePlayScreen.levelWidth = x;
+			if (y > GamePlayScreen.levelHeight)
+				GamePlayScreen.levelHeight = y;
 		}
+
 		return level;
 	}
 
@@ -104,24 +89,14 @@ public class Level {
 				if (c == '|') {
 					x = 0;
 					y++;
-				} else if (c == ',') {
-					// do nothing
-				} else if (c == '0') {
-					map[x][y] = 0;
-					x++;
-				} else if (c == '1') {
-					map[x][y] = 1;
-					x++;
-				} else if (c == '2') {
-					map[x][y] = 2;
-					x++;
-				} else if (c == '3') {
-					map[x][y] = 3;
-					x++;
-				} else if (c == '4') {
-					map[x][y] = 4;
-					x++;
-				}
+				} else
+					for (int i = 0; i < 10; i++) {
+						if (c == (char) ('0' + i)) {
+							map[x][y] = i;
+							x++;
+							break;
+						}
+					}
 
 				if (x * _tileWidth > LevelEditScreen.levelWidth)
 					LevelEditScreen.levelWidth = x * _tileWidth;

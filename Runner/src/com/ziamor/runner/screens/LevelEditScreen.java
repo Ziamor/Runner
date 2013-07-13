@@ -2,6 +2,8 @@ package com.ziamor.runner.screens;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import com.ziamor.runner.GameObject;
 import com.ziamor.runner.GameScreen;
@@ -35,12 +37,6 @@ public class LevelEditScreen extends GameScreen {
 		if (!getBlockUpdate())
 			return;
 
-		// if the user hits escape
-		if (Runner._input.isKeyHit(InputManager._keys.get("escape"))) {
-			Runner._gameScreenManager.addScreen(new GamePlayScreen());
-			Runner._gameScreenManager.removeScreen(this);
-		}
-
 		// move the camera with the arrow keys
 		if (Runner._input.isKeyPressed(InputManager._keys.get("left")))
 			viewX -= 10;
@@ -50,6 +46,21 @@ public class LevelEditScreen extends GameScreen {
 			viewY -= 10;
 		if (Runner._input.isKeyPressed(InputManager._keys.get("down")))
 			viewY += 10;
+
+		// change the level size with WASD
+		if (Runner._input.isKeyHit(InputManager._keys.get("a")))
+			levelWidth -= 32;
+		if (Runner._input.isKeyHit(InputManager._keys.get("d")))
+			levelWidth += 32;
+		if (Runner._input.isKeyHit(InputManager._keys.get("w")))
+			levelHeight -= 24;
+		if (Runner._input.isKeyHit(InputManager._keys.get("s")))
+			levelHeight += 24;
+
+		if (levelHeight < 552)
+			levelHeight = 552;
+		if (levelHeight > 50 * 24)
+			levelHeight = 50 * 24;
 
 		// if the user clicks
 		if (Runner._input.isMouseClicked()) {
@@ -74,15 +85,43 @@ public class LevelEditScreen extends GameScreen {
 			// remove a tile from the map
 			int x = (int) (InputManager.mouse_x + viewX) / 32;
 			int y = (int) (InputManager.mouse_y + viewY) / 24;
-			if (Runner._input.isMouseClickedRight(-viewX, -viewY, levelWidth * 32,
-					levelHeight * 24) && InputManager.mouse_y < 548)
+			if (Runner._input.isMouseClickedRight(-viewX, -viewY,
+					levelWidth * 32, levelHeight * 24)
+					&& InputManager.mouse_y < 548)
 				map[x][y] = 0;
 		}
 
-		// ALEX
-		// if the user presses a certain key, maybe s for save
-		// write the map to the file
-		// Level.saveLevel(map);
+		// when the user presses "escape", save and play
+		if (Runner._input.isKeyPressed(InputManager._keys.get("escape"))) {
+			FileWriter writer = null;
+			try {
+				String fileName = "res\\maps\\" + Runner.world + "-"
+						+ Runner.level;
+				String newLine = System.getProperty("line.separator");
+				writer = new FileWriter(fileName);
+				for (int y = 0; y < levelHeight / 24; y++) {
+					for (int x = 0; x < levelWidth / 32; x++) {
+						writer.write(map[x][y] + ",");
+					}
+					writer.write("|" + newLine);
+				}
+
+				writer.flush();
+				writer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					// Close the writer regardless of what happens...
+					writer.close();
+				} catch (Exception e) {
+				}
+			}
+
+			// go to the GamePlayScreen
+			Runner._gameScreenManager.addScreen(new GamePlayScreen());
+			Runner._gameScreenManager.removeScreen(this);
+		}
 
 		startPortalX = -1;
 		endPortalX = -1;
@@ -97,12 +136,13 @@ public class LevelEditScreen extends GameScreen {
 					g.setColor(Color.lightGray);
 					g.drawRect(x * 32 - viewX, y * 24 - viewY, 31, 47);
 				} else {
-					g.setColor(new Color(0,0,0,40));
-					g.drawLine(x * 32 - viewX, y * 24 - viewY,x * 32 - viewX + 32,y * 24 - viewY);
+					g.setColor(new Color(0, 0, 0, 40));
+					g.drawLine(x * 32 - viewX, y * 24 - viewY, x * 32 - viewX
+							+ 32, y * 24 - viewY);
 				}
 			}
 		}
-		
+
 		// draw the tiles
 		for (int x = 0; x < levelWidth / 32; x++) {
 			for (int y = 0; y < levelHeight / 24; y++) {
@@ -164,6 +204,9 @@ public class LevelEditScreen extends GameScreen {
 			g.fillRect(x + 9, y + 17, 14, 14);
 			g.fillRect(x + 13, y + 15, 6, 18);
 			g.fillRect(x + 7, y + 21, 18, 6);
+		} else if (id == 6) { // star
+			g.setColor(new Color(230, 230, 0, 255));
+			g.fillRect(x+4, y, 24, 24); 
 		}
 	}
 }

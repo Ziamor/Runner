@@ -17,6 +17,7 @@ public class AchieveScreen extends GameScreen {
 	private int viewY;
 	private boolean isScrolling;
 	private int scrollerY;
+	private int mouseOffset;
 
 	public AchieveScreen() {
 		this.setBlockRender(true);
@@ -42,15 +43,21 @@ public class AchieveScreen extends GameScreen {
 
 		if (Runner._input.isMouseClicked(550, scrollerY, 20, 50)) {
 			isScrolling = true;
+			mouseOffset = InputManager.mouse_y - scrollerY;
 		}
-		
-		if (isScrolling){
-			scrollerY = InputManager.mouse_y;
+
+		if (isScrolling) {
+			scrollerY = InputManager.mouse_y - mouseOffset;
 		}
-		
+
 		if (Runner._input.isMouseReleased()) {
 			isScrolling = false;
-		}	
+		}
+
+		if (scrollerY > 518)
+			scrollerY = 518;
+		if (scrollerY < 60)
+			scrollerY = 60;
 	}
 
 	public void paintComponent(Graphics g) {
@@ -69,12 +76,12 @@ public class AchieveScreen extends GameScreen {
 		g.fillRect(550, 20, 40, 40);
 		g.setColor(Color.black);
 		g.fillRect(555, 25, 30, 30);
-		
+
 		// draw the scroller
 		g.setColor(Color.darkGray);
-		g.fillRect(550,60,20,508);
+		g.fillRect(550, 60, 20, 508);
 		g.setColor(Color.lightGray);
-		g.fillRect(550,scrollerY,20,50);
+		g.fillRect(550, scrollerY, 20, 50);
 
 		// draw the achievement tiles
 		g.setColor(Color.blue);

@@ -6,9 +6,11 @@ import java.awt.Graphics;
 import com.ziamor.runner.GameObject;
 import com.ziamor.runner.screens.GamePlayScreen;
 
-public class Hazard extends GameObject{
+public class Spikes extends GameObject{
 	
-	public Hazard() {
+	public Spikes(int x, int y) {
+		this.x = x;
+		this.y = y;
 		this.objID = "hazard";
 		width = 32;
 		height = 16;

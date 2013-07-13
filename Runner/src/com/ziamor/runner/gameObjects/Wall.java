@@ -8,7 +8,9 @@ import com.ziamor.runner.screens.GamePlayScreen;
 
 public class Wall extends GameObject {
 
-	public Wall() {
+	public Wall(int x, int y) {
+		this.x = x;
+		this.y = y;
 		this.objID = "wall";
 		width = 32;
 		height = 48;
