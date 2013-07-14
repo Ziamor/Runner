@@ -84,7 +84,7 @@ public class Level {
 		if (levelData != null) {
 			int x = 0;
 			int y = 0;
-
+			
 			for (char c : levelData.toCharArray()) {
 				if (c == '|') {
 					x = 0;
