@@ -12,8 +12,10 @@ public class Star extends GameObject {
 		this.x = x + 4;
 		this.y = y;
 		this.objID = "star";
+		this.spriteID = "star";
 		width = 24;
 		height = 24;
+		loadSprite();
 
 	}
 
@@ -30,10 +32,7 @@ public class Star extends GameObject {
 		if (!isVisible || offScreen)
 			return;
 
-		g.setColor(new Color(230, 230, 0, 255));
-		g.fillRect(x - GamePlayScreen.viewX, y - GamePlayScreen.viewY, width,
-				height);
-
+	    g.drawImage(sprite, x - GamePlayScreen.viewX, y - GamePlayScreen.viewY, null);
 	}
 
 }

@@ -85,6 +85,8 @@ public class Player extends GameObject {
 				yspeedDouble = (yspeedDouble - 1) * 0.8;
 			else
 				yspeedDouble -= 0.2;
+			if (yspeedDouble < -10) // yspeed cap
+				yspeedDouble = -10;
 			int yspeed = ((int) yspeedDouble); // make yspeed an int
 			if (x > GamePlayScreen.endPortalX + 32)
 				xspeed += -1;
@@ -95,6 +97,10 @@ public class Player extends GameObject {
 			y += yspeed; // update y
 			return; // don't complete the rest of the update()
 		}
+		
+		// ****************************************************
+		// everything below here is for regular player movement
+		// ****************************************************
 
 		// make the player move forward
 		if (xspeed > 5) {
@@ -238,7 +244,7 @@ public class Player extends GameObject {
 		}
 
 		// kill the player if he is too low or too high
-		if (y > GamePlayScreen.levelHeight || y < -48) {
+		if (y > GamePlayScreen.levelHeight || y < -200) {
 			GamePlayScreen.playerDead = true;
 			xspeed = 0;
 			yspeedDouble = -13;
