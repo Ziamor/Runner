@@ -92,15 +92,14 @@ public class GamePlayScreen extends GameScreen {
 
 		if (playerDead) {
 			playerDeadTimer++;
-			if (playerDeadTimer == 100) { // shortly after the player dies
-				// go back to the main menu screen
-				// (eventually there will be a death screen)
-				Runner._gameScreenManager.addScreen(new MainMenuScreen());
-				Runner._gameScreenManager.removeScreen(this);
+			if (Player.y > levelHeight + 100) { // shortly after the player dies
+				// go to the death screen
+				Runner._gameScreenManager.addScreen(new DeathScreen());
+				this.setBlockUpdate(false); // freeze game objects
 			}
 		}
 
-		if (levelComplete && Player.y < viewY - 48) {
+		if (levelComplete && Player.y < viewY - 500) {
 			levelCompleteSplash = true;
 		}
 
@@ -115,12 +114,9 @@ public class GamePlayScreen extends GameScreen {
 			if (Runner.stars > Runner.starsHigh[Runner.world][Runner.level])
 				Runner.starsHigh[Runner.world][Runner.level] = Runner.stars;
 
-			// eventually,
-			// we'll have some sort of
-			// completion splash screen
-
-			Runner._gameScreenManager.addScreen(new LevelSelectScreen());
-			Runner._gameScreenManager.removeScreen(this);
+			// go to the level complete screen
+			Runner._gameScreenManager.addScreen(new LevelCompleteScreen());
+			this.setBlockUpdate(false); // freeze game objects
 		}
 
 	}

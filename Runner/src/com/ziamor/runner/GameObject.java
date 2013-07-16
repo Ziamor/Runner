@@ -19,6 +19,7 @@ import com.ziamor.runner.screens.GamePlayScreen;
 public class GameObject {
 
 	protected String objID;
+	protected String spriteID;
 	protected int x;
 	protected int y;
 	protected int width;
@@ -109,12 +110,15 @@ public class GameObject {
 	}
 
 	public void loadSprite() {
+		// load the file as a buffered image
 		BufferedImage img = null;
 		try {
-			img = ImageIO.read(new File("res\\sprites\\star.png"));
+			String fileName = "res\\sprites\\" + spriteID + ".png";
+			img = ImageIO.read(new File(fileName));
 		} catch (IOException e) {
 		}
 
+		// defines the filter
 		ImageFilter filter = new RGBImageFilter() {
 			public final int filterRGB(int x, int y, int rgb) {
 				if (rgb == 0xFFFFFFFF)
@@ -123,15 +127,19 @@ public class GameObject {
 					return rgb;
 			}
 		};
-
+		
+		// filters the buffered image to make all white pixels transparent
 		ImageProducer ip = new FilteredImageSource(img.getSource(), filter);
 		Image image = Toolkit.getDefaultToolkit().createImage(ip);
 
+		// converts the image back to a buffered image
 		BufferedImage dest = new BufferedImage(32, 32,
 				BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2 = dest.createGraphics();
 		g2.drawImage(image, 0, 0, null);
 		g2.dispose();
+		
+		// sets the buffered image as the sprite
 		sprite = dest;
 
 	}

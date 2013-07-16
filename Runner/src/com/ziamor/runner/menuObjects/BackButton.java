@@ -31,9 +31,8 @@ public class BackButton extends GameObject {
 				int size = GameScreenManager.getGameScreens().size();
 				Runner._gameScreenManager.addScreen(new LevelSelectScreen());
 				// clear the GamePauseScreen and GamePlayScreen
-				for (int i = 0; i < size; i++) {
+				for (int i = 0; i < size; i++)
 					GameScreenManager.getGameScreens().remove(0);
-				}
 			}
 
 			parent.setRemove(true);
