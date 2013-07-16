@@ -5,13 +5,10 @@ import java.awt.Graphics;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import com.ziamor.runner.GameObject;
 import com.ziamor.runner.GameScreen;
-import com.ziamor.runner.GameScreenManager;
 import com.ziamor.runner.InputManager;
 import com.ziamor.runner.Runner;
-import com.ziamor.runner.gameObjects.levels.Level;
-import com.ziamor.runner.menuObjects.BackButton;
+import com.ziamor.runner.gameObjects.levels.TextLevel;
 
 public class LevelEditScreen extends GameScreen {
 
@@ -27,7 +24,7 @@ public class LevelEditScreen extends GameScreen {
 	public LevelEditScreen() {
 		this.setBlockRender(true);
 		this.setBlockUpdate(true);
-		map = Level.loadLevelToEdit();
+		map = TextLevel.loadLevelToEdit();
 		selectedTile = 1;
 	}
 

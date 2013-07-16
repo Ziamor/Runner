@@ -10,11 +10,16 @@ import java.util.List;
 
 import com.ziamor.runner.GameObject;
 import com.ziamor.runner.Runner;
-import com.ziamor.runner.gameObjects.*;
+import com.ziamor.runner.gameObjects.BreakableWall;
+import com.ziamor.runner.gameObjects.Coin;
+import com.ziamor.runner.gameObjects.Player;
+import com.ziamor.runner.gameObjects.Portal;
+import com.ziamor.runner.gameObjects.Star;
+import com.ziamor.runner.gameObjects.Wall;
 import com.ziamor.runner.screens.GamePlayScreen;
 import com.ziamor.runner.screens.LevelEditScreen;
 
-public class Level {
+public class TextLevel {
 	private static final int _tileWidth = 32; // Temp width for the game;
 	private static final int _tileHeight = 24; // Temp height for the game;
 

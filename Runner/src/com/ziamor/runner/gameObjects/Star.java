@@ -17,6 +17,10 @@ public class Star extends GameObject {
 
 	}
 
+	public Star() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void update() {
 
 	}

@@ -3,7 +3,6 @@ package com.ziamor.runner;
 import java.awt.Graphics;
 
 import com.ziamor.runner.screens.GamePlayScreen;
-
 public class GameObject {
 
 	protected String objID;
@@ -17,24 +16,21 @@ public class GameObject {
 	protected boolean isActive = true;
 	protected boolean offScreen = false;
 	protected GameScreen parent;
-	
-	public GameObject(int x, int y)
-	{
+
+	public GameObject(int x, int y, GameScreen parent) {
 		this.x = x;
 		this.y = y;
-		this.parent = null;
-	}
-	
-	public GameObject()
-	{
-		this.parent = null;
-	}
-	
-	public GameObject(GameScreen parent)
-	{
 		this.parent = parent;
 	}
-	
+
+	public GameObject() {
+		this.parent = null;
+	}
+
+	public GameObject(GameScreen parent) {
+		this.parent = parent;
+	}
+
 	public String getObjID() {
 		return objID;
 	}
@@ -55,6 +51,10 @@ public class GameObject {
 		y = value;
 	}
 
+	public void setParent(GameScreen value) {
+		parent = value;
+	}
+	
 	public int getWidth() {
 		return width;
 	}
@@ -62,7 +62,7 @@ public class GameObject {
 	public void setWidth(int value) {
 		width = value;
 	}
-	
+
 	public int getHeight() {
 		return height;
 	}
@@ -70,7 +70,7 @@ public class GameObject {
 	public void setHeight(int value) {
 		height = value;
 	}
-	
+
 	public boolean isVisible() {
 		return isVisible;
 	}
@@ -78,7 +78,7 @@ public class GameObject {
 	public void setVisible(boolean isVisible) {
 		this.isVisible = isVisible;
 	}
-	
+
 	public boolean isActive() {
 		return isActive;
 	}
@@ -86,18 +86,16 @@ public class GameObject {
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}
-	
+
 	public void update() {
 	}
 
 	public void paintComponent(Graphics g) {
 		// don't draw objects that aren't on the screen
-		if (x > GamePlayScreen.viewX+800)
+		if (x > GamePlayScreen.viewX + 800)
 			offScreen = true;
 		else
 			offScreen = false;
 	}
-	
 
-	
 }

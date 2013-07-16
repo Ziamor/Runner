@@ -3,8 +3,6 @@ package com.ziamor.runner;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
-import com.ziamor.runner.gameObjects.Fireball;
-
 public class GameScreen {
 	private boolean blockRender;
 	private boolean blockUpdate;

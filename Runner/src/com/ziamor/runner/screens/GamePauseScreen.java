@@ -3,7 +3,6 @@ package com.ziamor.runner.screens;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import com.ziamor.runner.GameObject;
 import com.ziamor.runner.GameScreen;
 import com.ziamor.runner.GameScreenManager;
 import com.ziamor.runner.InputManager;

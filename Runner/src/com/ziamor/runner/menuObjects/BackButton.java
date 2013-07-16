@@ -5,9 +5,10 @@ import java.awt.Graphics;
 
 import com.ziamor.runner.GameObject;
 import com.ziamor.runner.GameScreenManager;
-import com.ziamor.runner.InputManager;
 import com.ziamor.runner.Runner;
-import com.ziamor.runner.screens.*;
+import com.ziamor.runner.screens.LevelSelectScreen;
+import com.ziamor.runner.screens.MainMenuScreen;
+import com.ziamor.runner.screens.WorldSelectScreen;
 
 public class BackButton extends GameObject {
 

@@ -31,6 +31,10 @@ public class BreakableWall extends GameObject {
 		particleYSpeed = new int[96];
 	}
 
+	public BreakableWall() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void update() {
 		if (!isActive && isVisible) {
 			if (!startBreak) {

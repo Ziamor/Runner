@@ -3,8 +3,6 @@ package com.ziamor.runner;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
-import com.ziamor.runner.gameObjects.Player;
-
 public class CollisionHandler {
 
 	public static boolean isColliding(GameObject gobj1, GameObject gobj2) {

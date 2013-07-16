@@ -18,6 +18,10 @@ public class Coin extends GameObject {
 		height = 16;
 	}
 
+	public Coin() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void update() {
 		// make the coin fade away if the player picked it up
 		if (!isActive && isVisible) {

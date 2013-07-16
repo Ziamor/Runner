@@ -1,9 +1,5 @@
 package com.ziamor.runner;
 
-import java.awt.DisplayMode;
-import java.awt.MouseInfo;
-import java.awt.Point;
-import java.awt.PointerInfo;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;

@@ -8,7 +8,7 @@ import com.ziamor.runner.GameObject;
 import com.ziamor.runner.GameScreen;
 import com.ziamor.runner.InputManager;
 import com.ziamor.runner.Runner;
-import com.ziamor.runner.screens.*;
+import com.ziamor.runner.screens.GamePlayScreen;
 
 public class Player extends GameObject {
 
@@ -253,18 +253,18 @@ public class Player extends GameObject {
 				}
 			}
 		}
-		
+
 		// collect any stars that the player is touching
-				for (GameObject gameObject : this.parent.getGameObjectsByID("star")) {
-					if (CollisionHandler.isColliding(this, gameObject)) {
-						if (gameObject.isActive() == true) {
-							gameObject.setActive(false); // make the coin inactive
-							gameObject.setVisible(false);
-							Runner.score += 10000;
-							Runner.stars++;
-						}
-					}
+		for (GameObject gameObject : this.parent.getGameObjectsByID("star")) {
+			if (CollisionHandler.isColliding(this, gameObject)) {
+				if (gameObject.isActive() == true) {
+					gameObject.setActive(false); // make the coin inactive
+					gameObject.setVisible(false);
+					Runner.score += 10000;
+					Runner.stars++;
 				}
+			}
+		}
 
 		// check if the player is touching any hazards
 		for (GameObject gameObject : this.parent.getGameObjectsByID("hazard")) {

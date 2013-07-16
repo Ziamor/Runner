@@ -3,12 +3,12 @@ package com.ziamor.runner.screens;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import com.ziamor.runner.GameObject;
 import com.ziamor.runner.GameScreen;
 import com.ziamor.runner.InputManager;
 import com.ziamor.runner.Runner;
-import com.ziamor.runner.menuObjects.*;
-import com.ziamor.runner.screens.*;
+import com.ziamor.runner.menuObjects.AchieveButton;
+import com.ziamor.runner.menuObjects.BackButton;
+import com.ziamor.runner.menuObjects.WorldSelectButton;
 
 public class WorldSelectScreen extends GameScreen {
 

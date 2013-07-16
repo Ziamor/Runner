@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import com.ziamor.runner.GameObject;
+import com.ziamor.runner.GameScreen;
 import com.ziamor.runner.screens.GamePlayScreen;
 
 public class Wall extends GameObject {
@@ -11,6 +12,14 @@ public class Wall extends GameObject {
 	public Wall(int x, int y) {
 		this.x = x;
 		this.y = y;
+		this.objID = "wall";
+		width = 32;
+		height = 48;
+	}
+
+	public Wall() {
+		this.x = -1;
+		this.y = -1;
 		this.objID = "wall";
 		width = 32;
 		height = 48;
