@@ -238,7 +238,7 @@ public class Player extends GameObject {
 		}
 
 		// kill the player if he is too low or too high
-		if (y > GamePlayScreen.levelHeight || y < -48) {
+		if (y > GamePlayScreen.levelHeight || y < -200) {
 			GamePlayScreen.playerDead = true;
 			xspeed = 0;
 			yspeedDouble = -13;
