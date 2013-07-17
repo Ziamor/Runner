@@ -35,9 +35,11 @@ public class GamePlayScreen extends GameScreen {
 		Runner.score = 0; // initialize score
 		Runner.stars = 0; // initialize stars
 
+		LevelParser.saveLevel(LevelParser.loadLevel());
 		//this.addGameObject(TextLevel.loadLevel());
-		this.addGameObject(LevelParser.loadLevel(this));
-
+		this.addGameObject(LevelParser.loadLevel());
+		
+		
 		// initialize view
 		viewX = Player.x - 64;
 		viewY = Player.yStart - 250;
@@ -62,26 +64,26 @@ public class GamePlayScreen extends GameScreen {
 		// if the user enters editor mode
 		if (Runner._input.isKeyHit(InputManager._keys.get("L"))) {
 			Runner._gameScreenManager.addScreen(new LevelEditScreen());
-			LevelEditScreen.viewX = GamePlayScreen.viewX;
-			LevelEditScreen.viewY = GamePlayScreen.viewY;
+			//LevelEditScreen.offX = GamePlayScreen.offX;
+			//LevelEditScreen.offY = GamePlayScreen.offY;
 			this.setRemove(true); // removes this screen
 		}
 
 		// move the view smoothly
 		if (!playerDead && !preLevel) {
 			// the view won't go past the end portal
-			int viewXDest = Player.x - 40;
+			int offXDest = Player.x - 40;
 			if (Player.x > endPortalX - 582)
-				viewXDest = endPortalX - 582;
-			viewX += (int) ((viewXDest - viewX) / 10);
+				offXDest = endPortalX - 582;
+			viewX += (int) ((offXDest - viewX) / 10);
 
-			int viewYDest = Player.y - 250;
-			if (viewYDest > levelHeight - 529) // if too low
-				viewYDest = levelHeight - 529;
-			if (viewYDest < 0) // if too high
-				viewYDest = 0;
+			int offYDest = Player.y - 250;
+			if (offYDest > levelHeight - 529) // if too low
+				offYDest = levelHeight - 529;
+			if (offYDest < 0) // if too high
+				offYDest = 0;
 			if (!levelComplete) // if player isn't in endPortal
-				viewY += (int) ((viewYDest - viewY) / 20);
+				viewY += (int) ((offYDest - viewY) / 20);
 		}
 
 		if (playerDead) {

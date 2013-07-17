@@ -12,6 +12,7 @@ public class Spikes extends GameObject{
 		this.x = x;
 		this.y = y;
 		this.objID = "hazard";
+		this.gobjFactorty = GameObjectFactory.SPIKES;
 		width = 32;
 		height = 16;
 	}

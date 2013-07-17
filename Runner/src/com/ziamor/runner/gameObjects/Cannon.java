@@ -14,10 +14,10 @@ public class Cannon extends GameObject {
 		this.x = x;
 		this.y = y;
 		this.objID = "cannon";
+		this.gobjFactorty = GameObjectFactory.CANNON;
 		width = 32;
 		height = 24;
-		
-		
+
 	}
 
 	public void update() {
@@ -25,7 +25,7 @@ public class Cannon extends GameObject {
 		shotTimer++;
 
 		if (shotTimer > 80 && !offScreen) {
-			parent.addGameObject(new Fireball(x+8, y+4, -5, -8));
+			parent.addGameObject(new Fireball(x + 8, y + 4, -5, -8));
 			shotTimer = 0;
 		}
 

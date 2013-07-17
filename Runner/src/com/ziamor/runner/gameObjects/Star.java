@@ -13,6 +13,7 @@ public class Star extends GameObject {
 		this.y = y;
 		this.objID = "star";
 		this.spriteID = "star";
+		this.gobjFactorty = GameObjectFactory.STAR;
 		width = 24;
 		height = 24;
 		loadSprite();

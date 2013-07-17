@@ -4,11 +4,17 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
+import com.ziamor.runner.GameObject;
 import com.ziamor.runner.GameScreen;
 import com.ziamor.runner.InputManager;
 import com.ziamor.runner.Runner;
+import com.ziamor.runner.gameObjects.GameObjectFactory;
+import com.ziamor.runner.gameObjects.Player;
+import com.ziamor.runner.gameObjects.levels.LevelParser;
 import com.ziamor.runner.gameObjects.levels.TextLevel;
+import com.ziamor.runner.menuObjects.LevelEditOverlay;
 
 public class LevelEditScreen extends GameScreen {
 
@@ -16,21 +22,22 @@ public class LevelEditScreen extends GameScreen {
 	public static int viewY;
 	public static int levelWidth;
 	public static int levelHeight;
-	private int[][] map;
 	private int startPortalX;
 	private int endPortalX;
 	private int selectedTile;
 
-	public LevelEditScreen() {
+	public LevelEditScreen(){		
 		this.setBlockRender(true);
 		this.setBlockUpdate(true);
-		map = TextLevel.loadLevelToEdit();
+		this.gameObjects = LevelParser.loadLevel();
+		Player.y = Player.yStart;
+		this.gameObjects.add(new LevelEditOverlay(0,608));
 		selectedTile = 1;
 	}
 
 	public void update() {
 		// call the gameScreen update();
-		super.update();
+		//super.update();
 		if (!getBlockUpdate())
 			return;
 
@@ -59,14 +66,18 @@ public class LevelEditScreen extends GameScreen {
 		if (levelHeight > 50 * 24)
 			levelHeight = 50 * 24;
 
+		GamePlayScreen.viewX = LevelEditScreen.viewX;
+		GamePlayScreen.viewY = LevelEditScreen.viewY;
+		
 		// if the user clicks
 		if (Runner._input.isMouseClicked()) {
 			// put a tile onto the map
 			int x = (int) (InputManager.mouse_x + viewX) / 32;
 			int y = (int) (InputManager.mouse_y + viewY) / 24;
-			if (Runner._input.isMouseClicked(-viewX, -viewY, levelWidth * 32,
-					levelHeight * 24) && InputManager.mouse_y < 548)
-				map[x][y] = selectedTile;
+			/*if (Runner._input.isMouseClicked(-viewX, -viewY, levelWidth * 32,
+					levelHeight * 24) && InputManager.mouse_y < 548)*/
+				gameObjects.add(GameObjectFactory.getById(selectedTile).create(
+						x * 32, y * 24));
 			// select a different tile
 			if (InputManager.mouse_y > 548) {
 				for (int tile = 1; tile < 10; tile++) {
@@ -78,54 +89,55 @@ public class LevelEditScreen extends GameScreen {
 			}
 		}
 
-		if (Runner._input.isMouseClickedRight()) {
+		/*if (Runner._input.isMouseClickedRight()) {
 			// remove a tile from the map
 			int x = (int) (InputManager.mouse_x + viewX) / 32;
 			int y = (int) (InputManager.mouse_y + viewY) / 24;
 			if (Runner._input.isMouseClickedRight(-viewX, -viewY,
 					levelWidth * 32, levelHeight * 24)
 					&& InputManager.mouse_y < 548)
-				map[x][y] = 0;
+				;//map[x][y] = 0;
 		}
 
+		/*
+		 * // when the user presses "escape", save and play if
+		 * (Runner._input.isKeyPressed(InputManager._keys.get("escape"))) {
+		 * FileWriter writer = null; try { String fileName = "res\\maps\\" +
+		 * Runner.world + "-" + Runner.level; String newLine =
+		 * System.getProperty("line.separator"); writer = new
+		 * FileWriter(fileName); for (int y = 0; y < levelHeight / 24; y++) {
+		 * for (int x = 0; x < levelWidth / 32; x++) { writer.write(map[x][y] +
+		 * ","); } writer.write("|" + newLine); }
+		 * 
+		 * writer.flush(); writer.close(); } catch (IOException e) {
+		 * e.printStackTrace(); } finally { try { // Close the writer regardless
+		 * of what happens... writer.close(); } catch (Exception e) { } }
+		 * 
+		 * // go to the GamePlayScreen Runner._gameScreenManager.addScreen(new
+		 * GamePlayScreen()); Runner._gameScreenManager.removeScreen(this); }
+		 *
 		// when the user presses "escape", save and play
 		if (Runner._input.isKeyPressed(InputManager._keys.get("escape"))) {
-			FileWriter writer = null;
-			try {
-				String fileName = "res\\maps\\" + Runner.world + "-"
-						+ Runner.level;
-				String newLine = System.getProperty("line.separator");
-				writer = new FileWriter(fileName);
-				for (int y = 0; y < levelHeight / 24; y++) {
-					for (int x = 0; x < levelWidth / 32; x++) {
-						writer.write(map[x][y] + ",");
-					}
-					writer.write("|" + newLine);
-				}
-
-				writer.flush();
-				writer.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					// Close the writer regardless of what happens...
-					writer.close();
-				} catch (Exception e) {
+			ArrayList<GameObject> GameObjectData = new ArrayList<GameObject>();
+			for (int y = 0; y < levelHeight / 24; y++) {
+				for (int x = 0; x < levelWidth / 32; x++) {
+					//GameObject gobj = GameObjectFactory.getById(map[x][y])
+					//		.create(x * 32, y * 24);
+					
+					//GameObjectData.add(gobj);
 				}
 			}
-
+			//LevelParser.saveLevel(GameObjectData);
 			// go to the GamePlayScreen
 			Runner._gameScreenManager.addScreen(new GamePlayScreen());
 			Runner._gameScreenManager.removeScreen(this);
 		}
-
+*/
 		startPortalX = -1;
 		endPortalX = -1;
 	}
 
 	public void paintComponent(Graphics g) {
-
 		// draw the grid
 		for (int x = 0; x < levelWidth / 32; x++) {
 			for (int y = 0; y < levelHeight / 24; y++) {
@@ -141,11 +153,7 @@ public class LevelEditScreen extends GameScreen {
 		}
 
 		// draw the tiles
-		for (int x = 0; x < levelWidth / 32; x++) {
-			for (int y = 0; y < levelHeight / 24; y++) {
-				drawTile(map[x][y], x * 32 - viewX, y * 24 - viewY, g);
-			}
-		}
+
 
 		// draw the portals last so they are on top
 		g.setColor(new Color(0, 255, 255, 100));
@@ -154,7 +162,7 @@ public class LevelEditScreen extends GameScreen {
 		if (endPortalX != -1)
 			g.fillRect(endPortalX, -viewY, 96, levelHeight);
 
-		// draw the borders
+		/*// draw the borders
 		g.setColor(Color.darkGray);
 		g.fillRect(0, 0, -viewX, 608);
 		g.fillRect(0, 0, 720, -viewY);
@@ -170,7 +178,7 @@ public class LevelEditScreen extends GameScreen {
 		g.setColor(Color.yellow);
 		g.drawRect(selectedTile * 50 - 43, 551, 37, 53);
 		g.drawRect(selectedTile * 50 - 44, 550, 39, 55);
-
+*/
 		// call the gameScreen paintComponent(g);
 		super.paintComponent(g);
 
@@ -203,7 +211,7 @@ public class LevelEditScreen extends GameScreen {
 			g.fillRect(x + 7, y + 21, 18, 6);
 		} else if (id == 6) { // star
 			g.setColor(new Color(230, 230, 0, 255));
-			g.fillRect(x+4, y, 24, 24); 
+			g.fillRect(x + 4, y, 24, 24);
 		}
 	}
 }

@@ -14,6 +14,7 @@ public class Coin extends GameObject {
 		this.x = x + 8;
 		this.y = y + 4;
 		this.objID = "coin";
+		this.gobjFactorty = GameObjectFactory.COIN;
 		width = 16;
 		height = 16;
 	}

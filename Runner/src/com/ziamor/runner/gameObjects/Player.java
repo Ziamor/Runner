@@ -26,6 +26,7 @@ public class Player extends GameObject {
 		Player.y = GamePlayScreen.levelHeight;
 		Player.yStart = yStart;
 		this.objID = "player";
+		this.gobjFactorty = GameObjectFactory.PLAYER;
 		width = 32;
 		height = 48;
 

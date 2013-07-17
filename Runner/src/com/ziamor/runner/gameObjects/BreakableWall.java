@@ -20,6 +20,7 @@ public class BreakableWall extends GameObject {
 		this.x = x;
 		this.y = y;
 		this.objID = "breakablewall";
+		this.gobjFactorty = GameObjectFactory.BREAKABLE_WALL;
 		width = 32;
 		height = 48;
 

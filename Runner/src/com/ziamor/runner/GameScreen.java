@@ -7,12 +7,16 @@ public class GameScreen {
 	private boolean blockRender;
 	private boolean blockUpdate;
 	private boolean remove;
+	public int offX;
+	public int offY;
 	protected ArrayList<GameObject> gameObjects;
 	protected ArrayList<GameObject> objectsToAdd;
 
 	public GameScreen() {
 		gameObjects = new ArrayList<GameObject>();
 		objectsToAdd = new ArrayList<GameObject>();
+		offX = 0;
+		offY = 0;
 	}
 
 	public void setBlockRender(boolean value) {
@@ -30,7 +34,17 @@ public class GameScreen {
 	public boolean getBlockUpdate() {
 		return this.blockUpdate;
 	}
-
+	
+	public void setOffX(int value)
+	{
+		offX = value;
+	}
+	
+	public void setOffY(int value)
+	{
+		offY = value;
+	}
+	
 	public void addGameObject(GameObject gobj) {
 		gobj.parent = this;
 		objectsToAdd.add(gobj);

@@ -41,11 +41,11 @@ public class TextLevel {
 					level.add(new Wall(x, y));
 					x = x + _tileWidth;
 				} else if (c == '2') {
-					level.add(new Portal(x - 32));
+					level.add(new Portal(x - 32, false));
 					level.add(new Player(x, y));
 					x = x + _tileWidth;
 				} else if (c == '3') {
-					level.add(new Portal(x - 32));
+					level.add(new Portal(x - 32, true));
 					GamePlayScreen.endPortalX = x - 32;
 					x = x + _tileWidth;
 				} else if (c == '4') {
@@ -89,7 +89,7 @@ public class TextLevel {
 		if (levelData != null) {
 			int x = 0;
 			int y = 0;
-			
+
 			for (char c : levelData.toCharArray()) {
 				if (c == '|') {
 					x = 0;

@@ -14,6 +14,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.ziamor.runner.gameObjects.GameObjectFactory;
 import com.ziamor.runner.screens.GamePlayScreen;
 
 public class GameObject {
@@ -31,25 +32,33 @@ public class GameObject {
 	protected boolean offScreen = false;
 	protected GameScreen parent;
 	protected BufferedImage sprite;
-
+	protected GameObjectFactory gobjFactorty; 
+	
 	public GameObject(int x, int y) {
 		this.x = x;
 		this.y = y;
 		this.parent = null;
+		this.gobjFactorty = GameObjectFactory.BLANK;
 	}
 
 	public GameObject() {
 		this.parent = null;
+		this.gobjFactorty = GameObjectFactory.BLANK;
 	}
 
 	public GameObject(GameScreen parent) {
 		this.parent = parent;
+		this.gobjFactorty = GameObjectFactory.BLANK;
 	}
 
 	public String getObjID() {
 		return objID;
 	}
 
+	public GameObjectFactory getgobjFactorty() {
+		return gobjFactorty;
+	}
+	
 	public int getX() {
 		return x;
 	}

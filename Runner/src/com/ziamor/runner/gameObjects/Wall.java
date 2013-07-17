@@ -8,11 +8,12 @@ import com.ziamor.runner.GameScreen;
 import com.ziamor.runner.screens.GamePlayScreen;
 
 public class Wall extends GameObject {
-
+	
 	public Wall(int x, int y) {
 		this.x = x;
 		this.y = y;
 		this.objID = "wall";
+		this.gobjFactorty = GameObjectFactory.WALL;
 		width = 32;
 		height = 48;
 	}
@@ -21,6 +22,7 @@ public class Wall extends GameObject {
 		this.x = -1;
 		this.y = -1;
 		this.objID = "wall";
+		this.gobjFactorty = GameObjectFactory.WALL;
 		width = 32;
 		height = 48;
 	}

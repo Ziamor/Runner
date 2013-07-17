@@ -14,16 +14,20 @@ public class Portal extends GameObject {
 	private int[] particleXSpeed;
 	private int[] particleYSpeed;
 
-	public Portal(int x) {
+	public Portal(int x, boolean endPortal) {
 		this.objID = "portal";
+		if (endPortal)
+			this.gobjFactorty = GameObjectFactory.EPORTAL;
+		else
+			this.gobjFactorty = GameObjectFactory.SPORTAL;
 		width = 96;
 		height = 3000;
 
-		this.x = x;
+		this.x = x - 32;
 		y = -1000;
 
 		amount = 300;
-		
+
 		particleX = new int[amount];
 		particleY = new int[amount];
 		particleXSpeed = new int[amount];
@@ -43,7 +47,7 @@ public class Portal extends GameObject {
 			else
 				particleXSpeed[i] += 1;
 			if (particleY[i] < y) {
-				particleY[i] = (int) (y + height - Math.random()*100);
+				particleY[i] = (int) (y + height - Math.random() * 100);
 				particleYSpeed[i] = (int) (-(Math.random() * 3 + 2));
 			}
 			particleX[i] += particleXSpeed[i];
@@ -64,7 +68,10 @@ public class Portal extends GameObject {
 		for (int i = 0; i < amount; i++) {
 			g.fillRect(particleX[i] - GamePlayScreen.viewX, particleY[i]
 					- GamePlayScreen.viewY, 5, 5);
-		}
-
+		}		
+	}
+	@Override
+	public int getX() {
+		return x + 32;
 	}
 }
