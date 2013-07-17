@@ -118,7 +118,7 @@ public class Player extends GameObject {
 		boolean wallAbove = false;
 		y = y + 1; // change y to check for walls below
 		for (GameObject gobj : this.parent.getGameObjectsByID("wall",
-				"breakablewall")) {
+				"breakableWall")) {
 			if (CollisionHandler.isColliding(this, gobj) && gobj.isActive()) {
 				if (yspeedDouble > 0) // stop the player if moving down
 					yspeedDouble = 0;
@@ -127,7 +127,7 @@ public class Player extends GameObject {
 		}
 		y = y - 2; // change y to check for walls above
 		for (GameObject gobj : this.parent.getGameObjectsByID("wall",
-				"breakablewall")) {
+				"breakableWall")) {
 			if (CollisionHandler.isColliding(this, gobj) && gobj.isActive()) {
 				if (yspeedDouble < 0) // stop the player if moving down
 					yspeedDouble = 0;
@@ -215,11 +215,11 @@ public class Player extends GameObject {
 			collision = false;
 			// loop through every wall to check for collisions
 			for (GameObject gameObject : this.parent.getGameObjectsByID("wall",
-					"breakablewall")) {
+					"breakableWall")) {
 				if (CollisionHandler.isColliding(this, gameObject)
 						&& gameObject.isActive()) {
 					collision = true;
-					if (xspeed > 6 && gameObject.getObjID() == "breakablewall") {
+					if (xspeed > 6 && gameObject.getObjID() == "breakableWall") {
 						collision = false;
 						gameObject.setActive(false);
 					}

@@ -1,9 +1,9 @@
 package com.ziamor.runner.gameObjects;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 import com.ziamor.runner.GameObject;
+import com.ziamor.runner.SpriteCache;
 import com.ziamor.runner.screens.GamePlayScreen;
 
 public class Coin extends GameObject {
@@ -14,6 +14,9 @@ public class Coin extends GameObject {
 		this.x = x + 8;
 		this.y = y + 4;
 		this.objID = "coin";
+		this.spriteID = "coin";
+		spriteOffsetX = -2;
+		spriteOffsetY = -2;
 		width = 16;
 		height = 16;
 	}
@@ -39,14 +42,8 @@ public class Coin extends GameObject {
 		if (!isVisible || offScreen)
 			return;
 
-		g.setColor(new Color(230, 230, 0, alpha));
-		g.fillRect(x - GamePlayScreen.viewX + 1, y - GamePlayScreen.viewY + 1,
-				width - 2, height - 2);
-		g.fillRect(x - GamePlayScreen.viewX + 5, y - GamePlayScreen.viewY - 1,
-				width - 10, height + 2);
-		g.fillRect(x - GamePlayScreen.viewX - 1, y - GamePlayScreen.viewY + 5,
-				width + 2, height - 10);
-
+		g.drawImage(SpriteCache._sprites.get(spriteID), x - GamePlayScreen.viewX + spriteOffsetX,
+				y - GamePlayScreen.viewY + spriteOffsetY, null);
 	}
 
 }
