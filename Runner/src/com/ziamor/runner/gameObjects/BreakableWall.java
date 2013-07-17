@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import com.ziamor.runner.GameObject;
+import com.ziamor.runner.SpriteCache;
 import com.ziamor.runner.screens.GamePlayScreen;
 
 public class BreakableWall extends GameObject {
@@ -21,6 +22,8 @@ public class BreakableWall extends GameObject {
 		this.y = y;
 		this.objID = "breakablewall";
 		this.gobjFactorty = GameObjectFactory.BREAKABLE_WALL;
+		this.objID = "breakableWall";
+		this.spriteID = "breakableWall";
 		width = 32;
 		height = 48;
 
@@ -69,12 +72,8 @@ public class BreakableWall extends GameObject {
 			return;
 
 		if (!startBreak) { // if the wall is intact
-			g.setColor(Color.gray);
-			g.fillRect(x - GamePlayScreen.viewX, y - GamePlayScreen.viewY,
-					width, height);
-			g.setColor(Color.lightGray);
-			g.fillRect(x + 4 - GamePlayScreen.viewX, y + 4
-					- GamePlayScreen.viewY, width - 8, height - 8);
+			g.drawImage(SpriteCache._sprites.get(spriteID), x - GamePlayScreen.viewX + spriteOffsetX,
+					y - GamePlayScreen.viewY + spriteOffsetY, null);
 		} else { // else draw particles
 			for (int i = 0; i < 96; i++) {
 				g.setColor(new Color(150, 150, 150, alpha));

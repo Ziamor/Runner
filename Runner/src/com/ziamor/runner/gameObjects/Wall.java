@@ -5,6 +5,7 @@ import java.awt.Graphics;
 
 import com.ziamor.runner.GameObject;
 import com.ziamor.runner.GameScreen;
+import com.ziamor.runner.SpriteCache;
 import com.ziamor.runner.screens.GamePlayScreen;
 
 public class Wall extends GameObject {
@@ -14,6 +15,8 @@ public class Wall extends GameObject {
 		this.y = y;
 		this.objID = "wall";
 		this.gobjFactorty = GameObjectFactory.WALL;
+		this.spriteID = "basicWall";
+		spriteOffsetY = -4;
 		width = 32;
 		height = 48;
 	}
@@ -35,12 +38,8 @@ public class Wall extends GameObject {
 		if (!isVisible || offScreen)
 			return;
 
-		g.setColor(Color.black);
-		g.fillRect(x - GamePlayScreen.viewX, y - GamePlayScreen.viewY, width,
-				height);
-		g.setColor(Color.gray);
-		g.fillRect(x + 4 - GamePlayScreen.viewX, y + 4 - GamePlayScreen.viewY,
-				width - 8, height - 8);
+		g.drawImage(SpriteCache._sprites.get(spriteID), x - GamePlayScreen.viewX + spriteOffsetX,
+				y - GamePlayScreen.viewY + spriteOffsetY, null);
 
 	}
 

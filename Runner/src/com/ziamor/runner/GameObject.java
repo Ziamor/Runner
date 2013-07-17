@@ -1,6 +1,7 @@
 package com.ziamor.runner;
 
 import java.awt.Graphics;
+
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import com.ziamor.runner.gameObjects.GameObjectFactory;
+
 import com.ziamor.runner.screens.GamePlayScreen;
 
 public class GameObject {
@@ -25,15 +27,15 @@ public class GameObject {
 	protected int y;
 	protected int width;
 	protected int height;
-	protected int xOffset;
-	protected int yOffset;
+	protected int spriteOffsetX;
+	protected int spriteOffsetY;
 	protected boolean isVisible = true;
 	protected boolean isActive = true;
 	protected boolean offScreen = false;
 	protected GameScreen parent;
 	protected BufferedImage sprite;
 	protected GameObjectFactory gobjFactorty; 
-	
+
 	public GameObject(int x, int y) {
 		this.x = x;
 		this.y = y;
@@ -121,40 +123,5 @@ public class GameObject {
 		else
 			offScreen = false;
 	}
-
-
-	public void loadSprite() {
-		// load the file as a buffered image
-		BufferedImage img = null;
-		try {
-			String fileName = "res\\sprites\\" + spriteID + ".png";
-			img = ImageIO.read(new File(fileName));
-		} catch (IOException e) {
-		}
-
-		// defines the filter
-		ImageFilter filter = new RGBImageFilter() {
-			public final int filterRGB(int x, int y, int rgb) {
-				if (rgb == 0xFFFFFFFF)
-					return rgb & 0x00000000;
-				else
-					return rgb;
-			}
-		};
-		
-		// filters the buffered image to make all white pixels transparent
-		ImageProducer ip = new FilteredImageSource(img.getSource(), filter);
-		Image image = Toolkit.getDefaultToolkit().createImage(ip);
-
-		// converts the image back to a buffered image
-		BufferedImage dest = new BufferedImage(32, 32,
-				BufferedImage.TYPE_INT_ARGB);
-		Graphics2D g2 = dest.createGraphics();
-		g2.drawImage(image, 0, 0, null);
-		g2.dispose();
-		
-		// sets the buffered image as the sprite
-		sprite = dest;
-
-	}
+	
 }
