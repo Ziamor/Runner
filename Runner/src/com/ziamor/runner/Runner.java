@@ -46,7 +46,7 @@ public class Runner extends JPanel {
 		// Make the main menu screen
 		_gameScreenManager = new GameScreenManager();
 		_gameScreenManager.addScreen(new MainMenuScreen());
-
+		
 		// Start the game loop
 		Thread t = new Thread() {
 			public void run() {

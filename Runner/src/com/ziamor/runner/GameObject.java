@@ -1,22 +1,9 @@
 package com.ziamor.runner;
 
 import java.awt.Graphics;
-
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
-import java.awt.image.FilteredImageSource;
-import java.awt.image.ImageFilter;
-import java.awt.image.ImageProducer;
-import java.awt.image.RGBImageFilter;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import com.ziamor.runner.gameObjects.GameObjectFactory;
-
 import com.ziamor.runner.screens.GamePlayScreen;
 
 public class GameObject {
@@ -32,6 +19,7 @@ public class GameObject {
 	protected boolean isVisible = true;
 	protected boolean isActive = true;
 	protected boolean offScreen = false;
+	protected boolean isInterface = false;
 	protected GameScreen parent;
 	protected BufferedImage sprite;
 	protected GameObjectFactory gobjFactorty; 
@@ -113,6 +101,14 @@ public class GameObject {
 		this.isActive = isActive;
 	}
 
+	public boolean getIsInterface() {
+		return isInterface;
+	}
+
+	public void setIsInterface(boolean value) {
+		this.isInterface = value;
+	}
+	
 	public void update() {
 	}
 

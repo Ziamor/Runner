@@ -1,10 +1,8 @@
 package com.ziamor.runner.gameObjects;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 import com.ziamor.runner.GameObject;
-import com.ziamor.runner.GameScreen;
 import com.ziamor.runner.SpriteCache;
 import com.ziamor.runner.screens.GamePlayScreen;
 

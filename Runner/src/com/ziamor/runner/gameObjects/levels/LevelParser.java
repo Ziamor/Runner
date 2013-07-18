@@ -1,10 +1,8 @@
 package com.ziamor.runner.gameObjects.levels;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -16,14 +14,12 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import com.ziamor.runner.GameObject;
-import com.ziamor.runner.GameScreen;
 import com.ziamor.runner.Runner;
 import com.ziamor.runner.gameObjects.GameObjectFactory;
 import com.ziamor.runner.screens.GamePlayScreen;
@@ -161,7 +157,7 @@ public class LevelParser {
 				//Make sure the object we are saving is a valid game object
 				if(gobj.getgobjFactorty().getId() == -1)
 					continue;
-				
+	
 				// gobj elements
 				Element egobj = doc.createElement("GameObject");
 				rootElement.appendChild(egobj);
@@ -218,7 +214,7 @@ public class LevelParser {
 
 	public static ArrayList<GameObject> loadLevel() {
 		String fileName = "res\\maps\\" + Runner.world + "-" + Runner.level
-				+ ".xml";
+				+ ".backup.xml";
 		LevelParser lp = new LevelParser(fileName);
 
 		return lp.loadFromXML();

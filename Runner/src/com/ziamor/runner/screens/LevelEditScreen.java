@@ -2,8 +2,6 @@ package com.ziamor.runner.screens;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import com.ziamor.runner.GameObject;
@@ -12,8 +10,8 @@ import com.ziamor.runner.InputManager;
 import com.ziamor.runner.Runner;
 import com.ziamor.runner.gameObjects.GameObjectFactory;
 import com.ziamor.runner.gameObjects.Player;
+import com.ziamor.runner.gameObjects.Portal;
 import com.ziamor.runner.gameObjects.levels.LevelParser;
-import com.ziamor.runner.gameObjects.levels.TextLevel;
 import com.ziamor.runner.menuObjects.LevelEditOverlay;
 
 public class LevelEditScreen extends GameScreen {
@@ -22,22 +20,49 @@ public class LevelEditScreen extends GameScreen {
 	public static int viewY;
 	public static int levelWidth;
 	public static int levelHeight;
+	public static int selectedTile;
+	// private int spawnX, spawnY;
 	private int startPortalX;
 	private int endPortalX;
-	private int selectedTile;
+	private Portal startPortal;
+	private Portal endPortal;
+	private Player player;
+	private LevelEditOverlay levelOverLay;
+	private ArrayList<GameObject> gameObjectsData;
+	private GameObject gobjToRemove;
 
-	public LevelEditScreen(){		
+	public LevelEditScreen() {
 		this.setBlockRender(true);
 		this.setBlockUpdate(true);
-		this.gameObjects = LevelParser.loadLevel();
-		Player.y = Player.yStart;
-		this.gameObjects.add(new LevelEditOverlay(0,608));
+		this.setDisableUpdate(true);
+		this.levelOverLay = new LevelEditOverlay(0, 608);
+		this.levelOverLay.setIsInterface(true);
+		this.addGameObject(levelOverLay);
 		selectedTile = 1;
+		gameObjectsData = new ArrayList<GameObject>();
+
+		ArrayList<GameObject> pregameObjectsData = LevelParser.loadLevel();
+		for (GameObject gobj : pregameObjectsData) {
+			if (gobj.getObjID().equals("portal")) {
+				if (gobj.getgobjFactorty() == GameObjectFactory.SPORTAL)
+					// startPortalX = gobj.getX();
+					startPortal = (Portal) gobj;
+				else if (gobj.getgobjFactorty() == GameObjectFactory.EPORTAL)
+					// endPortalX = gobj.getX();
+					endPortal = (Portal) gobj;
+			} else if (gobj.getObjID().equals("player")) {
+				player = (Player) gobj;
+				// spawnX = player.getX();
+				// spawnY = player.getY();
+				// gameObjectsData.add(gobj);
+			} else
+				gameObjectsData.add(gobj);
+		}
 	}
 
 	public void update() {
 		// call the gameScreen update();
-		//super.update();
+		super.update();
 		if (!getBlockUpdate())
 			return;
 
@@ -68,73 +93,63 @@ public class LevelEditScreen extends GameScreen {
 
 		GamePlayScreen.viewX = LevelEditScreen.viewX;
 		GamePlayScreen.viewY = LevelEditScreen.viewY;
-		
+
 		// if the user clicks
 		if (Runner._input.isMouseClicked()) {
 			// put a tile onto the map
 			int x = (int) (InputManager.mouse_x + viewX) / 32;
 			int y = (int) (InputManager.mouse_y + viewY) / 24;
-			/*if (Runner._input.isMouseClicked(-viewX, -viewY, levelWidth * 32,
-					levelHeight * 24) && InputManager.mouse_y < 548)*/
-				gameObjects.add(GameObjectFactory.getById(selectedTile).create(
-						x * 32, y * 24));
-			// select a different tile
-			if (InputManager.mouse_y > 548) {
-				for (int tile = 1; tile < 10; tile++) {
-					if (Runner._input.isMouseClicked(tile * 50 - 40, 554, 32,
-							48)) {
-						selectedTile = tile;
-					}
-				}
+
+			if (Runner._input.isMouseClicked(levelOverLay))
+				levelOverLay.selectTile();
+			else {
+				if (selectedTile == GameObjectFactory.EPORTAL.getId())
+					startPortal = (Portal) GameObjectFactory.getById(
+							selectedTile).create(x * 32, y * 24);
+				else if (selectedTile == GameObjectFactory.SPORTAL.getId())
+					endPortal = (Portal) GameObjectFactory
+							.getById(selectedTile).create(x * 32, y * 24);
+				else if (selectedTile == GameObjectFactory.PLAYER.getId())
+					player = (Player) GameObjectFactory.getById(selectedTile)
+							.create(x * 32, y * 24);
+				else
+					gameObjectsData.add(GameObjectFactory.getById(selectedTile)
+							.create(x * 32, y * 24));
 			}
 		}
 
-		/*if (Runner._input.isMouseClickedRight()) {
-			// remove a tile from the map
-			int x = (int) (InputManager.mouse_x + viewX) / 32;
-			int y = (int) (InputManager.mouse_y + viewY) / 24;
-			if (Runner._input.isMouseClickedRight(-viewX, -viewY,
-					levelWidth * 32, levelHeight * 24)
-					&& InputManager.mouse_y < 548)
-				;//map[x][y] = 0;
+		if (Runner._input.isMouseClickedRight()) { // remove a tile from the map
+			gobjToRemove = null;
+			for (GameObject gobj : gameObjectsData) {
+				int x = gobj.getX() - viewX;
+				int y = gobj.getY() - viewY;
+				int width = gobj.getWidth();
+				int height = gobj.getHeight();
+				if (Runner._input.isMouseClickedRight(x, y, width, height)) {
+					gobjToRemove = gobj;
+				}
+			}
 		}
-
-		/*
-		 * // when the user presses "escape", save and play if
-		 * (Runner._input.isKeyPressed(InputManager._keys.get("escape"))) {
-		 * FileWriter writer = null; try { String fileName = "res\\maps\\" +
-		 * Runner.world + "-" + Runner.level; String newLine =
-		 * System.getProperty("line.separator"); writer = new
-		 * FileWriter(fileName); for (int y = 0; y < levelHeight / 24; y++) {
-		 * for (int x = 0; x < levelWidth / 32; x++) { writer.write(map[x][y] +
-		 * ","); } writer.write("|" + newLine); }
-		 * 
-		 * writer.flush(); writer.close(); } catch (IOException e) {
-		 * e.printStackTrace(); } finally { try { // Close the writer regardless
-		 * of what happens... writer.close(); } catch (Exception e) { } }
-		 * 
-		 * // go to the GamePlayScreen Runner._gameScreenManager.addScreen(new
-		 * GamePlayScreen()); Runner._gameScreenManager.removeScreen(this); }
-		 *
+		if (gobjToRemove != null) {
+			gameObjectsData.remove(gobjToRemove);
+			gobjToRemove = null;
+		}
 		// when the user presses "escape", save and play
 		if (Runner._input.isKeyPressed(InputManager._keys.get("escape"))) {
-			ArrayList<GameObject> GameObjectData = new ArrayList<GameObject>();
-			for (int y = 0; y < levelHeight / 24; y++) {
-				for (int x = 0; x < levelWidth / 32; x++) {
-					//GameObject gobj = GameObjectFactory.getById(map[x][y])
-					//		.create(x * 32, y * 24);
-					
-					//GameObjectData.add(gobj);
-				}
-			}
-			//LevelParser.saveLevel(GameObjectData);
+			// player = new Player(64,192);
+			gameObjectsData.add(player);
+			// Portal sPortal = new Portal(player.getX(), player.getY(), false);
+			gameObjectsData.add(0, startPortal);
+			// Portal ePortal = new Portal(endPortalX, 600, true);
+			gameObjectsData.add(0, endPortal);
+			LevelParser.saveLevel(gameObjectsData);
 			// go to the GamePlayScreen
 			Runner._gameScreenManager.addScreen(new GamePlayScreen());
 			Runner._gameScreenManager.removeScreen(this);
+
+			startPortalX = -1;
+			endPortalX = -1;
 		}
-*/
-		startPortalX = -1;
-		endPortalX = -1;
 	}
 
 	public void paintComponent(Graphics g) {
@@ -153,65 +168,28 @@ public class LevelEditScreen extends GameScreen {
 		}
 
 		// draw the tiles
+		for (GameObject gobj : gameObjectsData)
+			gobj.paintComponent(g);
 
+		// Draw the player spawn
+		g.setColor(Color.blue);
+		g.fillRect(player.getX() - viewX, player.getY() - viewY, 32, 48);
+
+		// Draw end portal
+		g.setColor(Color.blue);
+		g.drawRect(endPortal.getX() + 2 - viewX, endPortal.getY() + 2 - viewY,
+				28, 44);
+		g.drawRect(endPortal.getX() + 4 - viewX, endPortal.getY() + 4 - viewY,
+				24, 40);
 
 		// draw the portals last so they are on top
-		g.setColor(new Color(0, 255, 255, 100));
-		if (startPortalX != -1)
-			g.fillRect(startPortalX, -viewY, 96, levelHeight);
-		if (endPortalX != -1)
-			g.fillRect(endPortalX, -viewY, 96, levelHeight);
+		/*
+		 * g.setColor(new Color(0, 255, 255, 100)); if (startPortalX != -1)
+		 * g.fillRect(startPortalX, -viewY, 96, levelHeight); if (endPortalX !=
+		 * -1) g.fillRect(endPortalX, -viewY, 96, levelHeight);
+		 */
 
-		/*// draw the borders
-		g.setColor(Color.darkGray);
-		g.fillRect(0, 0, -viewX, 608);
-		g.fillRect(0, 0, 720, -viewY);
-		g.fillRect(levelWidth - viewX, 0, 720 - levelWidth + viewX, 608);
-		g.fillRect(0, levelHeight - viewY, 720, 608 - levelHeight + viewY);
-
-		// draw the editor panel
-		g.setColor(new Color(200, 0, 200, 200));
-		g.fillRect(0, 608 - 60, 720, 60);
-		for (int tile = 1; tile < 10; tile++) {
-			drawTile(tile, tile * 50 - 40, 554, g);
-		}
-		g.setColor(Color.yellow);
-		g.drawRect(selectedTile * 50 - 43, 551, 37, 53);
-		g.drawRect(selectedTile * 50 - 44, 550, 39, 55);
-*/
 		// call the gameScreen paintComponent(g);
 		super.paintComponent(g);
-
-	}
-
-	private void drawTile(int id, int x, int y, Graphics g) {
-		if (id == 1) { // wall
-			g.setColor(Color.black);
-			g.fillRect(x, y, 32, 48);
-			g.setColor(Color.gray);
-			g.fillRect(x + 4, y + 4, 24, 40);
-		} else if (id == 2) { // player start position
-			g.setColor(Color.blue);
-			g.fillRect(x, y, 32, 48);
-			startPortalX = x - 32;
-		} else if (id == 3) { // end portal
-			g.setColor(Color.blue);
-			g.drawRect(x + 2, y + 2, 28, 44);
-			g.drawRect(x + 4, y + 4, 24, 40);
-			endPortalX = x - 32;
-		} else if (id == 4) { // breakable wall
-			g.setColor(Color.gray);
-			g.fillRect(x, y, 32, 48);
-			g.setColor(Color.lightGray);
-			g.fillRect(x + 4, y + 4, 24, 40);
-		} else if (id == 5) { // coin
-			g.setColor(new Color(230, 230, 0, 255));
-			g.fillRect(x + 9, y + 17, 14, 14);
-			g.fillRect(x + 13, y + 15, 6, 18);
-			g.fillRect(x + 7, y + 21, 18, 6);
-		} else if (id == 6) { // star
-			g.setColor(new Color(230, 230, 0, 255));
-			g.fillRect(x + 4, y, 24, 24);
-		}
 	}
 }

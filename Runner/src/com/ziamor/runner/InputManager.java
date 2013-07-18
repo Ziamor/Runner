@@ -8,7 +8,8 @@ import java.awt.event.MouseMotionListener;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InputManager implements KeyListener, MouseListener, MouseMotionListener {
+public class InputManager implements KeyListener, MouseListener,
+		MouseMotionListener {
 
 	private boolean[] key_pressed = new boolean[256];
 	private boolean[] key_released = new boolean[256];
@@ -68,6 +69,13 @@ public class InputManager implements KeyListener, MouseListener, MouseMotionList
 			return false;
 	}
 
+	public boolean isMouseClicked(GameObject gobj) {
+		if (gobj != null)
+			return isMouseClicked(gobj.getX(),gobj.getY(),gobj.getWidth(),gobj.getHeight());
+		else
+			return false;
+	}
+
 	public boolean isMouseClickedRight() {
 		return mouse_clickedRight;
 	}
@@ -80,10 +88,17 @@ public class InputManager implements KeyListener, MouseListener, MouseMotionList
 			return false;
 	}
 
+	public boolean isMouseClickedRight(GameObject gobj) {
+		if (gobj != null)
+			return isMouseClickedRight(gobj.getX(),gobj.getY(),gobj.getWidth(),gobj.getHeight());
+		else
+			return false;
+	}
+	
 	public boolean isMouseReleased() {
 		return mouse_released;
 	}
-	
+
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
@@ -142,9 +157,9 @@ public class InputManager implements KeyListener, MouseListener, MouseMotionList
 		else if (e.getButton() == 3)
 			mouse_releasedRight = true;
 	}
-	
+
 	public void update() {
-	
+
 		// clear mouse_clicked
 		mouse_clicked = false;
 		mouse_clickedRight = false;

@@ -2,14 +2,12 @@ package com.ziamor.runner.screens;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.logging.Level;
 
 import com.ziamor.runner.GameScreen;
 import com.ziamor.runner.InputManager;
 import com.ziamor.runner.Runner;
 import com.ziamor.runner.gameObjects.Player;
 import com.ziamor.runner.gameObjects.levels.LevelParser;
-import com.ziamor.runner.gameObjects.levels.TextLevel;
 
 public class GamePlayScreen extends GameScreen {
 
@@ -35,10 +33,7 @@ public class GamePlayScreen extends GameScreen {
 		Runner.score = 0; // initialize score
 		Runner.stars = 0; // initialize stars
 
-		LevelParser.saveLevel(LevelParser.loadLevel());
-		//this.addGameObject(TextLevel.loadLevel());
-		this.addGameObject(LevelParser.loadLevel());
-		
+		this.addGameObject(LevelParser.loadLevel());		
 		
 		// initialize view
 		viewX = Player.x - 64;

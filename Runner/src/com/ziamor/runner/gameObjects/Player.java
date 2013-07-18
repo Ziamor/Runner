@@ -5,7 +5,6 @@ import java.awt.Graphics;
 
 import com.ziamor.runner.CollisionHandler;
 import com.ziamor.runner.GameObject;
-import com.ziamor.runner.GameScreen;
 import com.ziamor.runner.InputManager;
 import com.ziamor.runner.Runner;
 import com.ziamor.runner.screens.GamePlayScreen;
@@ -21,10 +20,10 @@ public class Player extends GameObject {
 	private boolean gravitySwitchAble;
 	public static int yStart;
 
-	public Player(int x, int yStart) {
+	public Player(int x, int y) {
 		Player.x = x;
-		Player.y = GamePlayScreen.levelHeight;
-		Player.yStart = yStart;
+		Player.y = y;
+		Player.yStart = y;
 		this.objID = "player";
 		this.gobjFactorty = GameObjectFactory.PLAYER;
 		width = 32;

@@ -41,11 +41,11 @@ public class TextLevel {
 					level.add(new Wall(x, y));
 					x = x + _tileWidth;
 				} else if (c == '2') {
-					level.add(new Portal(x - 32, false));
+					level.add(new Portal(x - 32,500, false));
 					level.add(new Player(x, y));
 					x = x + _tileWidth;
 				} else if (c == '3') {
-					level.add(new Portal(x - 32, true));
+					level.add(new Portal(x - 32,500, true));
 					GamePlayScreen.endPortalX = x - 32;
 					x = x + _tileWidth;
 				} else if (c == '4') {

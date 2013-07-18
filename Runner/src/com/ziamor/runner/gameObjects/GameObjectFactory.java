@@ -1,7 +1,6 @@
 package com.ziamor.runner.gameObjects;
 
 import com.ziamor.runner.GameObject;
-import com.ziamor.runner.GameScreen;
 import com.ziamor.runner.screens.GamePlayScreen;
 
 public enum GameObjectFactory {
@@ -29,7 +28,7 @@ public enum GameObjectFactory {
 	SPORTAL(2) {
 		@Override
 		public GameObject create(int x, int y) {
-			return new Portal(x, false);
+			return new Portal(x, y, false);
 		}
 	},
 
@@ -37,7 +36,7 @@ public enum GameObjectFactory {
 		@Override
 		public GameObject create(int x, int y) {
 			GamePlayScreen.endPortalX = x - 32;
-			return new Portal(x, true);
+			return new Portal(x, y, true);
 		}
 	},
 	BREAKABLE_WALL(4) {

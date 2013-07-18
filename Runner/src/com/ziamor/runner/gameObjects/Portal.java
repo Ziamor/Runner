@@ -14,7 +14,7 @@ public class Portal extends GameObject {
 	private int[] particleXSpeed;
 	private int[] particleYSpeed;
 
-	public Portal(int x, boolean endPortal) {
+	public Portal(int x, int y, boolean endPortal) {
 		this.objID = "portal";
 		if (endPortal)
 			this.gobjFactorty = GameObjectFactory.EPORTAL;
@@ -24,7 +24,7 @@ public class Portal extends GameObject {
 		height = 3000;
 
 		this.x = x - 32;
-		y = -1000;
+		this.y = y;
 
 		amount = 300;
 
