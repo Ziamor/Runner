@@ -11,8 +11,10 @@ public class Coin extends GameObject {
 	private int alpha = 255;
 
 	public Coin(int x, int y) {
-		this.x = x + 8;
-		this.y = y + 4;
+		this.x = x;
+		this.y = y;
+		offsetX = 8;
+		offsetY = 4;
 		this.objID = "coin";
 		this.gobjFactorty = GameObjectFactory.COIN;
 		this.spriteID = "coin";
@@ -43,8 +45,9 @@ public class Coin extends GameObject {
 		if (!isVisible || offScreen)
 			return;
 
-		g.drawImage(SpriteCache._sprites.get(spriteID), x - GamePlayScreen.viewX + spriteOffsetX,
-				y - GamePlayScreen.viewY + spriteOffsetY, null);
+		g.drawImage(SpriteCache._sprites.get(spriteID), x
+				- GamePlayScreen.viewX + offsetX + spriteOffsetX, y
+				- GamePlayScreen.viewY + offsetY + spriteOffsetY, null);
 	}
 
 }

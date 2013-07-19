@@ -21,6 +21,7 @@ public class Player extends GameObject {
 	public static int yStart;
 
 	public Player(int x, int y) {
+		
 		Player.x = x;
 		Player.y = y;
 		Player.yStart = y;

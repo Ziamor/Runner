@@ -12,10 +12,10 @@ public enum GameObjectFactory {
 		}
 	},
 
-	PLAYER(0) {
+	SPORTAL(0) {
 		@Override
 		public GameObject create(int x, int y) {
-			return new Player(x, y);
+			return new Portal(x, y, false);
 		}
 	},
 	WALL(1) {
@@ -25,10 +25,10 @@ public enum GameObjectFactory {
 		}
 	},
 
-	SPORTAL(2) {
+	PLAYER(2) {
 		@Override
 		public GameObject create(int x, int y) {
-			return new Portal(x, y, false);
+			return new Player(x, y);
 		}
 	},
 

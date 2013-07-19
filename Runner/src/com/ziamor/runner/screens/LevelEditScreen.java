@@ -18,18 +18,15 @@ public class LevelEditScreen extends GameScreen {
 
 	public static int viewX;
 	public static int viewY;
-	public static int levelWidth;
-	public static int levelHeight;
 	public static int selectedTile;
-	// private int spawnX, spawnY;
-	private int startPortalX;
-	private int endPortalX;
-	private Portal startPortal;
-	private Portal endPortal;
-	private Player player;
+	public static int endPortalX;
+	public static int endPortalY;
+
 	private LevelEditOverlay levelOverLay;
 	private ArrayList<GameObject> gameObjectsData;
 	private GameObject gobjToRemove;
+
+	public static boolean editing;
 
 	public LevelEditScreen() {
 		this.setBlockRender(true);
@@ -39,25 +36,11 @@ public class LevelEditScreen extends GameScreen {
 		this.levelOverLay.setIsInterface(true);
 		this.addGameObject(levelOverLay);
 		selectedTile = 1;
-		gameObjectsData = new ArrayList<GameObject>();
 
-		ArrayList<GameObject> pregameObjectsData = LevelParser.loadLevel();
-		for (GameObject gobj : pregameObjectsData) {
-			if (gobj.getObjID().equals("portal")) {
-				if (gobj.getgobjFactorty() == GameObjectFactory.SPORTAL)
-					// startPortalX = gobj.getX();
-					startPortal = (Portal) gobj;
-				else if (gobj.getgobjFactorty() == GameObjectFactory.EPORTAL)
-					// endPortalX = gobj.getX();
-					endPortal = (Portal) gobj;
-			} else if (gobj.getObjID().equals("player")) {
-				player = (Player) gobj;
-				// spawnX = player.getX();
-				// spawnY = player.getY();
-				// gameObjectsData.add(gobj);
-			} else
-				gameObjectsData.add(gobj);
-		}
+		gameObjectsData = LevelParser.loadLevel();
+
+		GamePlayScreen.playerDead = false;
+		editing = true;
 	}
 
 	public void update() {
@@ -78,18 +61,19 @@ public class LevelEditScreen extends GameScreen {
 
 		// change the level size with WASD
 		if (Runner._input.isKeyHit(InputManager._keys.get("a")))
-			levelWidth -= 32;
+			GamePlayScreen.levelWidth -= 32;
 		if (Runner._input.isKeyHit(InputManager._keys.get("d")))
-			levelWidth += 32;
+			GamePlayScreen.levelWidth += 32;
 		if (Runner._input.isKeyHit(InputManager._keys.get("w")))
-			levelHeight -= 24;
+			GamePlayScreen.levelHeight -= 24;
 		if (Runner._input.isKeyHit(InputManager._keys.get("s")))
-			levelHeight += 24;
+			GamePlayScreen.levelHeight += 24;
 
-		if (levelHeight < 552)
-			levelHeight = 552;
-		if (levelHeight > 50 * 24)
-			levelHeight = 50 * 24;
+		// apply limits on level height and width
+		if (GamePlayScreen.levelHeight < 552)
+			GamePlayScreen.levelHeight = 552;
+		if (GamePlayScreen.levelHeight > 50 * 24)
+			GamePlayScreen.levelHeight = 50 * 24;
 
 		GamePlayScreen.viewX = LevelEditScreen.viewX;
 		GamePlayScreen.viewY = LevelEditScreen.viewY;
@@ -103,18 +87,8 @@ public class LevelEditScreen extends GameScreen {
 			if (Runner._input.isMouseClicked(levelOverLay))
 				levelOverLay.selectTile();
 			else {
-				if (selectedTile == GameObjectFactory.EPORTAL.getId())
-					startPortal = (Portal) GameObjectFactory.getById(
-							selectedTile).create(x * 32, y * 24);
-				else if (selectedTile == GameObjectFactory.SPORTAL.getId())
-					endPortal = (Portal) GameObjectFactory
-							.getById(selectedTile).create(x * 32, y * 24);
-				else if (selectedTile == GameObjectFactory.PLAYER.getId())
-					player = (Player) GameObjectFactory.getById(selectedTile)
-							.create(x * 32, y * 24);
-				else
-					gameObjectsData.add(GameObjectFactory.getById(selectedTile)
-							.create(x * 32, y * 24));
+				gameObjectsData.add(GameObjectFactory.getById(selectedTile)
+						.create(x * 32, y * 24));
 			}
 		}
 
@@ -136,26 +110,27 @@ public class LevelEditScreen extends GameScreen {
 		}
 		// when the user presses "escape", save and play
 		if (Runner._input.isKeyPressed(InputManager._keys.get("escape"))) {
-			// player = new Player(64,192);
-			gameObjectsData.add(player);
-			// Portal sPortal = new Portal(player.getX(), player.getY(), false);
-			gameObjectsData.add(0, startPortal);
-			// Portal ePortal = new Portal(endPortalX, 600, true);
-			gameObjectsData.add(0, endPortal);
 			LevelParser.saveLevel(gameObjectsData);
 			// go to the GamePlayScreen
 			Runner._gameScreenManager.addScreen(new GamePlayScreen());
 			Runner._gameScreenManager.removeScreen(this);
 
-			startPortalX = -1;
-			endPortalX = -1;
 		}
 	}
 
 	public void paintComponent(Graphics g) {
+		endPortalX = -1;
+		endPortalY = -1;
+
+		// draw the border
+		g.setColor(Color.darkGray);
+		g.fillRect(0, 0, 720, 608);
+		g.setColor(Color.white);
+		g.fillRect(-viewX, -viewY, GamePlayScreen.levelWidth, GamePlayScreen.levelHeight);
+
 		// draw the grid
-		for (int x = 0; x < levelWidth / 32; x++) {
-			for (int y = 0; y < levelHeight / 24; y++) {
+		for (int x = 0; x < GamePlayScreen.levelWidth / 32; x++) {
+			for (int y = 0; y < GamePlayScreen.levelHeight / 24; y++) {
 				if (y % 2 == 0) {
 					g.setColor(Color.lightGray);
 					g.drawRect(x * 32 - viewX, y * 24 - viewY, 31, 47);
@@ -171,23 +146,11 @@ public class LevelEditScreen extends GameScreen {
 		for (GameObject gobj : gameObjectsData)
 			gobj.paintComponent(g);
 
-		// Draw the player spawn
-		g.setColor(Color.blue);
-		g.fillRect(player.getX() - viewX, player.getY() - viewY, 32, 48);
-
-		// Draw end portal
-		g.setColor(Color.blue);
-		g.drawRect(endPortal.getX() + 2 - viewX, endPortal.getY() + 2 - viewY,
-				28, 44);
-		g.drawRect(endPortal.getX() + 4 - viewX, endPortal.getY() + 4 - viewY,
-				24, 40);
-
-		// draw the portals last so they are on top
-		/*
-		 * g.setColor(new Color(0, 255, 255, 100)); if (startPortalX != -1)
-		 * g.fillRect(startPortalX, -viewY, 96, levelHeight); if (endPortalX !=
-		 * -1) g.fillRect(endPortalX, -viewY, 96, levelHeight);
-		 */
+		g.setColor(new Color(0, 255, 255, 100));
+		g.fillRect(Player.x - viewX - 32, -viewY, 96,
+				GamePlayScreen.levelHeight);
+		if (endPortalX != -1)
+			g.fillRect(endPortalX - viewX - 32, -viewY, 96, endPortalY + 48);
 
 		// call the gameScreen paintComponent(g);
 		super.paintComponent(g);

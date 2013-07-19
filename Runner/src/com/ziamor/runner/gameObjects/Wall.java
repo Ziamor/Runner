@@ -36,8 +36,9 @@ public class Wall extends GameObject {
 		if (!isVisible || offScreen)
 			return;
 
-		g.drawImage(SpriteCache._sprites.get(spriteID), x - GamePlayScreen.viewX + spriteOffsetX,
-				y - GamePlayScreen.viewY + spriteOffsetY, null);
+		g.drawImage(SpriteCache._sprites.get(spriteID), x
+				- GamePlayScreen.viewX + offsetX + spriteOffsetX, y
+				- GamePlayScreen.viewY + offsetY + spriteOffsetY, null);
 
 	}
 

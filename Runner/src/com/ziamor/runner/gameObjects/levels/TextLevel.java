@@ -103,10 +103,10 @@ public class TextLevel {
 						}
 					}
 
-				if (x * _tileWidth > LevelEditScreen.levelWidth)
-					LevelEditScreen.levelWidth = x * _tileWidth;
-				if (y * _tileHeight > LevelEditScreen.levelHeight)
-					LevelEditScreen.levelHeight = y * _tileHeight;
+				if (x * _tileWidth > GamePlayScreen.levelWidth)
+					GamePlayScreen.levelWidth = x * _tileWidth;
+				if (y * _tileHeight > GamePlayScreen.levelHeight)
+					GamePlayScreen.levelHeight = y * _tileHeight;
 			}
 		}
 		return map;

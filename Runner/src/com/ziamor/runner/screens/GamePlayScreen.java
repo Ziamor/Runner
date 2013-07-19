@@ -2,11 +2,14 @@ package com.ziamor.runner.screens;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 
+import com.ziamor.runner.GameObject;
 import com.ziamor.runner.GameScreen;
 import com.ziamor.runner.InputManager;
 import com.ziamor.runner.Runner;
 import com.ziamor.runner.gameObjects.Player;
+import com.ziamor.runner.gameObjects.Portal;
 import com.ziamor.runner.gameObjects.levels.LevelParser;
 
 public class GamePlayScreen extends GameScreen {
@@ -18,7 +21,6 @@ public class GamePlayScreen extends GameScreen {
 	public static boolean preLevel;
 	public static boolean levelComplete;
 	private static boolean levelCompleteSplash;
-	private int playerDeadTimer;
 	public static int levelWidth;
 	public static int levelHeight;
 
@@ -30,11 +32,15 @@ public class GamePlayScreen extends GameScreen {
 		playerDead = false;
 		preLevel = true;
 
+		LevelEditScreen.editing = false;
+		
 		Runner.score = 0; // initialize score
 		Runner.stars = 0; // initialize stars
 
-		this.addGameObject(LevelParser.loadLevel());		
-		
+		ArrayList<GameObject> objectsToAdd = LevelParser.loadLevel();
+		this.addGameObject(new Portal(Player.x, 0, false));
+		this.addGameObject(objectsToAdd);
+
 		// initialize view
 		viewX = Player.x - 64;
 		viewY = Player.yStart - 250;
@@ -59,9 +65,7 @@ public class GamePlayScreen extends GameScreen {
 		// if the user enters editor mode
 		if (Runner._input.isKeyHit(InputManager._keys.get("L"))) {
 			Runner._gameScreenManager.addScreen(new LevelEditScreen());
-			//LevelEditScreen.offX = GamePlayScreen.offX;
-			//LevelEditScreen.offY = GamePlayScreen.offY;
-			this.setRemove(true); // removes this screen
+			Runner._gameScreenManager.removeScreen(this); // removes this screen
 		}
 
 		// move the view smoothly
@@ -82,7 +86,6 @@ public class GamePlayScreen extends GameScreen {
 		}
 
 		if (playerDead) {
-			playerDeadTimer++;
 			if (Player.y > levelHeight + 100) { // shortly after the player dies
 				// go to the death screen
 				Runner._gameScreenManager.addScreen(new DeathScreen());

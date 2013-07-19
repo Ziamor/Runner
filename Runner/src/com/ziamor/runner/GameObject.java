@@ -12,6 +12,8 @@ public class GameObject {
 	protected String spriteID;
 	protected int x;
 	protected int y;
+	protected int offsetX;
+	protected int offsetY;
 	protected int width;
 	protected int height;
 	protected int spriteOffsetX;

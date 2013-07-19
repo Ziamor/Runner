@@ -17,7 +17,6 @@ public class InputManager implements KeyListener, MouseListener,
 	private boolean mouse_clicked;
 	private boolean mouse_clickedRight;
 	private boolean mouse_released;
-	private boolean mouse_releasedRight;
 	public static int mouse_x;
 	public static int mouse_y;
 
@@ -154,8 +153,6 @@ public class InputManager implements KeyListener, MouseListener,
 		mouse_y = e.getY();
 		if (e.getButton() == 1)
 			mouse_released = true;
-		else if (e.getButton() == 3)
-			mouse_releasedRight = true;
 	}
 
 	public void update() {
@@ -164,7 +161,6 @@ public class InputManager implements KeyListener, MouseListener,
 		mouse_clicked = false;
 		mouse_clickedRight = false;
 		mouse_released = false;
-		mouse_releasedRight = false;
 
 		// clear key_hit
 		for (int i = 0; i < 256; i++) {

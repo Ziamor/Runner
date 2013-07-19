@@ -102,10 +102,10 @@ public class LevelParser {
 		int X = getIntValue(gobj, "X");
 		int Y = getIntValue(gobj, "Y");
 
-		if (X > GamePlayScreen.levelWidth)
-			GamePlayScreen.levelWidth = X;
-		if (Y > GamePlayScreen.levelHeight)
-			GamePlayScreen.levelHeight = Y;
+		if (X + 32 > GamePlayScreen.levelWidth)
+			GamePlayScreen.levelWidth = X + 32;
+		if (Y + 48 > GamePlayScreen.levelHeight)
+			GamePlayScreen.levelHeight = Y + 48;
 
 		// Create a new GameObject with the value read from the xml nodes
 		GameObject e = GameObjectFactory.getById(id).create(X, Y);
@@ -154,10 +154,10 @@ public class LevelParser {
 			doc.appendChild(rootElement);
 
 			for (GameObject gobj : GameObjectData) {
-				//Make sure the object we are saving is a valid game object
-				if(gobj.getgobjFactorty().getId() == -1)
+				// Make sure the object we are saving is a valid game object
+				if (gobj.getgobjFactorty().getId() == -1)
 					continue;
-	
+
 				// gobj elements
 				Element egobj = doc.createElement("GameObject");
 				rootElement.appendChild(egobj);
@@ -173,7 +173,8 @@ public class LevelParser {
 
 				// ID elements
 				Element firstname = doc.createElement("ID");
-				firstname.appendChild(doc.createTextNode(gobj.getgobjFactorty().getId() + ""));
+				firstname.appendChild(doc.createTextNode(gobj.getgobjFactorty()
+						.getId() + ""));
 				egobj.appendChild(firstname);
 
 				// X elements

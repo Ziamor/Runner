@@ -9,13 +9,12 @@ import com.ziamor.runner.screens.GamePlayScreen;
 public class Star extends GameObject {
 
 	public Star(int x, int y) {
-		this.x = x + 4;
+		this.x = x;
 		this.y = y;
 		this.objID = "star";
 		this.spriteID = "star";
 		this.gobjFactorty = GameObjectFactory.STAR;
 		spriteOffsetX = -4;
-		spriteOffsetY = -4;
 		width = 24;
 		height = 24;
 
@@ -34,8 +33,9 @@ public class Star extends GameObject {
 		if (!isVisible || offScreen)
 			return;
 
-		g.drawImage(SpriteCache._sprites.get(spriteID), x - GamePlayScreen.viewX + spriteOffsetX,
-				y - GamePlayScreen.viewY + spriteOffsetY, null);
+		g.drawImage(SpriteCache._sprites.get(spriteID), x
+				- GamePlayScreen.viewX + offsetX + spriteOffsetX, y
+				- GamePlayScreen.viewY + offsetY + spriteOffsetY, null);
 	}
 
 }

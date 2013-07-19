@@ -72,8 +72,9 @@ public class BreakableWall extends GameObject {
 			return;
 
 		if (!startBreak) { // if the wall is intact
-			g.drawImage(SpriteCache._sprites.get(spriteID), x - GamePlayScreen.viewX + spriteOffsetX,
-					y - GamePlayScreen.viewY + spriteOffsetY, null);
+			g.drawImage(SpriteCache._sprites.get(spriteID), x
+					- GamePlayScreen.viewX + offsetX + spriteOffsetX, y
+					- GamePlayScreen.viewY + offsetY + spriteOffsetY, null);
 		} else { // else draw particles
 			for (int i = 0; i < 96; i++) {
 				g.setColor(new Color(150, 150, 150, alpha));
