@@ -278,6 +278,6 @@
     <GameObject>
         <ID>2</ID>
         <X>64</X>
-        <Y>192</Y>
+        <Y>180</Y>
     </GameObject>
 </Entities>

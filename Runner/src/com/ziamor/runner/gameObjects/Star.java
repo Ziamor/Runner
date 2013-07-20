@@ -3,7 +3,7 @@ package com.ziamor.runner.gameObjects;
 import java.awt.Graphics;
 
 import com.ziamor.runner.GameObject;
-import com.ziamor.runner.SpriteCache;
+import com.ziamor.runner.TextureCache;
 import com.ziamor.runner.screens.GamePlayScreen;
 
 public class Star extends GameObject {
@@ -33,7 +33,7 @@ public class Star extends GameObject {
 		if (!isVisible || offScreen)
 			return;
 
-		g.drawImage(SpriteCache._sprites.get(spriteID), x
+		g.drawImage(TextureCache._textures.get(spriteID).getTexture(), x
 				- GamePlayScreen.viewX + offsetX + spriteOffsetX, y
 				- GamePlayScreen.viewY + offsetY + spriteOffsetY, null);
 	}

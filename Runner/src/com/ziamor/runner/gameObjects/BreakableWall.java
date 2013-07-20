@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import com.ziamor.runner.GameObject;
-import com.ziamor.runner.SpriteCache;
+import com.ziamor.runner.TextureCache;
 import com.ziamor.runner.screens.GamePlayScreen;
 
 public class BreakableWall extends GameObject {
@@ -72,7 +72,7 @@ public class BreakableWall extends GameObject {
 			return;
 
 		if (!startBreak) { // if the wall is intact
-			g.drawImage(SpriteCache._sprites.get(spriteID), x
+			g.drawImage(TextureCache._textures.get(spriteID).getTexture(), x
 					- GamePlayScreen.viewX + offsetX + spriteOffsetX, y
 					- GamePlayScreen.viewY + offsetY + spriteOffsetY, null);
 		} else { // else draw particles

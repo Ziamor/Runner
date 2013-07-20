@@ -17,7 +17,6 @@ import com.ziamor.runner.gameObjects.Portal;
 import com.ziamor.runner.gameObjects.Star;
 import com.ziamor.runner.gameObjects.Wall;
 import com.ziamor.runner.screens.GamePlayScreen;
-import com.ziamor.runner.screens.LevelEditScreen;
 
 public class TextLevel {
 	private static final int _tileWidth = 32; // Temp width for the game;

@@ -10,7 +10,6 @@ import com.ziamor.runner.InputManager;
 import com.ziamor.runner.Runner;
 import com.ziamor.runner.gameObjects.GameObjectFactory;
 import com.ziamor.runner.gameObjects.Player;
-import com.ziamor.runner.gameObjects.Portal;
 import com.ziamor.runner.gameObjects.levels.LevelParser;
 import com.ziamor.runner.menuObjects.LevelEditOverlay;
 

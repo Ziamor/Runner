@@ -7,6 +7,7 @@ import com.ziamor.runner.CollisionHandler;
 import com.ziamor.runner.GameObject;
 import com.ziamor.runner.InputManager;
 import com.ziamor.runner.Runner;
+import com.ziamor.runner.TextureCache;
 import com.ziamor.runner.screens.GamePlayScreen;
 
 public class Player extends GameObject {
@@ -19,16 +20,17 @@ public class Player extends GameObject {
 	private int dashTimer;
 	private boolean gravitySwitchAble;
 	public static int yStart;
-
+	private int animation = 0;
 	public Player(int x, int y) {
 		
 		Player.x = x;
 		Player.y = y;
 		Player.yStart = y;
 		this.objID = "player";
+		this.spriteID = "player";
 		this.gobjFactorty = GameObjectFactory.PLAYER;
 		width = 32;
-		height = 48;
+		height = 60;
 
 		yspeedDouble = 0;
 		xspeed = 0;
@@ -292,8 +294,14 @@ public class Player extends GameObject {
 		super.paintComponent(g);
 		if (!isVisible || offScreen)
 			return;
-
-		g.setColor(Color.blue);
+		if(animation > 69)
+			animation = 0;
+		g.drawImage(TextureCache._textures.get(spriteID).getTexture(animation,width,height), x
+				- GamePlayScreen.viewX + offsetX + spriteOffsetX, y
+				- GamePlayScreen.viewY + offsetY + spriteOffsetY, null);
+		animation++;
+		
+		/*g.setColor(Color.blue);
 		if (GamePlayScreen.playerDead) {
 			g.setColor(Color.red);
 		}
@@ -307,7 +315,7 @@ public class Player extends GameObject {
 		} else {
 			g.fillRect(x - GamePlayScreen.viewX + 3, y - GamePlayScreen.viewY
 					+ 3, width - 6, 8);
-		}
+		}*/
 
 	}
 
