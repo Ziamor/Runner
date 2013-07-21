@@ -10,14 +10,12 @@ import com.ziamor.runner.Runner;
 public class MainMenuScreen extends GameScreen {
 
 	public MainMenuScreen() {
-		this.setBlockRender(true);
-		this.setBlockUpdate(true);
 	}
 
 	public void update() {
 		// call the gameScreen update();
 		super.update();
-		if (!getBlockUpdate())
+		if (getDisableUpdate())
 			return;
 
 		if (Runner._input.isKeyPressed(InputManager._keys.get("space"))) {

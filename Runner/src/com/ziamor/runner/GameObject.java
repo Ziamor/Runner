@@ -8,23 +8,24 @@ import com.ziamor.runner.screens.GamePlayScreen;
 
 public class GameObject {
 
-	protected String objID;
-	protected String spriteID;
+	protected String objID; // name used for collisions
+	protected String spriteID; // name used for sprite rendering
 	protected int x;
 	protected int y;
-	protected int offsetX;
-	protected int offsetY;
 	protected int width;
 	protected int height;
-	protected int spriteOffsetX;
+	protected int offsetX; // Offset for the collision area
+	protected int offsetY;
+	protected int spriteOffsetX; // Additional offset for the sprite
 	protected int spriteOffsetY;
 	protected boolean isVisible = true;
 	protected boolean isActive = true;
-	protected boolean offScreen = false;
+	protected boolean offScreen = false; // if the object is off the screen
 	protected boolean isInterface = false;
 	protected GameScreen parent;
-	protected BufferedImage sprite;
-	protected GameObjectFactory gobjFactorty; 
+	// protected BufferedImage sprite; // this is currently unused because
+	// sprites are obtained from the TextureCache and not stored in the object
+	protected GameObjectFactory gobjFactorty;
 
 	public GameObject(int x, int y) {
 		this.x = x;
@@ -50,7 +51,7 @@ public class GameObject {
 	public GameObjectFactory getgobjFactorty() {
 		return gobjFactorty;
 	}
-	
+
 	public int getX() {
 		return x;
 	}
@@ -70,7 +71,7 @@ public class GameObject {
 	public void setParent(GameScreen value) {
 		parent = value;
 	}
-	
+
 	public int getWidth() {
 		return width;
 	}
@@ -110,16 +111,33 @@ public class GameObject {
 	public void setIsInterface(boolean value) {
 		this.isInterface = value;
 	}
-	
+
 	public void update() {
 	}
 
 	public void paintComponent(Graphics g) {
 		// don't draw objects that aren't on the screen
-		if (x > GamePlayScreen.viewX + 800)
+		if (getX() > GamePlayScreen.viewX + 920
+				|| getX() < GamePlayScreen.viewX - 200)
 			offScreen = true;
 		else
 			offScreen = false;
 	}
-	
+
+	public int getOffsetX() {
+		return offsetX;
+	}
+
+	public void setOffsetX(int offsetX) {
+		this.offsetX = offsetX;
+	}
+
+	public int getOffsetY() {
+		return offsetY;
+	}
+
+	public void setOffsetY(int offsetY) {
+		this.offsetY = offsetY;
+	}
+
 }

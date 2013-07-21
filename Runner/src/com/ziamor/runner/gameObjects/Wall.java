@@ -37,8 +37,8 @@ public class Wall extends GameObject {
 			return;
 
 		g.drawImage(TextureCache._textures.get(spriteID).getTexture(), x
-				- GamePlayScreen.viewX + offsetX + spriteOffsetX, y
-				- GamePlayScreen.viewY + offsetY + spriteOffsetY, null);
+				- GamePlayScreen.viewX + getOffsetX() + spriteOffsetX, y
+				- GamePlayScreen.viewY + getOffsetY() + spriteOffsetY, null);
 	}
 
 }

@@ -21,22 +21,22 @@ public class Texture {
 
 	public BufferedImage getTexture(int index, int tileWidth, int tileHeight) {
 		if (isTileSet) {
-			//try {
-				BufferedImage img = null;
-				int x = 0;
-				int y = 0;
-				int xTiles = tex.getWidth() / tileWidth;
-				int yTiles = tex.getHeight() / tileHeight;
+			// try {
+			BufferedImage img = null;
+			int x = 0;
+			int y = 0;
+			int xTiles = tex.getWidth() / tileWidth;
+			int yTiles = tex.getHeight() / tileHeight;
 
-				y = index / xTiles;
-				x = index % xTiles;
-				System.out.println("X:" + x + "," + "Y:" + y);
-				img = this.tex.getSubimage(x * tileWidth, y * tileHeight,
-						tileWidth, tileHeight);
-				return img;
-			//} catch (Exception e) {
-			//	return null;
-			//}
+			y = index / xTiles;
+			x = index % xTiles;
+			// System.out.println("X:" + x + "," + "Y:" + y);
+			img = this.tex.getSubimage(x * tileWidth, y * tileHeight,
+					tileWidth, tileHeight);
+			return img;
+			// } catch (Exception e) {
+			// return null;
+			// }
 		} else
 			return null;
 	}

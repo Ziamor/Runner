@@ -71,7 +71,7 @@ public class LevelParser {
 	}
 
 	private void parseDocument() {
-		// get the root elememt
+		// get the root element
 		Element docEle = dom.getDocumentElement();
 
 		// get a nodelist of <GameObject> elements

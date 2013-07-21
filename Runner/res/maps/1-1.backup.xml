@@ -186,11 +186,6 @@
         <Y>192</Y>
     </GameObject>
     <GameObject>
-        <ID>3</ID>
-        <X>832</X>
-        <Y>144</Y>
-    </GameObject>
-    <GameObject>
         <ID>1</ID>
         <X>224</X>
         <Y>720</Y>
@@ -276,8 +271,13 @@
         <Y>48</Y>
     </GameObject>
     <GameObject>
+        <ID>3</ID>
+        <X>896</X>
+        <Y>144</Y>
+    </GameObject>
+    <GameObject>
         <ID>2</ID>
-        <X>64</X>
-        <Y>180</Y>
+        <X>32</X>
+        <Y>168</Y>
     </GameObject>
 </Entities>

@@ -12,9 +12,6 @@ import com.ziamor.runner.menuObjects.BackButton;
 public class GamePauseScreen extends GameScreen {
 
 	public GamePauseScreen() {
-		this.setBlockRender(true);
-		this.setBlockUpdate(true);
-
 		// make the back button
 		this.addGameObject(new BackButton("LevelSelect"));
 	}
@@ -22,13 +19,13 @@ public class GamePauseScreen extends GameScreen {
 	public void update() {
 		// call the gameScreen update();
 		super.update();
-		if (!getBlockUpdate())
+		if (getDisableUpdate())
 			return;
 
 		// check to see if the user unpaused the game
 		if (Runner._input.isKeyHit(InputManager._keys.get("escape"))) {
 			// set the GamePlayScreen to update
-			GameScreenManager.getGameScreens().get(0).setBlockUpdate(true);
+			GameScreenManager.getGameScreens().get(0).setDisableUpdate(false);
 			// remove the pause screen
 			Runner._gameScreenManager.removeScreen(this);
 		}

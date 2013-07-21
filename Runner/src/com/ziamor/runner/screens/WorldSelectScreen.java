@@ -15,8 +15,6 @@ public class WorldSelectScreen extends GameScreen {
 	public static int viewX = 0;
 
 	public WorldSelectScreen() {
-		this.setBlockRender(true);
-		this.setBlockUpdate(true);
 		viewX = (Runner.world - 1) * 700;
 
 		// make the world buttons
@@ -38,7 +36,7 @@ public class WorldSelectScreen extends GameScreen {
 	public void update() {
 		// call the gameScreen update();
 		super.update();
-		if (!getBlockUpdate())
+		if (getDisableUpdate())
 			return;
 
 		if (Runner._input.isKeyHit(InputManager._keys.get("right"))) {

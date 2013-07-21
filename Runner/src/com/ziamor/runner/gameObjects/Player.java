@@ -9,6 +9,7 @@ import com.ziamor.runner.InputManager;
 import com.ziamor.runner.Runner;
 import com.ziamor.runner.TextureCache;
 import com.ziamor.runner.screens.GamePlayScreen;
+import com.ziamor.runner.screens.LevelEditScreen;
 
 public class Player extends GameObject {
 
@@ -16,21 +17,23 @@ public class Player extends GameObject {
 	public static int y;
 	private double yspeedDouble;
 	private int xspeed;
-	private boolean gravitySwitch;
 	private int dashTimer;
+	private boolean gravitySwitch;
 	private boolean gravitySwitchAble;
-	public static int yStart;
 	private int animation = 0;
+	public static boolean isDead;
+	public static boolean spawningAnimation;
+	
 	public Player(int x, int y) {
 		
 		Player.x = x;
 		Player.y = y;
-		Player.yStart = y;
 		this.objID = "player";
 		this.spriteID = "player";
 		this.gobjFactorty = GameObjectFactory.PLAYER;
 		width = 32;
 		height = 60;
+		isDead = false;
 
 		yspeedDouble = 0;
 		xspeed = 0;
@@ -38,7 +41,9 @@ public class Player extends GameObject {
 		gravitySwitch = false;
 		dashTimer = 0;
 		gravitySwitchAble = true;
-
+		
+		if (spawningAnimation)
+		offsetY = GamePlayScreen.levelHeight - y;
 	}
 
 	public void update() {
@@ -47,39 +52,48 @@ public class Player extends GameObject {
 			return;
 
 		// if the player hasn't started the level yet
-		if (GamePlayScreen.preLevel) {
-			if (y > yStart + 100) {
+		// play the spawning animation
+		if (spawningAnimation) {
+			if (offsetY > 100) {
 				yspeedDouble -= 0.5;
 				if (yspeedDouble < -15)
 					yspeedDouble = -15;
 			} else
 				yspeedDouble += 0.5;
 
-			if (y > yStart && yspeedDouble > 0) {
-				y = yStart;
-				GamePlayScreen.preLevel = false;
-			}
-
-			if (GamePlayScreen.preLevel) {
-				y += yspeedDouble;
+			if (offsetY > 0 && yspeedDouble > 0) {
+				// stop the animation
+				offsetY = 0;
+				spawningAnimation = false;
+			} else {
+				// continue the animation
+				offsetY += yspeedDouble;
 				return;
 			}
 		}
 
 		// if player is dead
-		if (GamePlayScreen.playerDead) {
+		if (isDead) {
 			yspeedDouble += 0.5; // apply gravity
-			int yspeed = ((int) yspeedDouble); // make yspeed an int
-			x += xspeed; // update x
-			y += yspeed; // update y
+			x += xspeed;         // update x
+			y += yspeedDouble;   // update y
 			return; // don't complete the rest of the update()
 		}
 
 		// check if the player has entered the end portal
+		for (GameObject gameObject : this.parent
+				.getGameObjectsByID("endPortal")) {
+			if (CollisionHandler.isColliding(this, gameObject)
+					&& !GamePlayScreen.levelComplete) {
+				GamePlayScreen.levelComplete = true;
+				yspeedDouble *= 0.5;
+				gravitySwitch = false;
+			}
+		}
+		
+		
 		if (x > GamePlayScreen.endPortalX + 32 && !GamePlayScreen.levelComplete) {
-			GamePlayScreen.levelComplete = true;
-			yspeedDouble *= 0.5;
-			gravitySwitch = false;
+			
 		}
 
 		// if player is in a portal at the end of the level
@@ -238,7 +252,7 @@ public class Player extends GameObject {
 					yCount++;
 				} else {
 					// kill the player if he ran into a wall
-					GamePlayScreen.playerDead = true;
+					isDead = true;
 					xspeed = -4;
 					yspeedDouble = -6;
 					break;
@@ -248,7 +262,7 @@ public class Player extends GameObject {
 
 		// kill the player if he is too low or too high
 		if (y > GamePlayScreen.levelHeight || y < -200) {
-			GamePlayScreen.playerDead = true;
+			isDead = true;
 			xspeed = 0;
 			yspeedDouble = -13;
 		}
@@ -280,7 +294,7 @@ public class Player extends GameObject {
 			if (CollisionHandler.isColliding(this, gameObject)) {
 				if (gameObject.isActive() == true) {
 					// kill the player and knock him back
-					GamePlayScreen.playerDead = true;
+					isDead = true;
 					xspeed = -4;
 					yspeedDouble = -6;
 					break;
@@ -288,18 +302,22 @@ public class Player extends GameObject {
 			}
 		}
 
+		// go to the next frame of the animation
+		// (this has to be here so that the animation doesn't run in the pause screen)
+		animation++;
+		if(animation > 69)
+			animation = 0;
+		
 	}
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		if (!isVisible || offScreen)
 			return;
-		if(animation > 69)
-			animation = 0;
+		
 		g.drawImage(TextureCache._textures.get(spriteID).getTexture(animation,width,height), x
-				- GamePlayScreen.viewX + offsetX + spriteOffsetX, y
-				- GamePlayScreen.viewY + offsetY + spriteOffsetY, null);
-		animation++;
+				- GamePlayScreen.viewX + getOffsetX() + spriteOffsetX, y
+				- GamePlayScreen.viewY + getOffsetY() + spriteOffsetY, null);
 		
 		/*g.setColor(Color.blue);
 		if (GamePlayScreen.playerDead) {
@@ -326,5 +344,4 @@ public class Player extends GameObject {
 	public int getY() { // need this because y is static
 		return y;
 	}
-
 }

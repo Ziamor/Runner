@@ -11,14 +11,12 @@ import com.ziamor.runner.Runner;
 public class DeathScreen extends GameScreen {
 
 	public DeathScreen() {
-		this.setBlockRender(true);
-		this.setBlockUpdate(true);
 	}
 
 	public void update() {
 		// call the gameScreen update();
 		super.update();
-		if (!getBlockUpdate())
+		if (getDisableUpdate())
 			return;
 
 		// if user hits space

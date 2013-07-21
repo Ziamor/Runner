@@ -7,7 +7,7 @@ import com.ziamor.runner.GameObject;
 import com.ziamor.runner.screens.GamePlayScreen;
 import com.ziamor.runner.screens.LevelEditScreen;
 
-public class Portal extends GameObject {
+public class EndPortal extends GameObject {
 
 	private int amount;
 	private int[] particleX;
@@ -15,26 +15,18 @@ public class Portal extends GameObject {
 	private int[] particleXSpeed;
 	private int[] particleYSpeed;
 
-	public Portal(int x, int y, boolean endPortal) {
-		this.objID = "portal";
+	public EndPortal(int x, int y) {
+		this.objID = "endPortal";
 		this.x = x;
 		this.y = y;
 
-		if (endPortal) {
-			this.gobjFactorty = GameObjectFactory.EPORTAL;
-			offsetY = -y;
-			height = y + 48;
-		} else {
-			this.gobjFactorty = GameObjectFactory.BLANK;
-			offsetY = -y;
-			height = GamePlayScreen.levelHeight;
-		}
-
+		this.gobjFactorty = GameObjectFactory.EPORTAL;
+		setOffsetY(-y);
+		height = y + 48;
 		width = 96;
+		setOffsetX(-32);
 
-		offsetX = -32;
-
-		amount = height/ 10;
+		amount = height / 10;
 
 		particleX = new int[amount];
 		particleY = new int[amount];
@@ -64,30 +56,22 @@ public class Portal extends GameObject {
 	}
 
 	public void paintComponent(Graphics g) {
-		if (LevelEditScreen.editing) {
-			LevelEditScreen.endPortalX = x;
-			LevelEditScreen.endPortalY = y;
-			g.setColor(Color.blue);
-			g.drawRect(x + 2 - GamePlayScreen.viewX, y + 2
-					- GamePlayScreen.viewY, 28, 44);
-			g.drawRect(x + 4 - GamePlayScreen.viewX, y + 4
-					- GamePlayScreen.viewY, 24, 40);
+		if (parent instanceof LevelEditScreen) 
 			return; // don't draw the portals while editing
-		}
 
 		super.paintComponent(g);
 		if (!isVisible || offScreen)
 			return;
 
 		g.setColor(Color.cyan);
-		g.fillRect(x - GamePlayScreen.viewX + offsetX + spriteOffsetX, y
-				- GamePlayScreen.viewY + offsetY + spriteOffsetY, width, height);
+		g.fillRect(x - GamePlayScreen.viewX + getOffsetX() + spriteOffsetX, y
+				- GamePlayScreen.viewY + getOffsetY() + spriteOffsetY, width, height);
 
 		g.setColor(Color.blue);
 		for (int i = 0; i < amount; i++) {
-			g.fillRect(particleX[i] - GamePlayScreen.viewX + offsetX
+			g.fillRect(particleX[i] - GamePlayScreen.viewX + getOffsetX()
 					+ spriteOffsetX, particleY[i] - GamePlayScreen.viewY
-					+ offsetY + spriteOffsetY, 5, 5);
+					+ getOffsetY() + spriteOffsetY, 5, 5);
 		}
 	}
 

@@ -4,12 +4,13 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 
 public class GameScreen {
-	private boolean blockRender;
-	private boolean blockUpdate;
-	private boolean remove;
-	private boolean disableUpdate;
-	public int offX;
-	public int offY;
+	private boolean disableRender; // disables rendering of the screen
+	private boolean disableUpdate; // disables updating of the screen
+	private boolean disableObjectUpdate; // disables updating of objects only
+	private boolean remove; // used for removing a screen from within an object
+							// without throwing an error
+	public int offsetX; // I can't think of a time where we would ever use these
+	public int offsetY;
 	protected ArrayList<GameObject> gameObjects;
 	protected ArrayList<GameObject> objectsToAdd;
 	protected ArrayList<GameObject> objectsToRemove;
@@ -20,38 +21,37 @@ public class GameScreen {
 		objectsToAdd = new ArrayList<GameObject>();
 		objectsToRemove = new ArrayList<GameObject>();
 		interfaceOverlay = new ArrayList<GameObject>();
-		offX = 0;
-		offY = 0;
-		disableUpdate = false;
+		offsetX = 0;
+		offsetY = 0;
+		disableObjectUpdate = false;
 	}
 
-	public void setBlockRender(boolean value) {
-		this.blockRender = value;
-	}
-
-	public void setBlockUpdate(boolean value) {
-		this.blockUpdate = value;
-	}
-
-	public boolean getBlockRender() {
-		return this.blockRender;
-	}
-
-	public boolean getBlockUpdate() {
-		return this.blockUpdate;
+	public void setDisableRender(boolean value) {
+		this.disableRender = value;
 	}
 
 	public void setDisableUpdate(boolean value) {
-
 		this.disableUpdate = value;
 	}
 
-	public void setOffX(int value) {
-		offX = value;
+	public boolean getDisableRender() {
+		return this.disableRender;
 	}
 
-	public void setOffY(int value) {
-		offY = value;
+	public boolean getDisableUpdate() {
+		return this.disableUpdate;
+	}
+
+	public void setDisableObjectUpdate(boolean value) {
+		this.disableObjectUpdate = value;
+	}
+
+	public void setOffsetX(int value) {
+		offsetX = value;
+	}
+
+	public void setOffsetY(int value) {
+		offsetY = value;
 	}
 
 	public void addGameObject(GameObject gobj) {
@@ -68,8 +68,9 @@ public class GameScreen {
 	}
 
 	public void removeGameObject(GameObject gobj) {
-		if (gobj != null)
+		if (gobj != null) {
 			objectsToRemove.add(gobj);
+		}
 	}
 
 	public void clearGameObjects() {
@@ -123,13 +124,13 @@ public class GameScreen {
 		objectsToRemove = new ArrayList<GameObject>();
 
 		// stop the update if needed
-		if (!blockUpdate) {
+		if (disableUpdate) {
 			return;
 		}
 
 		// update all game objects
 		ArrayList<GameObject> gameObjectsToUpdate = gameObjects;
-		if (!disableUpdate)
+		if (!disableObjectUpdate)
 			for (GameObject gameObject : gameObjectsToUpdate) {
 				gameObject.update();
 			}

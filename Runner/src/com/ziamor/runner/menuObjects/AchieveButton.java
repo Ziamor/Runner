@@ -19,7 +19,7 @@ public class AchieveButton extends GameObject {
 	public void update() {
 		if (Runner._input.isMouseClicked(x, y, width, height)) {
 			Runner._gameScreenManager.addScreen(new AchieveScreen());
-			parent.setBlockUpdate(false); // freeze game objects
+			parent.setDisableUpdate(true); // freeze game objects
 		}
 	}
 

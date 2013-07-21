@@ -13,8 +13,8 @@ public class Coin extends GameObject {
 	public Coin(int x, int y) {
 		this.x = x;
 		this.y = y;
-		offsetX = 8;
-		offsetY = 4;
+		setOffsetX(8);
+		setOffsetY(4);
 		this.objID = "coin";
 		this.gobjFactorty = GameObjectFactory.COIN;
 		this.spriteID = "coin";
@@ -46,8 +46,8 @@ public class Coin extends GameObject {
 			return;
 
 		g.drawImage(TextureCache._textures.get(spriteID).getTexture(), x
-				- GamePlayScreen.viewX + offsetX + spriteOffsetX, y
-				- GamePlayScreen.viewY + offsetY + spriteOffsetY, null);
+				- GamePlayScreen.viewX + getOffsetX() + spriteOffsetX, y
+				- GamePlayScreen.viewY + getOffsetY() + spriteOffsetY, null);
 	}
 
 }

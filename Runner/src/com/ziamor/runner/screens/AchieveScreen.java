@@ -18,8 +18,6 @@ public class AchieveScreen extends GameScreen {
 	private int mouseOffset;
 
 	public AchieveScreen() {
-		this.setBlockRender(true);
-		this.setBlockUpdate(true);
 		AchieveState = new int[30];
 		AchieveState = new int[30];
 		// 0 = hidden, 1 = viewable, 2 = completed
@@ -29,13 +27,13 @@ public class AchieveScreen extends GameScreen {
 	public void update() {
 		// call the gameScreen update();
 		super.update();
-		if (!getBlockUpdate())
+		if (getDisableUpdate())
 			return;
 
 		// if the user clicks the red button
 		if (Runner._input.isMouseClicked(550, 20, 40, 40)) {
 			// go back to the previous screen
-			GameScreenManager.getGameScreens().get(0).setBlockUpdate(true);
+			GameScreenManager.getGameScreens().get(0).setDisableUpdate(false);
 			Runner._gameScreenManager.removeScreen(this);
 		}
 

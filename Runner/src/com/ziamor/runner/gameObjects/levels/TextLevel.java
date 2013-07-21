@@ -12,8 +12,9 @@ import com.ziamor.runner.GameObject;
 import com.ziamor.runner.Runner;
 import com.ziamor.runner.gameObjects.BreakableWall;
 import com.ziamor.runner.gameObjects.Coin;
+import com.ziamor.runner.gameObjects.EndPortal;
 import com.ziamor.runner.gameObjects.Player;
-import com.ziamor.runner.gameObjects.Portal;
+import com.ziamor.runner.gameObjects.StartPortal;
 import com.ziamor.runner.gameObjects.Star;
 import com.ziamor.runner.gameObjects.Wall;
 import com.ziamor.runner.screens.GamePlayScreen;
@@ -40,11 +41,11 @@ public class TextLevel {
 					level.add(new Wall(x, y));
 					x = x + _tileWidth;
 				} else if (c == '2') {
-					level.add(new Portal(x - 32,500, false));
+					level.add(new StartPortal(x - 32,500));
 					level.add(new Player(x, y));
 					x = x + _tileWidth;
 				} else if (c == '3') {
-					level.add(new Portal(x - 32,500, true));
+					level.add(new EndPortal(x - 32,500));
 					GamePlayScreen.endPortalX = x - 32;
 					x = x + _tileWidth;
 				} else if (c == '4') {

@@ -11,9 +11,6 @@ import com.ziamor.runner.menuObjects.LevelSelectButton;
 public class LevelSelectScreen extends GameScreen {
 
 	public LevelSelectScreen() {
-		this.setBlockRender(true);
-		this.setBlockUpdate(true);
-
 		// make the level buttons
 		for (int i = 1; i < 4; i++) {
 			for (int j = 0; j < 3; j++) {
@@ -30,7 +27,7 @@ public class LevelSelectScreen extends GameScreen {
 	public void update() {
 		// call the gameScreen update();
 		super.update();
-		if (!getBlockUpdate())
+		if (getDisableUpdate())
 			return;
 	}
 

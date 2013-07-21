@@ -14,7 +14,9 @@ public class Star extends GameObject {
 		this.objID = "star";
 		this.spriteID = "star";
 		this.gobjFactorty = GameObjectFactory.STAR;
+		setOffsetX(4);
 		spriteOffsetX = -4;
+		spriteOffsetY = -4;
 		width = 24;
 		height = 24;
 
