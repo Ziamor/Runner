@@ -344,4 +344,12 @@ public class Player extends GameObject {
 	public int getY() { // need this because y is static
 		return y;
 	}
+	
+	public void setX(int value) {
+		x = value;
+	}
+
+	public void setY(int value) {
+		y = value;
+	}
 }

@@ -34,8 +34,6 @@ public class LevelEditScreen extends GameScreen {
 	}
 
 	public void update() {
-		// call the gameScreen update();
-		super.update();
 		if (getDisableUpdate())
 			return;
 
@@ -70,14 +68,18 @@ public class LevelEditScreen extends GameScreen {
 
 		// Left Click - add a tile
 		if (Runner._input.isMouseClicked()) {
-			int x = (int) (InputManager.mouse_x + viewX) / 32;
-			int y = (int) (InputManager.mouse_y + viewY) / 24;
+			int x = InputManager.mouse_x + viewX;
+			int y = InputManager.mouse_y + viewY;
+			if (LevelEditOverlay.snapToGrid) {
+				x = x - x % 32;
+				y = y - y % 24;
+			}
 
 			if (Runner._input.isMouseClicked(levelOverLay))
 				levelOverLay.selectTile();
 			else {
-				addGameObject(GameObjectFactory.getById(selectedTile).create(
-						x * 32, y * 24));
+				this.addGameObject(GameObjectFactory.getById(selectedTile)
+						.create(x, y));
 			}
 		}
 
@@ -98,6 +100,7 @@ public class LevelEditScreen extends GameScreen {
 			removeGameObject(gobjToRemove);
 			gobjToRemove = null;
 		}
+
 		// when the user presses "escape", save and play
 		if (Runner._input.isKeyPressed(InputManager._keys.get("escape"))) {
 			LevelParser.saveLevel(gameObjects);
@@ -107,9 +110,8 @@ public class LevelEditScreen extends GameScreen {
 
 		}
 
-		// make the startPortal be where the Player is
-		// (the startPortal is still drawn from within GamePlayScreen)
-		StartPortal.x = Player.x;
+		// call the gameScreen update();
+		super.update();
 	}
 
 	public void paintComponent(Graphics g) {
@@ -151,12 +153,9 @@ public class LevelEditScreen extends GameScreen {
 		for (GameObject gobj : getGameObjectsByID("endPortal")) {
 			g.setColor(new Color(0, 255, 255, 100));
 			g.fillRect(gobj.getX() - viewX - 32, -viewY, 96, gobj.getY() + 48);
-			g.setColor(Color.blue);
-			g.drawRect(gobj.getX() + 2 - viewX, gobj.getY() + 2 - viewY, 28, 44);
-			g.drawRect(gobj.getX() + 4 - viewX, gobj.getY() + 4 - viewY, 24, 40);
 		}
 
-		// call the gameScreen paintComponent(g);
-		super.paintComponent(g);
+		// draw the edit overlay
+		levelOverLay.paintComponent(g);
 	}
 }

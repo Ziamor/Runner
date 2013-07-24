@@ -30,6 +30,7 @@ public class TextureCache {
 			put("basicWall", loadTextureTransparent("basicWall", false));
 			put("breakableWall", loadTextureTransparent("breakableWall", false));
 			put("player", loadTextureTransparent("player", true));
+			put("spikes", loadTextureTransparent("spikes", true));
 		}
 	};
 
@@ -46,6 +47,10 @@ public class TextureCache {
 
 	public static Texture loadTextureTransparent(String textureName,
 			boolean tileSet) {
+		// This method is pointless now
+		// I realized you can just save the transparency into the PNG
+		// if you use Photoshop instead of Paint
+		
 		Texture tex = null;
 		// load the file as a buffered image
 		tex = loadTexture(textureName, tileSet);

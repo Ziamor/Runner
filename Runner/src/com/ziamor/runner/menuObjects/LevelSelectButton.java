@@ -5,6 +5,7 @@ import java.awt.Graphics;
 
 import com.ziamor.runner.GameObject;
 import com.ziamor.runner.Runner;
+import com.ziamor.runner.TextureCache;
 import com.ziamor.runner.screens.GamePlayScreen;
 
 public class LevelSelectButton extends GameObject {
@@ -34,17 +35,19 @@ public class LevelSelectButton extends GameObject {
 		g.setColor(Color.green);
 		g.fillRect(x, y, width, height);
 		g.setColor(Color.black);
-		g.drawString("" + Runner.world + " - " + level, x + width / 2 - 10, y
-				+ 30);
+		g.drawString("" + Runner.world + " - " + level, x + width / 2 - 10,
+				y + 30);
 		g.drawString("" + Runner.scoreHigh[Runner.world][this.level], x + width
 				/ 2, y + 60);
 
 		// draw stars
 		g.setColor(new Color(230, 230, 0, 255));
-		for (int i = 1; i < Runner.starsHigh[Runner.world][level] + 1; i++) 
-			g.fillRect(x + 9 + 32 * i, y + 80, 24, 24);
+		for (int i = 1; i < Runner.starsHigh[Runner.world][level] + 1; i++)
+			g.drawImage(TextureCache._textures.get("star").getTexture(), x + 37
+					* i - 5, y + 74, null);
+		// g.fillRect(x + 9 + 32 * i, y + 80, 24, 24);
 		g.setColor(Color.black);
-		for (int i = 1; i < 4; i++) 
-			g.drawRect(x + 9 + 32 * i, y + 80, 24, 24);
+		for (int i = 1; i < 4; i++)
+			g.drawRect(x + 37 * i - 5, y + 74, 32, 32);
 	}
 }

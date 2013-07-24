@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import com.ziamor.runner.GameObject;
+import com.ziamor.runner.TextureCache;
 import com.ziamor.runner.screens.GamePlayScreen;
 
 public class Spikes extends GameObject{
@@ -12,9 +13,12 @@ public class Spikes extends GameObject{
 		this.x = x;
 		this.y = y;
 		this.objID = "hazard";
+		this.spriteID = "spikes";
 		this.gobjFactorty = GameObjectFactory.SPIKES;
 		width = 32;
 		height = 16;
+		offsetY = 8;
+		spriteOffsetY = -8;
 	}
 
 	public void update() {
@@ -26,14 +30,9 @@ public class Spikes extends GameObject{
 		if (!isVisible || offScreen)
 			return;
 		
-		g.setColor(Color.black);
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 4; j++) {
-				// draw some spikes
-				g.fillRect(x - GamePlayScreen.viewX + 8*i+4-j, y - GamePlayScreen.viewY +4*j,
-						(j+1)*2, height-j*4);
-			}
-		}
+		g.drawImage(TextureCache._textures.get(spriteID).getTexture(), x
+				- GamePlayScreen.viewX + getOffsetX() + spriteOffsetX, y
+				- GamePlayScreen.viewY + getOffsetY() + spriteOffsetY, null);
 		
 		
 

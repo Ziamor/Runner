@@ -56,8 +56,14 @@ public class EndPortal extends GameObject {
 	}
 
 	public void paintComponent(Graphics g) {
-		if (parent instanceof LevelEditScreen) 
-			return; // don't draw the portals while editing
+		if (!(parent instanceof GamePlayScreen)) {
+			g.setColor(Color.blue);
+			g.drawRect(x + 2 - GamePlayScreen.viewX, y + 2
+					- GamePlayScreen.viewY, 28, 44);
+			g.drawRect(x + 4 - GamePlayScreen.viewX, y + 4
+					- GamePlayScreen.viewY, 24, 40);
+			return;
+		}
 
 		super.paintComponent(g);
 		if (!isVisible || offScreen)
@@ -65,7 +71,8 @@ public class EndPortal extends GameObject {
 
 		g.setColor(Color.cyan);
 		g.fillRect(x - GamePlayScreen.viewX + getOffsetX() + spriteOffsetX, y
-				- GamePlayScreen.viewY + getOffsetY() + spriteOffsetY, width, height);
+				- GamePlayScreen.viewY + getOffsetY() + spriteOffsetY, width,
+				height);
 
 		g.setColor(Color.blue);
 		for (int i = 0; i < amount; i++) {

@@ -27,11 +27,6 @@
     </GameObject>
     <GameObject>
         <ID>1</ID>
-        <X>736</X>
-        <Y>192</Y>
-    </GameObject>
-    <GameObject>
-        <ID>1</ID>
         <X>768</X>
         <Y>192</Y>
     </GameObject>
@@ -83,11 +78,6 @@
     <GameObject>
         <ID>1</ID>
         <X>576</X>
-        <Y>216</Y>
-    </GameObject>
-    <GameObject>
-        <ID>1</ID>
-        <X>608</X>
         <Y>216</Y>
     </GameObject>
     <GameObject>
@@ -256,28 +246,148 @@
         <Y>432</Y>
     </GameObject>
     <GameObject>
-        <ID>6</ID>
-        <X>304</X>
-        <Y>72</Y>
-    </GameObject>
-    <GameObject>
-        <ID>6</ID>
-        <X>656</X>
-        <Y>48</Y>
-    </GameObject>
-    <GameObject>
-        <ID>6</ID>
-        <X>720</X>
-        <Y>48</Y>
-    </GameObject>
-    <GameObject>
         <ID>3</ID>
         <X>896</X>
         <Y>144</Y>
     </GameObject>
     <GameObject>
+        <ID>8</ID>
+        <X>512</X>
+        <Y>408</Y>
+    </GameObject>
+    <GameObject>
         <ID>2</ID>
-        <X>32</X>
+        <X>64</X>
+        <Y>168</Y>
+    </GameObject>
+    <GameObject>
+        <ID>8</ID>
+        <X>384</X>
+        <Y>408</Y>
+    </GameObject>
+    <GameObject>
+        <ID>1</ID>
+        <X>608</X>
+        <Y>312</Y>
+    </GameObject>
+    <GameObject>
+        <ID>1</ID>
+        <X>640</X>
+        <Y>312</Y>
+    </GameObject>
+    <GameObject>
+        <ID>1</ID>
+        <X>672</X>
+        <Y>312</Y>
+    </GameObject>
+    <GameObject>
+        <ID>1</ID>
+        <X>704</X>
+        <Y>312</Y>
+    </GameObject>
+    <GameObject>
+        <ID>1</ID>
+        <X>736</X>
+        <Y>312</Y>
+    </GameObject>
+    <GameObject>
+        <ID>7</ID>
+        <X>608</X>
+        <Y>288</Y>
+    </GameObject>
+    <GameObject>
+        <ID>7</ID>
+        <X>640</X>
+        <Y>288</Y>
+    </GameObject>
+    <GameObject>
+        <ID>7</ID>
+        <X>672</X>
+        <Y>288</Y>
+    </GameObject>
+    <GameObject>
+        <ID>7</ID>
+        <X>704</X>
+        <Y>288</Y>
+    </GameObject>
+    <GameObject>
+        <ID>7</ID>
+        <X>736</X>
+        <Y>288</Y>
+    </GameObject>
+    <GameObject>
+        <ID>6</ID>
+        <X>288</X>
+        <Y>72</Y>
+    </GameObject>
+    <GameObject>
+        <ID>6</ID>
+        <X>640</X>
+        <Y>48</Y>
+    </GameObject>
+    <GameObject>
+        <ID>6</ID>
+        <X>704</X>
+        <Y>48</Y>
+    </GameObject>
+    <GameObject>
+        <ID>6</ID>
+        <X>256</X>
+        <Y>120</Y>
+    </GameObject>
+    <GameObject>
+        <ID>6</ID>
+        <X>256</X>
+        <Y>144</Y>
+    </GameObject>
+    <GameObject>
+        <ID>6</ID>
+        <X>256</X>
+        <Y>168</Y>
+    </GameObject>
+    <GameObject>
+        <ID>6</ID>
+        <X>224</X>
+        <Y>120</Y>
+    </GameObject>
+    <GameObject>
+        <ID>6</ID>
+        <X>224</X>
+        <Y>144</Y>
+    </GameObject>
+    <GameObject>
+        <ID>6</ID>
+        <X>224</X>
+        <Y>168</Y>
+    </GameObject>
+    <GameObject>
+        <ID>6</ID>
+        <X>192</X>
+        <Y>120</Y>
+    </GameObject>
+    <GameObject>
+        <ID>6</ID>
+        <X>192</X>
+        <Y>144</Y>
+    </GameObject>
+    <GameObject>
+        <ID>6</ID>
+        <X>192</X>
+        <Y>168</Y>
+    </GameObject>
+    <GameObject>
+        <ID>6</ID>
+        <X>288</X>
+        <Y>120</Y>
+    </GameObject>
+    <GameObject>
+        <ID>6</ID>
+        <X>288</X>
+        <Y>144</Y>
+    </GameObject>
+    <GameObject>
+        <ID>6</ID>
+        <X>288</X>
         <Y>168</Y>
     </GameObject>
 </Entities>

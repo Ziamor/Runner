@@ -1,5 +1,6 @@
 package com.ziamor.runner;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -138,6 +139,12 @@ public class GameObject {
 
 	public void setOffsetY(int offsetY) {
 		this.offsetY = offsetY;
+	}
+
+	public void paintComponentInEditorPanel(Graphics g, int tileNumber) {
+		if (spriteID != null)
+		g.drawImage(TextureCache._textures.get(spriteID).getTexture(),
+				tileNumber * 50 + 10, 554, null);
 	}
 
 }

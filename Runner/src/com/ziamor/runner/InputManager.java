@@ -39,6 +39,9 @@ public class InputManager implements KeyListener, MouseListener,
 			put("escape", 27);
 
 			put("L", 76);
+			put("z", 90);
+			put("x", 88);
+			put("c", 67);
 		}
 	};
 

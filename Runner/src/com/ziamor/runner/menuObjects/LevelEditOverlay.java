@@ -8,20 +8,27 @@ import com.ziamor.runner.GameObject;
 import com.ziamor.runner.InputManager;
 import com.ziamor.runner.Runner;
 import com.ziamor.runner.gameObjects.GameObjectFactory;
+import com.ziamor.runner.screens.GamePlayScreen;
 import com.ziamor.runner.screens.LevelEditScreen;
 
 public class LevelEditOverlay extends GameObject {
-	ArrayList<GameObject> tiles;
+	private ArrayList<GameObject> tiles;
+	private int viewTile; // which tile is first to be displayed at the bottom
+	private final int TileXStart = 80;
+	public static boolean snapToGrid;
 
 	public LevelEditOverlay(int x, int y) {
 		super(x, y);
 		this.width = Runner._width;
 		this.height = 60;
 		this.y = y - height;
+		snapToGrid = true;
 		tiles = new ArrayList<GameObject>();
+		viewTile = 0;
 		for (int i = 0; i < GameObjectFactory.getSize(); i++) {
 			try {
-				GameObject gobj = GameObjectFactory.getById(i).create(x * i, y);
+				GameObject gobj = GameObjectFactory.getById(i).create(
+						i * 50 - 40, y + 6);
 				if (gobj != null)
 					tiles.add(gobj);
 			} catch (IllegalArgumentException e) {
@@ -30,63 +37,78 @@ public class LevelEditOverlay extends GameObject {
 		}
 	}
 
+	public void update() {
+		// change the level size with WASD
+		if (Runner._input.isKeyHit(InputManager._keys.get("z")))
+			viewTile--;
+		if (Runner._input.isKeyHit(InputManager._keys.get("x")))
+			viewTile++;
+
+		if (viewTile > GameObjectFactory.getSize() - 2)
+			viewTile = GameObjectFactory.getSize() - 2;
+		if (viewTile < 0)
+			viewTile = 0;
+
+		if (Runner._input.isKeyHit(InputManager._keys.get("c")))
+			snapToGrid = !snapToGrid;
+	}
+
 	public void paintComponent(Graphics g) {
-		// call the gameScreen paintComponent(g);
-		super.paintComponent(g);
+
 		// draw the editor panel
 		g.setColor(new Color(200, 0, 200, 200));
 		g.fillRect(x, y, width, height);
-		for (int tile = 1; tile < 10; tile++) {
-			drawTile(tile, tile * 50 - 40, 554, g);
+
+		// draw all the tiles
+		for (int i = viewTile; i < viewTile + 10; i++) {
+			if (i < tiles.size()) {
+				if (tiles.get(i) != null) {
+					GameObject gobj = tiles.get(i);
+					int backupX = gobj.getX();
+					int backupY = gobj.getY();
+					gobj.setX((i - viewTile) * 50 + 10 + TileXStart);
+					gobj.setY(this.y + 6);
+					GamePlayScreen.viewX = 0;
+					GamePlayScreen.viewY = 0;
+					tiles.get(i).paintComponent(g);
+					gobj.setX(backupX);
+					gobj.setY(backupY);
+				}
+			}
 		}
 
+		// draw the current tile marker
 		g.setColor(Color.yellow);
-		g.drawRect(LevelEditScreen.selectedTile * 50 - 43, 551, 37, 53);
-		g.drawRect(LevelEditScreen.selectedTile * 50 - 44, 550, 39, 55);
+		g.drawRect((LevelEditScreen.selectedTile - viewTile) * 50 - 43
+				+ TileXStart, 551, 37, 53);
+		g.drawRect((LevelEditScreen.selectedTile - viewTile) * 50 - 44
+				+ TileXStart, 550, 39, 55);
+
+		// draw the z and x controls
+		// to move the tile select view
+		g.setColor(Color.black);
+		g.drawString("<< (Z)", 25, this.y + 35);
+		g.drawString(">> (X)", 660, this.y + 35);
+
+		// draw the grid snap info
+		g.setColor(new Color(0, 0, 0, 150));
+		if (snapToGrid)
+			g.drawString("Grid snap is ON (Toggle with 'C')", 5, 15);
+		else
+			g.drawString("Grid snap is OFF (Toggle with 'C')", 5, 15);
+
 	}
 
-	private void drawTile(int id, int x, int y, Graphics g) {
-		if (id == 1) { // wall
-			g.setColor(Color.black);
-			g.fillRect(x, y, 32, 48);
-			g.setColor(Color.gray);
-			g.fillRect(x + 4, y + 4, 24, 40);
-		} else if (id == 2) { // player start position
-			g.setColor(Color.blue);
-			g.fillRect(x, y, 32, 48);
-			// startPortalX = x - 32;
-		} else if (id == 3) { // end portal
-			g.setColor(Color.blue);
-			g.drawRect(x + 2, y + 2, 28, 44);
-			g.drawRect(x + 4, y + 4, 24, 40);
-			// endPortalX = x - 32;
-		} else if (id == 4) { // breakable wall
-			g.setColor(Color.gray);
-			g.fillRect(x, y, 32, 48);
-			g.setColor(Color.lightGray);
-			g.fillRect(x + 4, y + 4, 24, 40);
-		} else if (id == 5) { // coin
-			g.setColor(new Color(230, 230, 0, 255));
-			g.fillRect(x + 9, y + 17, 14, 14);
-			g.fillRect(x + 13, y + 15, 6, 18);
-			g.fillRect(x + 7, y + 21, 18, 6);
-		} else if (id == 6) { // star
-			g.setColor(new Color(230, 230, 0, 255));
-			g.fillRect(x + 4, y, 24, 24);
-		}
-	}
-	
-	public void selectTile()
-	{
-		if(Runner._input.isMouseClicked(this))
+	public void selectTile() {
+		if (Runner._input.isMouseClicked(this))
 			// select a different tile
-						if (InputManager.mouse_y > 548) {
-							for (int tile = 1; tile < 10; tile++) {
-								if (Runner._input.isMouseClicked(tile * 50 - 40, 554, 32,
-										48)) {
-									LevelEditScreen.selectedTile = tile;
-								}
-							}
-						}
+			if (InputManager.mouse_y > 548) {
+				for (int tile = viewTile; tile < viewTile + 10; tile++) {
+					if (Runner._input.isMouseClicked((tile - viewTile) * 50
+							- 40 + TileXStart, 554, 32, 48)) {
+						LevelEditScreen.selectedTile = tile;
+					}
+				}
+			}
 	}
 }
