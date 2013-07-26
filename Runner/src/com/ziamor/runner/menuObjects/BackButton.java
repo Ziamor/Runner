@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import com.ziamor.runner.GameObject;
 import com.ziamor.runner.GameScreenManager;
 import com.ziamor.runner.Runner;
+import com.ziamor.runner.TextureCache;
 import com.ziamor.runner.screens.LevelSelectScreen;
 import com.ziamor.runner.screens.MainMenuScreen;
 import com.ziamor.runner.screens.WorldSelectScreen;
@@ -15,6 +16,7 @@ public class BackButton extends GameObject {
 	public String destination;
 
 	public BackButton(String dest) {
+		spriteID = "backButton";
 		destination = dest;
 		x = 15;
 		y = 15;
@@ -41,10 +43,10 @@ public class BackButton extends GameObject {
 	}
 
 	public void paintComponent(Graphics g) {
-		g.setColor(Color.lightGray);
-		g.fillRect(x, y, width, height);
-		g.setColor(Color.black);
-		g.drawString("Back", 26, 45);
+		g.drawImage(TextureCache._textures.get(spriteID).getTexture(), x, y,
+				null);
+		// g.setColor(Color.black);
+		// g.drawString("Back", 26, 45);
 	}
 
 }

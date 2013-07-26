@@ -26,7 +26,7 @@ public class Texture {
 			int x = 0;
 			int y = 0;
 			int xTiles = tex.getWidth() / tileWidth;
-			int yTiles = tex.getHeight() / tileHeight;
+			// int yTiles = tex.getHeight() / tileHeight;
 
 			y = index / xTiles;
 			x = index % xTiles;

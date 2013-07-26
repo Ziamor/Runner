@@ -2,6 +2,7 @@ package com.ziamor.runner;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 
 import javax.swing.JPanel;
@@ -13,13 +14,18 @@ public class Runner extends JPanel {
 	public static int _width, _height;
 	public static GameScreenManager _gameScreenManager;
 	public static InputManager _input;
-	
+
 	public static int world;
 	public static int level;
-	public static int score;
-	public static int stars;
-	public static int[][] scoreHigh;
-	public static int[][] starsHigh;
+	public static int score; // score in the current level
+	public static int stars; // stars in the current level
+	public static int[][] scoreHigh; // high score for each level
+	public static int[][] starsHigh; // high stars for each level
+	public static int scoreTotal; // total score over all levels
+	public static int starsTotal; // total stars over all levels
+
+	public static Font fontLarge = new Font("arial", Font.BOLD, 32);
+	public static Font fontSmall = new Font("arial", Font.BOLD, 14);
 
 	public Runner() {
 		this.setFocusable(true);
@@ -27,7 +33,7 @@ public class Runner extends JPanel {
 		// Get the dimensions of the screen
 		Runner._width = 720;
 		Runner._height = 608;
-		
+
 		// Set the game window
 		this.setPreferredSize(new Dimension(_width, _height));
 
@@ -40,13 +46,14 @@ public class Runner extends JPanel {
 		// Initialize game-wide variables
 		Runner.world = 1;
 		Runner.level = 1;
-		scoreHigh = new int[4][10]; // size is 1 bigger than # of worlds and levels
+		scoreHigh = new int[4][10]; // size is 1 bigger than # of worlds and
+									// levels
 		starsHigh = new int[4][10]; // [0][0] remains empty
-		
+
 		// Make the main menu screen
 		_gameScreenManager = new GameScreenManager();
 		_gameScreenManager.addScreen(new MainMenuScreen());
-		
+
 		// Start the game loop
 		Thread t = new Thread() {
 			public void run() {
@@ -60,7 +67,7 @@ public class Runner extends JPanel {
 		while (_isRunning) {
 			this.repaint();
 			try {
-				Thread.sleep(1000/60);
+				Thread.sleep(1000 / 60);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

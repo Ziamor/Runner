@@ -25,12 +25,14 @@ public class TextureCache {
 		{
 			// use loadTextureTransparent to remove a white background
 			// otherwise, use loadTexture
-			put("star", loadTextureTransparent("star", false));
-			put("coin", loadTextureTransparent("coin", false));
+			put("star", loadTextureTransparent("star", true));
+			put("starOutline", loadTextureTransparent("starOutline", false));
+			put("coin", loadTextureTransparent("coin", true));
 			put("basicWall", loadTextureTransparent("basicWall", false));
 			put("breakableWall", loadTextureTransparent("breakableWall", false));
 			put("player", loadTextureTransparent("player", true));
-			put("spikes", loadTextureTransparent("spikes", true));
+			put("spikes", loadTextureTransparent("spikes", false));
+			put("backButton", loadTextureTransparent("backButton", false));
 		}
 	};
 

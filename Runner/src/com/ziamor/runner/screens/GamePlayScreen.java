@@ -1,6 +1,7 @@
 package com.ziamor.runner.screens;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
@@ -8,6 +9,7 @@ import com.ziamor.runner.GameObject;
 import com.ziamor.runner.GameScreen;
 import com.ziamor.runner.InputManager;
 import com.ziamor.runner.Runner;
+import com.ziamor.runner.TextureCache;
 import com.ziamor.runner.gameObjects.Player;
 import com.ziamor.runner.gameObjects.StartPortal;
 import com.ziamor.runner.gameObjects.levels.LevelParser;
@@ -114,6 +116,12 @@ public class GamePlayScreen extends GameScreen {
 		if (getDisableRender())
 			return;
 
+		// draw the startPortal
+		startPortal.paintComponent(g);
+
+		// draw the objects
+		super.paintComponent(g);
+
 		// draw the black fade at the bottom
 		for (int i = 1; i < 6; i++) {
 			g.setColor(new Color(0, 0, 0, 50 * i - 30));
@@ -121,18 +129,28 @@ public class GamePlayScreen extends GameScreen {
 			g.fillRect(0, -viewY + 40 - i * 8, 720, 8);
 		}
 
-		// draw the startPortal
-		startPortal.paintComponent(g);
-
-		// draw the objects
-		super.paintComponent(g);
-
+		// draw the overlay
 		g.setColor(Color.black);
 		g.fillRect(0, 608 - 60, 720, 60);
-		g.setColor(Color.gray);
+		g.setColor(Color.darkGray);
 		g.fillRect(5, 553, 710, 50);
-		g.setColor(Color.black);
-		g.drawString("Score: " + Runner.score, 20, 582);
+
+		// draw the score display
+		g.setColor(new Color(20, 110, 255, 255));
+		g.setFont(Runner.fontSmall);
+		g.drawString("Score:", 338, 566);
+		g.setFont(Runner.fontLarge);
+		g.drawString("" + Runner.score,
+				361 - String.valueOf(Runner.score).length() * 9, 598);
+
+		// draw the star display
+		int i = 1;
+		for (i = 1; i < Runner.stars + 1; i++)
+			g.drawImage(TextureCache._textures.get("star")
+					.getTexture(0, 32, 32), 40 * i - 23, 562, null);
+		for (int j = i; j < 4; j++)
+			g.drawImage(TextureCache._textures.get("starOutline").getTexture(),
+					40 * j - 23, 562, null);
 
 	}
 }

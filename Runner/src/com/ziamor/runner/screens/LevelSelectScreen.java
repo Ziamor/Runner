@@ -1,9 +1,12 @@
 package com.ziamor.runner.screens;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 
 import com.ziamor.runner.GameScreen;
+import com.ziamor.runner.Runner;
+import com.ziamor.runner.TextureCache;
 import com.ziamor.runner.menuObjects.AchieveButton;
 import com.ziamor.runner.menuObjects.BackButton;
 import com.ziamor.runner.menuObjects.LevelSelectButton;
@@ -45,6 +48,25 @@ public class LevelSelectScreen extends GameScreen {
 		// draw the objects
 		super.paintComponent(g);
 
-	}
 
+		Runner.scoreTotal = 200*(100*500+3*10000);
+		Runner.starsTotal = 3*200;
+		
+		// draw the score display
+		g.setColor(new Color(20,110,255,255));
+		g.setFont(Runner.fontSmall);
+		g.drawString("Score:",338,18);
+		g.setFont(Runner.fontLarge);
+		g.drawString("" + Runner.scoreTotal,
+				361 - String.valueOf(Runner.scoreTotal).length() * 9, 50);
+		
+		// draw the star display
+		g.setColor(new Color(225,225,0,255));
+		g.drawImage(TextureCache._textures.get("star").getTexture(0,32,32), 100, 14,
+				null);
+		g.drawString("x " + Runner.starsTotal, 140, 40);
+		
+		// draw the trophy display
+
+	}
 }

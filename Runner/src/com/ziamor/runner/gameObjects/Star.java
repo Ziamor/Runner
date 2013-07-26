@@ -8,6 +8,8 @@ import com.ziamor.runner.screens.GamePlayScreen;
 
 public class Star extends GameObject {
 
+	private int animation;
+
 	public Star(int x, int y) {
 		this.x = x;
 		this.y = y;
@@ -19,6 +21,7 @@ public class Star extends GameObject {
 		spriteOffsetY = -4;
 		width = 24;
 		height = 24;
+		animation = 0;
 
 	}
 
@@ -27,7 +30,9 @@ public class Star extends GameObject {
 	}
 
 	public void update() {
-
+		animation++;
+		if (animation > 29)
+			animation = 0;
 	}
 
 	public void paintComponent(Graphics g) {
@@ -35,9 +40,11 @@ public class Star extends GameObject {
 		if (!isVisible || offScreen)
 			return;
 
-		g.drawImage(TextureCache._textures.get(spriteID).getTexture(), x
-				- GamePlayScreen.viewX + offsetX + spriteOffsetX, y
-				- GamePlayScreen.viewY + offsetY + spriteOffsetY, null);
+		g.drawImage(
+				TextureCache._textures.get(spriteID).getTexture(animation/15, 32,
+						32),
+				x - GamePlayScreen.viewX + offsetX + spriteOffsetX, y
+						- GamePlayScreen.viewY + offsetY + spriteOffsetY, null);
 	}
 
 }

@@ -78,11 +78,13 @@ public class LevelEditOverlay extends GameObject {
 		}
 
 		// draw the current tile marker
-		g.setColor(Color.yellow);
-		g.drawRect((LevelEditScreen.selectedTile - viewTile) * 50 - 43
-				+ TileXStart, 551, 37, 53);
-		g.drawRect((LevelEditScreen.selectedTile - viewTile) * 50 - 44
-				+ TileXStart, 550, 39, 55);
+		if (LevelEditScreen.selectedTile > viewTile) {
+			g.setColor(Color.yellow);
+			g.drawRect((LevelEditScreen.selectedTile - viewTile) * 50 - 43
+					+ TileXStart, 551, 37, 53);
+			g.drawRect((LevelEditScreen.selectedTile - viewTile) * 50 - 44
+					+ TileXStart, 550, 39, 55);
+		}
 
 		// draw the z and x controls
 		// to move the tile select view

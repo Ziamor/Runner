@@ -9,6 +9,7 @@ import com.ziamor.runner.screens.GamePlayScreen;
 public class Coin extends GameObject {
 
 	private int alpha = 255;
+	private int animation;
 
 	public Coin(int x, int y) {
 		this.x = x;
@@ -22,6 +23,7 @@ public class Coin extends GameObject {
 		spriteOffsetY = -2;
 		width = 16;
 		height = 16;
+		animation = 0;
 	}
 
 	public Coin() {
@@ -38,6 +40,10 @@ public class Coin extends GameObject {
 				isVisible = false;
 			}
 		}
+		
+		animation++; // update the animation
+		if (animation > 31)
+			animation = 0;
 	}
 
 	public void paintComponent(Graphics g) {
@@ -45,7 +51,7 @@ public class Coin extends GameObject {
 		if (!isVisible || offScreen)
 			return;
 
-		g.drawImage(TextureCache._textures.get(spriteID).getTexture(), x
+		g.drawImage(TextureCache._textures.get(spriteID).getTexture(animation/5,20,20), x
 				- GamePlayScreen.viewX + getOffsetX() + spriteOffsetX, y
 				- GamePlayScreen.viewY + getOffsetY() + spriteOffsetY, null);
 	}

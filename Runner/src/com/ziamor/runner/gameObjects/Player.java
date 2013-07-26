@@ -315,7 +315,7 @@ public class Player extends GameObject {
 		if (!isVisible || offScreen)
 			return;
 		
-		g.drawImage(TextureCache._textures.get(spriteID).getTexture(animation,width,height), x
+		g.drawImage(TextureCache._textures.get(spriteID).getTexture(animation, width, height), x
 				- GamePlayScreen.viewX + getOffsetX() + spriteOffsetX, y
 				- GamePlayScreen.viewY + getOffsetY() + spriteOffsetY, null);
 		
