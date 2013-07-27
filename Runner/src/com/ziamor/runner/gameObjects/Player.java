@@ -25,7 +25,6 @@ public class Player extends GameObject {
 	public static boolean spawningAnimation;
 	
 	public Player(int x, int y) {
-		
 		Player.x = x;
 		Player.y = y;
 		this.objID = "player";
@@ -89,11 +88,6 @@ public class Player extends GameObject {
 				yspeedDouble *= 0.5;
 				gravitySwitch = false;
 			}
-		}
-		
-		
-		if (x > GamePlayScreen.endPortalX + 32 && !GamePlayScreen.levelComplete) {
-			
 		}
 
 		// if player is in a portal at the end of the level

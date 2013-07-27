@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import com.ziamor.runner.GameScreen;
 import com.ziamor.runner.InputManager;
 import com.ziamor.runner.Runner;
+import com.ziamor.runner.TextureCache;
 import com.ziamor.runner.menuObjects.AchieveButton;
 import com.ziamor.runner.menuObjects.BackButton;
 import com.ziamor.runner.menuObjects.WorldSelectButton;
@@ -58,6 +59,16 @@ public class WorldSelectScreen extends GameScreen {
 		else if (viewX > (Runner.world - 1) * 700)
 			viewX--;
 
+		// if the user hits space
+		if (Runner._input.isKeyHit(InputManager._keys.get("space"))
+				&& !isRemove()) {
+			// go to the LevelSelectScreen for the current world
+			Runner._gameScreenManager.addScreen(new LevelSelectScreen());
+			// remove this screen
+			Runner._gameScreenManager.removeScreen(this);
+
+		}
+
 	}
 
 	public void paintComponent(Graphics g) {
@@ -73,6 +84,20 @@ public class WorldSelectScreen extends GameScreen {
 
 		// call the gameScreen paintComponent(g);
 		super.paintComponent(g);
+
+		// draw the score display
+		g.setColor(new Color(20, 110, 255, 255));
+		g.setFont(Runner.fontSmall);
+		g.drawString("Score:", 338, 18);
+		g.setFont(Runner.fontLarge);
+		g.drawString("" + Runner.scoreTotal,
+				361 - String.valueOf(Runner.scoreTotal).length() * 9, 50);
+
+		// draw the star display
+		g.setColor(new Color(225, 225, 0, 255));
+		g.drawImage(TextureCache._textures.get("star").getTexture(0, 32, 32),
+				100, 14, null);
+		g.drawString("x " + Runner.starsTotal, 140, 40);
 
 	}
 

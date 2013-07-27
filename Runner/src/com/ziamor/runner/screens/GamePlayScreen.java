@@ -11,6 +11,7 @@ import com.ziamor.runner.InputManager;
 import com.ziamor.runner.Runner;
 import com.ziamor.runner.TextureCache;
 import com.ziamor.runner.gameObjects.Player;
+import com.ziamor.runner.gameObjects.Wall;
 import com.ziamor.runner.gameObjects.StartPortal;
 import com.ziamor.runner.gameObjects.levels.LevelParser;
 
@@ -95,14 +96,6 @@ public class GamePlayScreen extends GameScreen {
 		// if the player has completed a level
 		if (levelCompleteSplash) {
 
-			// update the high score
-			if (Runner.score > Runner.scoreHigh[Runner.world][Runner.level])
-				Runner.scoreHigh[Runner.world][Runner.level] = Runner.score;
-
-			// update the high stars
-			if (Runner.stars > Runner.starsHigh[Runner.world][Runner.level])
-				Runner.starsHigh[Runner.world][Runner.level] = Runner.stars;
-
 			// go to the level complete screen
 			Runner._gameScreenManager.addScreen(new LevelCompleteScreen());
 			this.setDisableUpdate(true); // freeze game objects
@@ -140,8 +133,8 @@ public class GamePlayScreen extends GameScreen {
 		g.setFont(Runner.fontSmall);
 		g.drawString("Score:", 338, 566);
 		g.setFont(Runner.fontLarge);
-		g.drawString("" + Runner.score,
-				361 - String.valueOf(Runner.score).length() * 9, 598);
+		g.drawString("" + Runner.score, 361 - String.valueOf(Runner.score)
+				.length() * 9, 598);
 
 		// draw the star display
 		int i = 1;

@@ -29,6 +29,7 @@ public class TextureCache {
 			put("starOutline", loadTextureTransparent("starOutline", false));
 			put("coin", loadTextureTransparent("coin", true));
 			put("basicWall", loadTextureTransparent("basicWall", false));
+			put("wall", loadTextureTransparent("wall", true));
 			put("breakableWall", loadTextureTransparent("breakableWall", false));
 			put("player", loadTextureTransparent("player", true));
 			put("spikes", loadTextureTransparent("spikes", false));
