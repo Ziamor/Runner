@@ -101,6 +101,14 @@ public class LevelEditScreen extends GameScreen {
 			gobjToRemove = null;
 		}
 
+		// Delete all tiles
+		if (Runner._input.isKeyPressed(InputManager._keys.get("c"))) {
+			for (GameObject gobj : gameObjects) {
+				if (gobj.getIsInterface() == false)
+				removeGameObject(gobj);
+			}
+		}
+
 		// when the user presses "escape", save and play
 		if (Runner._input.isKeyPressed(InputManager._keys.get("escape"))) {
 			LevelParser.saveLevel(gameObjects);
@@ -118,7 +126,7 @@ public class LevelEditScreen extends GameScreen {
 
 		// draw the border
 		g.setColor(Color.darkGray);
-		g.fillRect(0, 0, 720, 608);
+		g.fillRect(0, 0, 760, 608);
 		g.setColor(Color.white);
 		g.fillRect(-viewX, -viewY, GamePlayScreen.levelWidth,
 				GamePlayScreen.levelHeight);

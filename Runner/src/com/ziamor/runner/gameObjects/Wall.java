@@ -16,9 +16,11 @@ public class Wall extends GameObject {
 		this.y = y;
 		this.objID = "wall";
 		this.gobjFactorty = GameObjectFactory.WALL;
-		this.spriteID = "wall";
+		this.spriteID = "wallGrass";
 		width = 32;
 		height = 24;
+		spriteOffsetX = -8;
+		spriteOffsetY = -8;
 		subImage = -1;
 	}
 
@@ -33,11 +35,14 @@ public class Wall extends GameObject {
 	}
 
 	public void update() {
-		if (subImage == -1)
-			setBitmask();
+		
 	}
 
 	public void paintComponent(Graphics g) {
+		// set the bitmask, if it hasn't already
+		if (subImage == -1)
+			setBitmask();
+		
 		super.paintComponent(g);
 		if (!isVisible || offScreen)
 			return;

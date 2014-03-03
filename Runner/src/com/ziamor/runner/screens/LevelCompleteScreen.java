@@ -7,6 +7,7 @@ import com.ziamor.runner.GameScreen;
 import com.ziamor.runner.GameScreenManager;
 import com.ziamor.runner.InputManager;
 import com.ziamor.runner.Runner;
+import com.ziamor.runner.TextureCache;
 
 public class LevelCompleteScreen extends GameScreen {
 
@@ -18,6 +19,12 @@ public class LevelCompleteScreen extends GameScreen {
 		// update the high stars
 		if (Runner.stars > Runner.starsHigh[Runner.world][Runner.level])
 			Runner.starsHigh[Runner.world][Runner.level] = Runner.stars;
+
+		// update the isUnlocked
+		if (Runner.level < 9)
+			Runner.isUnlocked[Runner.world][Runner.level + 1] = true;
+		else
+			Runner.isUnlocked[Runner.world + 1][1] = true;
 
 		// update the total score and total stars
 		Runner.scoreTotal = 0;
@@ -37,8 +44,9 @@ public class LevelCompleteScreen extends GameScreen {
 			return;
 
 		// if user hits space
+		// or if the user clicks the "next level" button
 		if (Runner._input.isKeyHit(InputManager._keys.get("space"))
-				|| Runner._input.isMouseClicked(260, 250, 200, 70)) {
+				|| Runner._input.isMouseClicked(280, 250, 200, 70)) {
 			// load the next level and remove this screen
 			int size = GameScreenManager.getGameScreens().size();
 			for (int i = 0; i < size; i++) {
@@ -49,44 +57,62 @@ public class LevelCompleteScreen extends GameScreen {
 		}
 
 		// if user hits escape
+		// or if the user clicks the "return to level select" button
 		if (Runner._input.isKeyHit(InputManager._keys.get("escape"))
-				|| Runner._input.isMouseClicked(290, 355, 140, 60)) {
+				|| Runner._input.isMouseClicked(310, 355, 140, 60)) {
 			// go back to the level select screen
 			int size = GameScreenManager.getGameScreens().size();
 			for (int i = 0; i < size; i++) {
 				GameScreenManager.getGameScreens().remove(0);
 			}
-			Runner._gameScreenManager.addScreen(new LevelSelectScreen());
+			Runner._gameScreenManager.addScreen(new MenuScreen(2));
+		}
+
+		// if the user clicks the "retry level" button
+		if (Runner._input.isMouseClicked(310, 450, 140, 60)) {
+			// go back to the level select screen
+			int size = GameScreenManager.getGameScreens().size();
+			for (int i = 0; i < size; i++) {
+				GameScreenManager.getGameScreens().remove(0);
+			}
+			Runner._gameScreenManager.addScreen(new GamePlayScreen());
 		}
 
 	}
 
 	public void paintComponent(Graphics g) {
 
+		// dim the background
 		Color c = new Color(100, 100, 100, 100);
 		g.setColor(c);
 		g.fillRect(0, 0, 1024, 608 - 60);
 
 		// draw the victory banner
 		g.setColor(Color.green);
-		g.fillRect(0, 60, 720, 150);
+		g.fillRect(0, 60, 760, 150);
 		g.setColor(Color.black);
-		g.drawString("SUCCESS!", 280, 140);
+		g.drawString("SUCCESS!", 300, 140);
 
 		// draw the next level button
+		g.drawImage(TextureCache._textures.get("largeButton").getTexture(),
+				280, 250, null); // width 200, height 70
 		g.setFont(Runner.fontLarge);
-		g.setColor(Color.cyan);
-		g.fillRect(260, 250, 200, 70);
 		g.setColor(Color.black);
-		g.drawString("Next Level", 280, 295);
+		g.drawString("Next Level", 300, 295);
 
 		// draw the level select button
+		g.drawImage(TextureCache._textures.get("smallButton").getTexture(),
+				310, 355, null); // width 140, height 60
 		g.setFont(Runner.fontSmall);
-		g.setColor(Color.cyan);
-		g.fillRect(290, 355, 140, 60);
 		g.setColor(Color.black);
-		g.drawString("Return to", 327, 379);
-		g.drawString("Level Select", 316, 398);
+		g.drawString("Return to", 347, 379);
+		g.drawString("Level Select", 336, 398);
+
+		// draw the retry level button
+		g.drawImage(TextureCache._textures.get("smallButton").getTexture(),
+				310, 450, null); // width 140, height 60
+		g.setColor(Color.black);
+		g.drawString("Retry Level", 341, 485);
 
 		// call the gameScreen paintComponent(g);
 		super.paintComponent(g);

@@ -21,7 +21,7 @@ public class WorldSelectScreen extends GameScreen {
 		// make the world buttons
 		for (int i = 1; i < 4; i++) {
 			WorldSelectButton tempbutton = new WorldSelectButton();
-			tempbutton.setX(90 + 700 * (i - 1));
+			tempbutton.setX(110 + 700 * (i - 1));
 			tempbutton.setY(130);
 			tempbutton.setWidth(540);
 			tempbutton.setHeight(348);
@@ -30,7 +30,7 @@ public class WorldSelectScreen extends GameScreen {
 		}
 
 		// make the corner buttons button
-		this.addGameObject(new BackButton("MainMenu"));
+		this.addGameObject(new BackButton());
 		this.addGameObject(new AchieveButton());
 	}
 
@@ -58,16 +58,6 @@ public class WorldSelectScreen extends GameScreen {
 			viewX++;
 		else if (viewX > (Runner.world - 1) * 700)
 			viewX--;
-
-		// if the user hits space
-		if (Runner._input.isKeyHit(InputManager._keys.get("space"))
-				&& !isRemove()) {
-			// go to the LevelSelectScreen for the current world
-			Runner._gameScreenManager.addScreen(new LevelSelectScreen());
-			// remove this screen
-			Runner._gameScreenManager.removeScreen(this);
-
-		}
 
 	}
 

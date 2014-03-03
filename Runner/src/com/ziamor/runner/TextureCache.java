@@ -25,15 +25,22 @@ public class TextureCache {
 		{
 			// use loadTextureTransparent to remove a white background
 			// otherwise, use loadTexture
-			put("star", loadTextureTransparent("star", true));
-			put("starOutline", loadTextureTransparent("starOutline", false));
-			put("coin", loadTextureTransparent("coin", true));
-			put("basicWall", loadTextureTransparent("basicWall", false));
-			put("wall", loadTextureTransparent("wall", true));
-			put("breakableWall", loadTextureTransparent("breakableWall", false));
-			put("player", loadTextureTransparent("player", true));
-			put("spikes", loadTextureTransparent("spikes", false));
-			put("backButton", loadTextureTransparent("backButton", false));
+			put("star", loadTexture("star", true));
+			put("starOutline", loadTexture("starOutline", false));
+			put("coin", loadTexture("coin", true));
+			put("basicWall", loadTexture("basicWall", false));
+			put("wall", loadTexture("wall", true));
+			put("wallGrass", loadTexture("wallGrass", true));
+			put("breakableOverlay", loadTexture("breakableOverlay", false));
+			put("player", loadTexture("player", true));
+			put("spikes", loadTexture("spikes", false));
+			put("backButton", loadTexture("backButton", false));
+			put("largeButton", loadTexture("largeButton", false));
+			put("smallButton", loadTexture("smallButton", false));
+			put("levelButton", loadTexture("levelButton", false));
+			put("levelButtonLocked", loadTexture("levelButtonLocked", false));
+			put("achieveButton", loadTexture("achieveButton", false));
+			put("worldButton", loadTexture("worldButton", false));
 		}
 	};
 
@@ -48,11 +55,9 @@ public class TextureCache {
 		return tex;
 	}
 
-	public static Texture loadTextureTransparent(String textureName,
+	public static Texture loadTextureBW(String textureName,
 			boolean tileSet) {
-		// This method is pointless now
-		// I realized you can just save the transparency into the PNG
-		// if you use Photoshop instead of Paint
+		// Loads a texture in black and white (greyscale)
 		
 		Texture tex = null;
 		// load the file as a buffered image

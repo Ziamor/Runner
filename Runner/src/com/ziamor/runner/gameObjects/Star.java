@@ -31,7 +31,7 @@ public class Star extends GameObject {
 
 	public void update() {
 		animation++;
-		if (animation > 29)
+		if (animation > 19)
 			animation = 0;
 	}
 
@@ -41,7 +41,7 @@ public class Star extends GameObject {
 			return;
 
 		g.drawImage(
-				TextureCache._textures.get(spriteID).getTexture(animation/15, 32,
+				TextureCache._textures.get(spriteID).getTexture(animation/5, 32,
 						32),
 				x - GamePlayScreen.viewX + offsetX + spriteOffsetX, y
 						- GamePlayScreen.viewY + offsetY + spriteOffsetY, null);

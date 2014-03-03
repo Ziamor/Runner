@@ -89,7 +89,7 @@ public class InputManager implements KeyListener, MouseListener,
 		} else
 			return false;
 	}
-
+	
 	public boolean isMouseClickedRight(GameObject gobj) {
 		if (gobj != null)
 			return isMouseClickedRight(gobj.getX(),gobj.getY(),gobj.getWidth(),gobj.getHeight());

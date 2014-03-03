@@ -21,19 +21,21 @@ public class GamePlayScreen extends GameScreen {
 	public static int viewX;
 	public static int viewY;
 	public static boolean levelComplete;
-	private static boolean levelCompleteSplash;
 	public static int levelWidth;
 	public static int levelHeight;
 	public static StartPortal startPortal;
+	private int needControlScreen;
 
 	public GamePlayScreen() {
+		// set variables
 		levelComplete = false;
-		levelCompleteSplash = false;
 		Player.spawningAnimation = true;
 
-		Runner.score = 0; // initialize score
-		Runner.stars = 0; // initialize stars
+		// reset score and stars
+		Runner.score = 0;
+		Runner.stars = 0;
 
+		// add all the objects
 		this.addGameObject(LevelParser.loadLevel());
 		startPortal = new StartPortal(Player.x, 0);
 
@@ -44,9 +46,22 @@ public class GamePlayScreen extends GameScreen {
 			viewY = levelHeight - 560;
 		if (viewY < 0) // if too high
 			viewY = 0;
+		
+		
+		// if there is a new move introduced in this level
+		if (Runner.level == 1) {
+			needControlScreen = 1;
+		}
 	}
 
 	public void update() {
+		// draw the controlScreen, if required
+		if (needControlScreen > 0) {
+			Runner._gameScreenManager.addScreen(new ControlScreen());
+			this.setDisableUpdate(true); // freeze game objects
+			needControlScreen = 0;
+		}
+		
 		// call the gameScreen update();
 		super.update();
 		if (getDisableUpdate())
@@ -90,11 +105,6 @@ public class GamePlayScreen extends GameScreen {
 		}
 
 		if (levelComplete && Player.y < viewY - 500) {
-			levelCompleteSplash = true;
-		}
-
-		// if the player has completed a level
-		if (levelCompleteSplash) {
 
 			// go to the level complete screen
 			Runner._gameScreenManager.addScreen(new LevelCompleteScreen());
@@ -108,6 +118,10 @@ public class GamePlayScreen extends GameScreen {
 	public void paintComponent(Graphics g) {
 		if (getDisableRender())
 			return;
+		
+		// draw the background
+		//g.setColor(new Color(0,255,255,0));
+		//g.fillRect(0, 0, 760, 608);
 
 		// draw the startPortal
 		startPortal.paintComponent(g);
@@ -118,22 +132,22 @@ public class GamePlayScreen extends GameScreen {
 		// draw the black fade at the bottom
 		for (int i = 1; i < 6; i++) {
 			g.setColor(new Color(0, 0, 0, 50 * i - 30));
-			g.fillRect(0, levelHeight - viewY - 48 + i * 8, 720, 8);
-			g.fillRect(0, -viewY + 40 - i * 8, 720, 8);
+			g.fillRect(0, levelHeight - viewY - 48 + i * 8, 760, 8);
+			g.fillRect(0, -viewY + 40 - i * 8, 760, 8);
 		}
 
 		// draw the overlay
 		g.setColor(Color.black);
-		g.fillRect(0, 608 - 60, 720, 60);
+		g.fillRect(0, 608 - 60, 760, 60);
 		g.setColor(Color.darkGray);
-		g.fillRect(5, 553, 710, 50);
+		g.fillRect(5, 553, 750, 50);
 
 		// draw the score display
 		g.setColor(new Color(20, 110, 255, 255));
 		g.setFont(Runner.fontSmall);
-		g.drawString("Score:", 338, 566);
+		g.drawString("Score:", 358, 566);
 		g.setFont(Runner.fontLarge);
-		g.drawString("" + Runner.score, 361 - String.valueOf(Runner.score)
+		g.drawString("" + Runner.score, 381 - String.valueOf(Runner.score)
 				.length() * 9, 598);
 
 		// draw the star display

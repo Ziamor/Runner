@@ -215,7 +215,7 @@ public class LevelParser {
 
 	public static ArrayList<GameObject> loadLevel() {
 		String fileName = "res\\maps\\" + Runner.world + "-" + Runner.level
-				+ ".backup.xml";
+				+ ".xml";
 		LevelParser lp = new LevelParser(fileName);
 
 		return lp.loadFromXML();
@@ -223,8 +223,8 @@ public class LevelParser {
 
 	public static ArrayList<GameObject> saveLevel(
 			ArrayList<GameObject> GameObjectData) {
-		String fileName = "res\\maps\\" + Runner.world + "-" + Runner.level
-				+ ".backup.xml";
+		String fileName = "res\\maps\\" + Runner.world + "-" + 2
+				+ ".xml";
 		LevelParser lp = new LevelParser(fileName);
 		lp.saveToXML(fileName, GameObjectData);
 

@@ -150,9 +150,17 @@ public class GameScreen {
 
 	public void paintComponent(Graphics g) {
 
-		// paint all game objects
+		// paint the objects (except walls)
 		for (GameObject gameObject : gameObjects) {
-			gameObject.paintComponent(g);
+			if (!(gameObject.getObjID() == "wall" || gameObject.getObjID() == "breakableWall"))
+				gameObject.paintComponent(g);
+		}
+
+		// paint the walls
+		for (GameObject gameObject : gameObjects) {
+			if (gameObject.getObjID() == "wall"
+					|| gameObject.getObjID() == "breakableWall")
+				gameObject.paintComponent(g);
 		}
 
 		// paint all game interfaces

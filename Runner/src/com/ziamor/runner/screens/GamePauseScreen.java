@@ -13,7 +13,7 @@ public class GamePauseScreen extends GameScreen {
 
 	public GamePauseScreen() {
 		// make the back button
-		this.addGameObject(new BackButton("LevelSelect"));
+		this.addGameObject(new BackButton());
 	}
 
 	public void update() {
@@ -36,11 +36,11 @@ public class GamePauseScreen extends GameScreen {
 
 		Color c = new Color(0, 0, 0, 100);
 		g.setColor(c);
-		g.fillRect(0, 0, 1024, 608);
+		g.fillRect(0, 0, 760, 608);
 
 		g.setColor(Color.red);
-		g.fillRect(0, 0, 1024, 30);
-		g.fillRect(0, 608 - 30, 1024, 30);
+		g.fillRect(0, 0, 760, 30);
+		g.fillRect(0, 608 - 30, 760, 30);
 		g.setColor(Color.black);
 		g.drawString("PAUSED", 350, 20);
 		g.drawString("PAUSED", 350, 598);

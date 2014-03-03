@@ -23,7 +23,7 @@ public class Player extends GameObject {
 	private int animation = 0;
 	public static boolean isDead;
 	public static boolean spawningAnimation;
-	
+
 	public Player(int x, int y) {
 		Player.x = x;
 		Player.y = y;
@@ -40,9 +40,9 @@ public class Player extends GameObject {
 		gravitySwitch = false;
 		dashTimer = 0;
 		gravitySwitchAble = true;
-		
+
 		if (spawningAnimation)
-		offsetY = GamePlayScreen.levelHeight - y;
+			offsetY = GamePlayScreen.levelHeight - y;
 	}
 
 	public void update() {
@@ -53,10 +53,8 @@ public class Player extends GameObject {
 		// if the player hasn't started the level yet
 		// play the spawning animation
 		if (spawningAnimation) {
-			if (offsetY > 100) {
+			if (offsetY > (GamePlayScreen.levelHeight - y -50)/2) {
 				yspeedDouble -= 0.5;
-				if (yspeedDouble < -15)
-					yspeedDouble = -15;
 			} else
 				yspeedDouble += 0.5;
 
@@ -74,8 +72,8 @@ public class Player extends GameObject {
 		// if player is dead
 		if (isDead) {
 			yspeedDouble += 0.5; // apply gravity
-			x += xspeed;         // update x
-			y += yspeedDouble;   // update y
+			x += xspeed; // update x
+			y += yspeedDouble; // update y
 			return; // don't complete the rest of the update()
 		}
 
@@ -108,7 +106,7 @@ public class Player extends GameObject {
 			y += yspeed; // update y
 			return; // don't complete the rest of the update()
 		}
-		
+
 		// ****************************************************
 		// everything below here is for regular player movement
 		// ****************************************************
@@ -119,6 +117,22 @@ public class Player extends GameObject {
 		} else {
 			xspeed = 5;
 		}
+		
+		// check for an up or down arrow press for fastFall
+		boolean fastFall = false;
+		if (Runner._input.isKeyPressed(InputManager._keys.get("down"))
+				&& !gravitySwitch)
+			fastFall = true;
+		if (Runner._input.isKeyPressed(InputManager._keys.get("up"))
+				&& gravitySwitch)
+			fastFall = true;
+		
+		// check if the player can break through walls
+		boolean canBreak = false;
+		if (xspeed > 6)
+			canBreak = true;
+		if (Math.abs(yspeedDouble) > 12 && fastFall)
+			canBreak = true;
 
 		// reduce the dash timer
 		if (dashTimer > 0)
@@ -179,6 +193,7 @@ public class Player extends GameObject {
 			xspeed = 20; // dash forward
 			yspeedDouble = 0;
 			dashTimer = 60;
+			canBreak = true;
 		}
 
 		// check for left arrow press
@@ -189,30 +204,33 @@ public class Player extends GameObject {
 		}
 
 		// check for down arrow press
-		boolean fastFall = false;
 		if (Runner._input.isKeyHit(InputManager._keys.get("down"))) {
 			if (gravitySwitch && grounded == true)
 				yspeedDouble = 13;
 		}
-		if (Runner._input.isKeyPressed(InputManager._keys.get("down"))
-				&& !gravitySwitch)
-			fastFall = true;
 
 		// check for up arrow press
 		if (Runner._input.isKeyHit(InputManager._keys.get("up"))) {
 			if (!gravitySwitch && grounded == true)
 				yspeedDouble = -13;
 		}
-		if (Runner._input.isKeyPressed(InputManager._keys.get("up"))
-				&& gravitySwitch)
-			fastFall = true;
 
 		// apply gravity
-		if (fastFall)
+		int cap = 16;
+		if (fastFall) {
 			yspeedDouble += gravity * 3; // fast falling
-		else
+			cap = 20;
+		} else 
 			yspeedDouble += gravity; // normal falling
-		int yspeed = ((int) yspeedDouble); // make yspeed an int
+
+		// apply speed cap
+		if (yspeedDouble > cap)
+			yspeedDouble = cap;
+		if (yspeedDouble < -cap)
+			yspeedDouble = -cap;
+		
+		// make yspeed an integer
+		int yspeed = ((int) yspeedDouble); 
 
 		// move player
 		x += xspeed;
@@ -230,9 +248,12 @@ public class Player extends GameObject {
 				if (CollisionHandler.isColliding(this, gameObject)
 						&& gameObject.isActive()) {
 					collision = true;
-					if (xspeed > 6 && gameObject.getObjID() == "breakableWall") {
-						collision = false;
-						gameObject.setActive(false);
+					// break through the wall if able
+					if (gameObject.getObjID() == "breakableWall") {
+						if (canBreak) {
+							collision = false;
+							gameObject.setActive(false);
+						}
 					}
 				}
 			}
@@ -266,7 +287,7 @@ public class Player extends GameObject {
 			if (CollisionHandler.isColliding(this, gameObject)) {
 				if (gameObject.isActive() == true) {
 					gameObject.setActive(false); // make the coin inactive
-					Runner.score += 100;
+					Runner.score += 500;
 				}
 			}
 		}
@@ -297,37 +318,24 @@ public class Player extends GameObject {
 		}
 
 		// go to the next frame of the animation
-		// (this has to be here so that the animation doesn't run in the pause screen)
+		// (this has to be here so that the animation doesn't run in the pause
+		// screen)
 		animation++;
-		if(animation > 69)
+		if (animation > 69)
 			animation = 0;
-		
+
 	}
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		if (!isVisible || offScreen)
 			return;
-		
-		g.drawImage(TextureCache._textures.get(spriteID).getTexture(animation, width, height), x
-				- GamePlayScreen.viewX + getOffsetX() + spriteOffsetX, y
-				- GamePlayScreen.viewY + getOffsetY() + spriteOffsetY, null);
-		
-		/*g.setColor(Color.blue);
-		if (GamePlayScreen.playerDead) {
-			g.setColor(Color.red);
-		}
-		g.fillRect(x - GamePlayScreen.viewX, y - GamePlayScreen.viewY, width,
-				height);
 
-		g.setColor(Color.black);
-		if (!gravitySwitch) {
-			g.fillRect(x - GamePlayScreen.viewX + 3, y - GamePlayScreen.viewY
-					+ 37, width - 6, 8);
-		} else {
-			g.fillRect(x - GamePlayScreen.viewX + 3, y - GamePlayScreen.viewY
-					+ 3, width - 6, 8);
-		}*/
+		g.drawImage(
+				TextureCache._textures.get(spriteID).getTexture(animation,
+						width, height), x - GamePlayScreen.viewX + getOffsetX()
+						+ spriteOffsetX, y - GamePlayScreen.viewY
+						+ getOffsetY() + spriteOffsetY, null);
 
 	}
 
@@ -338,7 +346,7 @@ public class Player extends GameObject {
 	public int getY() { // need this because y is static
 		return y;
 	}
-	
+
 	public void setX(int value) {
 		x = value;
 	}

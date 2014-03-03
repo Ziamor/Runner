@@ -39,7 +39,7 @@ public class LevelEditOverlay extends GameObject {
 
 	public void update() {
 		// change the level size with WASD
-		if (Runner._input.isKeyHit(InputManager._keys.get("z")))
+		if (Runner._input.isKeyHit(InputManager._keys.get("x")))
 			viewTile--;
 		if (Runner._input.isKeyHit(InputManager._keys.get("x")))
 			viewTile++;
@@ -49,7 +49,7 @@ public class LevelEditOverlay extends GameObject {
 		if (viewTile < 0)
 			viewTile = 0;
 
-		if (Runner._input.isKeyHit(InputManager._keys.get("c")))
+		if (Runner._input.isKeyHit(InputManager._keys.get("z")))
 			snapToGrid = !snapToGrid;
 	}
 
@@ -90,7 +90,7 @@ public class LevelEditOverlay extends GameObject {
 		// to move the tile select view
 		g.setColor(Color.black);
 		g.drawString("<< (Z)", 25, this.y + 35);
-		g.drawString(">> (X)", 660, this.y + 35);
+		g.drawString(">> (X)", 700, this.y + 35);
 
 		// draw the grid snap info
 		g.setColor(new Color(0, 0, 0, 150));

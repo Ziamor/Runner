@@ -23,7 +23,7 @@ public class LevelSelectScreen extends GameScreen {
 		}
 
 		// make the corner buttons button
-		this.addGameObject(new BackButton("WorldSelect"));
+		this.addGameObject(new BackButton());
 		this.addGameObject(new AchieveButton());
 	}
 

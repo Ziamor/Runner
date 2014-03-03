@@ -42,7 +42,7 @@ public class Coin extends GameObject {
 		}
 		
 		animation++; // update the animation
-		if (animation > 31)
+		if (animation > 39)
 			animation = 0;
 	}
 

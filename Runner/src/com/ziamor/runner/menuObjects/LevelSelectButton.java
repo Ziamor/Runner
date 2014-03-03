@@ -7,6 +7,7 @@ import com.ziamor.runner.GameObject;
 import com.ziamor.runner.Runner;
 import com.ziamor.runner.TextureCache;
 import com.ziamor.runner.screens.GamePlayScreen;
+import com.ziamor.runner.screens.MenuScreen;
 
 public class LevelSelectButton extends GameObject {
 
@@ -17,34 +18,53 @@ public class LevelSelectButton extends GameObject {
 		this.y = y;
 		this.level = level;
 		width = 170;
-		height = 110;
+		height = 105;
+		objID = "levelSelectButton";
 	}
 
 	public void update() {
-		if (Runner._input.isMouseClicked(x, y, width, height)) {
-
-			Runner.level = this.level; // set the level
-			Runner._gameScreenManager.addScreen(new GamePlayScreen());
-
-			// remove the LevelSelectScreen
-			parent.setRemove(true);
+		// if the menu is on level select
+		if (MenuScreen.mode == 2) {
+			// if the level is unlocked
+			if (Runner.isUnlocked[Runner.world][this.level] == true) {
+				if (Runner._input.isMouseClicked(x, y, width, height)) {
+					// set the current level to this level
+					Runner.level = this.level;
+					// go to the GamePlayScreen
+					Runner._gameScreenManager.addScreen(new GamePlayScreen());
+					// remove the LevelSelectScreen
+					parent.setRemove(true);
+				}
+			}
 		}
 	}
 
 	public void paintComponent(Graphics g) {
-		g.setColor(Color.green);
-		g.fillRect(x, y, width, height);
+		if (MenuScreen.mode == 0)
+			return;
+
+		// draw the button
+		if (Runner.isUnlocked[Runner.world][this.level])
+			g.drawImage(TextureCache._textures.get("levelButton").getTexture(),
+					x, y - MenuScreen.viewY - 608, null);
+		else
+			g.drawImage(TextureCache._textures.get("levelButtonLocked")
+					.getTexture(), x, y - MenuScreen.viewY - 608,
+					null);
+
+		// draw the text
 		g.setColor(Color.black);
 		g.setFont(Runner.fontLarge);
-		g.drawString("" + Runner.world + " - " + level, x + width / 2 - 30,
-				y + 40);
+		g.drawString("" + Runner.world + " - " + level, x
+				+ width / 2 - 32, y - MenuScreen.viewY - 608 + 49);
 
 		// draw the score
 		int score = Runner.scoreHigh[Runner.world][this.level];
 		if (score > 0) {
 			g.setFont(Runner.fontSmall);
 			g.drawString("" + score, x + width / 2
-					- String.valueOf(score).length() * 4 + 2, y + 68);
+					- String.valueOf(score).length() * 4 + 2, y
+					- MenuScreen.viewY - 608 + 113);
 		}
 
 		// draw stars
@@ -52,9 +72,11 @@ public class LevelSelectButton extends GameObject {
 		int i = 1;
 		for (i = 1; i < Runner.starsHigh[Runner.world][level] + 1; i++)
 			g.drawImage(TextureCache._textures.get("star")
-					.getTexture(0, 32, 32), x + 37 * i - 5, y + 74, null);
+					.getTexture(0, 32, 32), x + 37 * i - 5,
+					y - MenuScreen.viewY - 608 + 65, null);
 		for (int j = i; j < 4; j++)
 			g.drawImage(TextureCache._textures.get("starOutline").getTexture(),
-					x + 37 * j - 5, y + 74, null);
+					x + 37 * j - 5, y - MenuScreen.viewY - 608
+							+ 65, null);
 	}
 }
